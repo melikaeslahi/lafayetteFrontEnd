@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: 'vazir';
+    src: url(../../../public/font/Vazir.eot) format('eot');
+    src: url(../../../public/font/Vazir.ttf) format('ttf');
+    src: url(../../../public/font/Vazir.woff) format('woff');
+    src: url(../../../public/font/Vazir.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam';
+    src: url(../../../public/font/Shabnam.eot) format('eot');
+    src: url(../../../public/font/Shabnam.ttf) format('ttf');
+    src: url(../../../public/font/Shabnam.woff) format('woff');
+    src: url(../../../public/font/Shabnam.woff2) format('woff2');
+}
+@font-face {
+    font-family: 'lotus';
+    src: url(../../../public/font/B\ Lotus_0.ttf) format('ttf');
+ 
+} */
+  html{
+    font-family: lotus;
+}
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
