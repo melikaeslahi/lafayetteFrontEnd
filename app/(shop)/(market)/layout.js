@@ -12,7 +12,11 @@ import Header from "@/components/shop/Header";
 import {   isBrowser, isMobile } from "react-device-detect";
 import MobileHeader from "@/components/shop/MobileHeader";
 import MobileFooter from "@/components/shop/MobileFooter";
- 
+import {  Vazirmatn } from 'next/font/google'
+export const vazirmatn = Vazirmatn({
+    subsets: ['arabic'],
+    display: 'swap'
+});
  
 import useAuth from "@/hooks/useAuth";
 import { useEffect } from "react";
@@ -39,7 +43,7 @@ const StoreLayout = ({ children }) => {
         <Providers >
 
             <html>
-                <body dir='rtl' className={`dark:bg-zinc-700`}>
+                <body dir='rtl' className={`dark:bg-zinc-700 ${vazirmatn.className}`}>
                     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                         { isMobile ? <MobileHeader /> : <Header />}
                         <main  >

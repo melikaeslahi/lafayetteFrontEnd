@@ -21,7 +21,7 @@ const  ProductContent = ({children , title , className }) =>{
                         <h1 className="text-pallete text-lg text-right font-bold">{title}</h1>
                         <FontAwesomeIcon icon={faArrowRight} className={'text-pallete text-xl font-extrabold p-2'} />
                     </section>
-                    <section className={`${className}`}>
+                    <section cElassName={`${className}`}>
                     {children} 
 
                     

@@ -28,7 +28,11 @@ const Card = () => {
         <PaymentContainer sidebar={
             <Sidebar>
             <section className={`flex justify-between items-center mb-1 pb-3 w-full`}>
-                <button type="submit" className={`bg-red-600 text-white rounded-lg  my-2  px-6 py-2  w-full`}>  تکمیل فرایند خرید </button>
+                <button 
+                type="submit" 
+                className={`bg-red-600 text-white rounded-lg  my-2  px-6 py-2  w-full`}> 
+                 تکمیل فرایند خرید 
+            </button>
 
             </section>
             </Sidebar>

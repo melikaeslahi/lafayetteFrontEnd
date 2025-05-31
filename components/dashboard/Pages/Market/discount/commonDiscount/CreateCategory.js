@@ -8,10 +8,10 @@ import {  Input  } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { useAddNewCommonDiscountMutation } from '@/lib/market/commonDiscountApi'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
-import CommonDiscountSchema from '@/validation/doshboard/market/discount/commonDiscount/CommonDiscontValidation'
  
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
+import CommonDiscountSchema from '@/validation/doshboard/market/discount/commonDiscount/commonDiscontValidation'
 
 
 const CreateCommonDiscount = () => {

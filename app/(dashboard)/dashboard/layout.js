@@ -14,7 +14,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@/app/theme-provider";
 import { Providers } from '@/app/Provider';
- 
+import {ScheherazadeNew} from 'next/font/google'
+// export const scheherazadeNew = ScheherazadeNew({
+//     display: 'swap'
+// });
+
 
 // export const metadata = {
 //     title: {
@@ -32,9 +36,9 @@ const RootLayout = ({ children }) => {
 
         < >
             <Providers  >
-
+            {/* ${scheherazadeNew.className} */}
                 <html>
-                    <body dir='rtl' className={`dark:bg-zinc-700`}>
+                    <body dir='rtl' className={`dark:bg-zinc-700 `}>
                         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                             <Drawer />
                             <Header />

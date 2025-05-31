@@ -14,10 +14,6 @@ module.exports = {
       darkMode: ["class"],
     theme: {
         extend: {
-            fontFamily: {
-                
-                'lotus': 'lotus',
-            },
             screens: {
                 'dark': {'raw': '(prefers-color-scheme: dark)'},
                 // => @media (prefers-color-scheme: dark) { ... }

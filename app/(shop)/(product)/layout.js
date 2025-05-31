@@ -14,7 +14,11 @@ import { isBrowser, isMobile } from "react-device-detect";
 import ProductHeader from "@/components/shop/pages/market/ProductHeader";
 import ProductFooter from "@/components/shop/pages/market/ProductFootter";
 import { Providers } from "@/app/Provider";
-
+import {  Vazirmatn } from 'next/font/google'
+export const vazirmatn = Vazirmatn({
+    subsets: ['arabic'],
+    display: 'swap'
+});
 // export const metadata = {
 //     title: {
 
@@ -31,7 +35,7 @@ const  ProductLayout = ({ children }) => {
          <Providers>
 
             <html>
-                <body dir='rtl' className={`dark:bg-zinc-700`}>
+                <body dir='rtl' className={`dark:bg-zinc-700 ${vazirmatn.className}`}>
                     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                         {  isMobile ?  <ProductHeader /> : <Header />    }
                      

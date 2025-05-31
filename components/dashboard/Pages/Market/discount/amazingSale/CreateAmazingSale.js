@@ -7,10 +7,10 @@ import {   useEffect } from 'react'
 import {   Input } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { useAddNewAmazingSaleMutation, useGetProductsQuery } from '@/lib/market/amazingSaleApi'
-import AmazingSaleSchema from '@/validation/doshboard/market/discount/AmazingSale/AmazingSaleValidation'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
+import AmazingSaleSchema from '@/validation/doshboard/market/discount/AmazingSale/amazingSaleValidation'
 
 
 const CreateAmazingSale = () => {

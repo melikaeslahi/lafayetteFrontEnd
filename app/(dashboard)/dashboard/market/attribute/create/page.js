@@ -12,10 +12,7 @@ const Create = () => {
 
         <>
          <CreateAttribute />
-      
-            
-
-           
+         
         </>
     )
 }

@@ -10,8 +10,8 @@ import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboa
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { useGetCommonDiscountQuery, useUpdateCommonDiscountMutation } from '@/lib/market/commonDiscountApi'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
-import CommonDiscountSchema from '@/validation/doshboard/market/discount/commonDiscount/CommonDiscontValidation'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
+import CommonDiscountSchema from '@/validation/doshboard/market/discount/commonDiscount/commonDiscontValidation'
 const UpdateCommonDiscount = ({ params }) => {
     const { data:  commonDiscount = {}, isLoading, isSuccess, isError } =  useGetCommonDiscountQuery(params);
    
