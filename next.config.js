@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  //for debug vercel error 
+  swcMinify: false,
+  experimental: {
+    css: false
+  },
+  // end for debug vercel error
   async headers() {
     return [
       {

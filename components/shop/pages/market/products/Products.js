@@ -1,6 +1,4 @@
-import Image from "next/image"
-import Product from "./Product"
-import slide3 from '../../../../../public/image/IMG_20230529_183159.jpg'
+import Product from "./Product" 
 import { useSelector } from "react-redux";
  
 
