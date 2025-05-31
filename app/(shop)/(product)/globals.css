@@ -16,11 +16,11 @@
     src: url(../../../public/font/Shabnam.woff) format('woff');
     src: url(../../../public/font/Shabnam.woff2) format('woff2');
 }
-@font-face {
+/* @font-face {
     font-family: 'lotus';
     src: url(../../../public/font/B\ Lotus_0.ttf) format('ttf');
  
-} */
+}   */
   html{
     font-family: lotus;
 }
