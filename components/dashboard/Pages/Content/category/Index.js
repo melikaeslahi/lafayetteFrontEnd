@@ -1,10 +1,9 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname} from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -14,7 +13,6 @@ import Link from "next/link";
 import useToast from "@/hooks/useToast";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-    const router = useRouter();
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
@@ -72,6 +70,7 @@ const Index = () => {
         <TableContainer
             pagination={postCategories?.meta}
             deleteRecord={deleteCategory}
+            
         >
             {<Table>
                 <thead className="text-pallete  shadow-md">
@@ -91,7 +90,7 @@ const Index = () => {
                     {postCategories.data?.map((itemCategory, index) => {
                         const indexArray = itemCategory.image && Object.entries(itemCategory.image?.indexArray);
                         return (
-                            <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                            <tr key={itemCategory.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
                                 <td className="pl-3 py-3">{index+=1}</td>
                                 <td className="pl-3 py-3">{itemCategory.name}</td>
                                 <td className="pl-3 py-3"   > {indexArray?.map(([size, value]) => (
