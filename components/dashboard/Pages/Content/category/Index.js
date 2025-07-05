@@ -13,6 +13,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import { useChangePostCategoryStatusMutation, useDeletePostCategoryMutation, useGetAllPostCategoryQuery } from "@/lib/content/postCategoryApi";
 import Link from "next/link";
+import useToast from "@/hooks/useToast";
 const Index = () => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -21,6 +22,8 @@ const Index = () => {
 
     // fetch post from localhost:8000/category?page=1,2,3
     const { data: postCategories = [], isError, isLoading, isSuccess } = useGetAllPostCategoryQuery({ page, perPage, search });
+    console.log(postCategories , 'postCategoryData');
+    console.log(page , 'page')
 
     const [chengeStatus, { data: dataStatus }] = useChangePostCategoryStatusMutation();
     const [deleteCategory, result] = useDeletePostCategoryMutation();
@@ -29,51 +32,63 @@ const Index = () => {
         await chengeStatus(id);
     }
 
-    useEffect(() => {
-
-        dispatch(setIsLoading(isLoading));
-        dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(postCategories.data?.length));
-
-    }, [isLoading, isSuccess, isError, postCategories])
+    useEffect(()=>{
+         useToast({ dataStatus:dataStatus ,  message:"دسته بندی"})
+    },[dataStatus]);
 
     useEffect(() => {
         //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success('دسته بندی با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
+       useToast({result:result , message:"دسته بندی"})
     }, [result]);
+     
+    useEffect(() => {
+
+  
+        dispatch(setItemLength(postCategories.data?.length));
+
+    }, [ postCategories])
+
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
 
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success('  دسته بندی  با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
+        dispatch(setIsLoading(isLoading));
+       console.log(isLoading , 'is loading');
 
-                toast.success('  دسته بندی با موفقیت غیر فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
+    }, [isLoading])
+    useEffect(() => {
 
-    }, [dataStatus])
+         
+        dispatch(setIsSuccess(isSuccess));
+       console.log(isSuccess , 'is Success');
+        
+
+    }, [  isSuccess ])
+   
+
+    // useEffect(() => {
+    //     // status checked and unchecked
+    //     if (dataStatus) {
+
+    //         if (dataStatus.status === true && dataStatus.checked === true) {
+    //             toast.success('  دسته بندی  با موفقیت  فعال شد  ', {
+    //                 position: toast.POSITION.TOP_LEFT,
+    //                 rtl: true
+    //             })
+    //         } else if (dataStatus.status === true && dataStatus.checked === false) {
+
+    //             toast.success('  دسته بندی با موفقیت غیر فعال شد  ', {
+    //                 position: toast.POSITION.TOP_LEFT,
+    //                 rtl: true
+    //             })
+    //         } else if (dataStatus.status === false) {
+    //             toast.error('   خطایی پیش آمده است  ', {
+    //                 position: toast.POSITION.TOP_LEFT,
+    //                 rtl: true
+    //             })
+    //         }
+    //     }
+
+    // }, [dataStatus])
 
     return (<>
         <TitlePage
@@ -109,12 +124,12 @@ const Index = () => {
                 </thead>
                 <tbody>
                     {postCategories.data?.map((itemCategory, index) => {
-                        const indexArray = Object.entries(itemCategory.image.indexArray);
+                        const indexArray = itemCategory.image && Object.entries(itemCategory.image?.indexArray);
                         return (
                             <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
                                 <td className="pl-3 py-3">{index+=1}</td>
                                 <td className="pl-3 py-3">{itemCategory.name}</td>
-                                <td className="pl-3 py-3"   > {indexArray.map(([size, value]) => (
+                                <td className="pl-3 py-3"   > {indexArray?.map(([size, value]) => (
                                     itemCategory.image.currentImage === size && <Image key={size} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${value}`} unoptimized={true} alt="image" className="w-12 h-12" width={'100'} height={'100'} />
                                 ))}   </td>
                                 <td className="pl-3 py-3">
