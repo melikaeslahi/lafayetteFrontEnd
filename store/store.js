@@ -44,7 +44,7 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
  
 import {getCookie} from 'cookies-next';
  
-import { persistReducer , persistStore } from "redux-persist";
+// import { persistReducer , persistStore } from "redux-persist";
 import { profileApi } from "@/lib/customer/profile/profileApi";
 import { addressApi } from "@/lib/customer/salesProccess/addressApi";
 import { marketProductApi } from "@/lib/customer/market/productApi";
@@ -62,10 +62,10 @@ import { productSizeApi } from "@/lib/market/productSizeApi";
 
 const storage =  window !== "undefined" ? createWebStorage("local") : createNoopStorage();
  
-const persistConfig = {
-  key: 'root',
- storage 
-}
+// const persistConfig = {
+//   key: 'root',
+//  storage 
+// }
 
 const rootReducer = combineReducers({
    
@@ -128,11 +128,13 @@ const rootReducer = combineReducers({
 
 })
  
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+// const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 // const makeStore = (context) =>
  const store =  configureStore({
-  reducer:persistedReducer,
+  reducer:rootReducer,
+  // reducer:persistedReducer,
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware(
       {
