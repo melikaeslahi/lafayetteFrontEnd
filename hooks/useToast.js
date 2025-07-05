@@ -30,9 +30,9 @@ const useToast=({dataStatus=null , result=null ,  message})=>{
      if (dataStatus === null || dataStatus=== undefined) return;
      if (dataStatus) {
         if (dataStatus.status === true && dataStatus.checked === true) {
-            successCheckTrueToast(title);
+            successCheckTrueToast(message);
         } else if (dataStatus.status === true && dataStatus.checked === false) {
-            successCheckFalseToast(title);               
+            successCheckFalseToast(message);               
         } else if (dataStatus.status === false) {
             errorToast();
         }
