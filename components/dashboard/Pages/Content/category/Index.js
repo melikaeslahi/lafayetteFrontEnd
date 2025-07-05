@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useChangePostCategoryStatusMutation, useDeletePostCategoryMutation, useGetAllPostCategoryQuery } from "@/lib/content/postCategoryApi";
 import Link from "next/link";
 import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -20,9 +21,7 @@ const Index = () => {
 
     // fetch post from localhost:8000/category?page=1,2,3
     const { data: postCategories = [], isError, isLoading, isSuccess } = useGetAllPostCategoryQuery({ page, perPage, search });
-    console.log(postCategories , 'postCategoryData');
-    console.log(page , 'page')
-
+     
     const [chengeStatus, { data: dataStatus }] = useChangePostCategoryStatusMutation();
     const [deleteCategory, result] = useDeletePostCategoryMutation();
 
@@ -53,7 +52,11 @@ const Index = () => {
    
 
     return (<>
-        <TitlePage
+        <TableHeader 
+          title={'دسته بندی'} 
+          href={`${pathname}/create`}  
+          sitemap=' بخش محتوایی / دسته بندی ها  '/>
+        {/* <TitlePage
             name='دسته بندی ها'
             sitemapPage=' بخش محتوایی / دسته بندی ها  '
 
@@ -64,7 +67,7 @@ const Index = () => {
                 {' '}
                 ایجاد دسته جدید
             </Link>
-        </TitlePage>
+        </TitlePage> */}
 
         <TableContainer
             pagination={postCategories?.meta}
