@@ -2,7 +2,6 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
- 
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname, useRouter } from "next/navigation";
@@ -10,7 +9,6 @@ import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image";
-import { toast } from "react-toastify";
 import { useChangePostCategoryStatusMutation, useDeletePostCategoryMutation, useGetAllPostCategoryQuery } from "@/lib/content/postCategoryApi";
 import Link from "next/link";
 import useToast from "@/hooks/useToast";
@@ -42,53 +40,17 @@ const Index = () => {
     }, [result]);
      
     useEffect(() => {
-
-  
         dispatch(setItemLength(postCategories.data?.length));
-
     }, [ postCategories])
 
-
     useEffect(() => {
-
         dispatch(setIsLoading(isLoading));
-       console.log(isLoading , 'is loading');
-
     }, [isLoading])
+
     useEffect(() => {
-
-         
         dispatch(setIsSuccess(isSuccess));
-       console.log(isSuccess , 'is Success');
-        
-
     }, [  isSuccess ])
    
-
-    // useEffect(() => {
-    //     // status checked and unchecked
-    //     if (dataStatus) {
-
-    //         if (dataStatus.status === true && dataStatus.checked === true) {
-    //             toast.success('  دسته بندی  با موفقیت  فعال شد  ', {
-    //                 position: toast.POSITION.TOP_LEFT,
-    //                 rtl: true
-    //             })
-    //         } else if (dataStatus.status === true && dataStatus.checked === false) {
-
-    //             toast.success('  دسته بندی با موفقیت غیر فعال شد  ', {
-    //                 position: toast.POSITION.TOP_LEFT,
-    //                 rtl: true
-    //             })
-    //         } else if (dataStatus.status === false) {
-    //             toast.error('   خطایی پیش آمده است  ', {
-    //                 position: toast.POSITION.TOP_LEFT,
-    //                 rtl: true
-    //             })
-    //         }
-    //     }
-
-    // }, [dataStatus])
 
     return (<>
         <TitlePage
