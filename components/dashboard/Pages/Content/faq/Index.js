@@ -1,6 +1,5 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
@@ -8,8 +7,6 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Image from "next/image";
-import { toast } from "react-toastify";
 import Link from "next/link";
 import { useChangeFaqStatusMutation, useDeleteFaqMutation, useGetAllFaqsQuery } from "@/lib/content/faqApi";
 import useToast from "@/hooks/useToast";
@@ -58,8 +55,10 @@ const Index = () => {
         <TableHeader 
         title={'سوالات متداول'}
         href={`${pathname}/create`}
-        sitemap={' بخش محتوایی / سوالات متداول  '}
+        sitemap={' بخش محتوایی / سوالات متداول'}
         />
+        
+
         <TableContainer
             pagination={faqs?.meta}
             deleteRecord={deleteFaq}
