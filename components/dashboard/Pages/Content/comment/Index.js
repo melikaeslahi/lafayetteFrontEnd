@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
  
 import Link from "next/link";
 import { useChangeApprovedPostMutation, useChangeCommentPostStatusMutation, useGetAllCommentPostQuery } from "@/lib/content/commentPostApi";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
+import useToast from "@/hooks/useToast";
  
  
 const Index = () => {
@@ -37,40 +39,26 @@ const Index = () => {
     }
 
     useEffect(() => {
-
         dispatch(setIsLoading(isLoading));
+    }, [isLoading]);
+
+    useEffect(() => {   
         dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(comments.data?.length));
+    }, [isSuccess]);
 
-    }, [isLoading, isSuccess, isError, comments])
-
-   
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
+        dispatch(setIsError(isError));
+    }, [ isError ]);
 
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success('کامنت   با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
+    useEffect(() => {
+        dispatch(setItemLength(comments.data?.length));
+    }, [comments]);
 
-                toast.success('       کامنت با موفقیت غیر فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
 
-    }, [dataStatus])
+   useEffect(()=>{
+    useToast({dataStatus:dataStatus , message:"کامنت"})
+   },[dataStatus])
 
     useEffect(() => {
         // status checked and unchecked
@@ -98,22 +86,13 @@ const Index = () => {
     }, [dataApproved])
 
     return (<>
-        <TitlePage
-            name=' کامنت   ها'
-            sitemapPage='بخش فروش/ویترین/  کامنت ها'
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" disabled>
-                {' '}
-                ایجاد کامنت
-            </Link>
-        </TitlePage>
-
+    <TableHeader 
+    title={'کامنت ها'}
+    href={`${pathname}/create`}
+    sitemap={'بخش فروش/ویترین/کامنت ها'}
+    />      
         <TableContainer
             pagination={comments?.meta}
-       
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -131,15 +110,10 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {comments.data?.map((comment, index) => {
-             
+            {comments.data?.map((comment, index) => {          
                 return (
                     <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
-                       
-                        
-                       
-                        
+                        <td className="pl-3 py-3">{index+=1}</td>     
                         <td className="pl-3 py-3">{comment.body.replace(/<(.|\n)*?>/g, '').slice(0, 10)}</td>
                         <td className="pl-3 py-3">{comment.parent_id ? comment.parent_id.user.first_name + '' +comment.parent_id.user.last_name : ' '}</td>
                         <td className="pl-3 py-3">{comment.user.id  }</td>
@@ -147,13 +121,10 @@ const Index = () => {
                         <td className="pl-3 py-3">{comment?.commentable.id  }</td>
                         <td className="pl-3 py-3">{comment?.commentable.title  }</td>
                         <td className="pl-3 py-3">{comment.approved == 1 ? 'تایید شده': 'تایید نشده'  }</td>
-
-
-
                         <td className="pl-3 py-3">
                             {<input type="checkbox" name="status" defaultChecked={comment.status === 1 ? true : false} onChange={() => handlerStatus(comment.id)} />}
                         </td>
-                       
+
                         <td>
                             <Link href={`${pathname}/show/${comment.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  نمایش     </Link>
 
@@ -163,8 +134,7 @@ const Index = () => {
                             <Button type="button" onClick={() => {
                                 handlerApproved(comment.id)
                            }} className="py-2 px-4 bg-green-500 hover:bg-green-600 rounded text-white">      تایید    </Button>
-                            }
-                            
+                            }                      
                         </td>
                     </tr>)
             })}
