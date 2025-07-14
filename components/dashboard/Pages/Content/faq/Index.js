@@ -2,7 +2,6 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
-
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
@@ -11,85 +10,56 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image";
 import { toast } from "react-toastify";
-
 import Link from "next/link";
 import { useChangeFaqStatusMutation, useDeleteFaqMutation, useGetAllFaqsQuery } from "@/lib/content/faqApi";
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
 
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
-    // fetch post from localhost:8000/category?page=1,2,3
+    // fetch post from localhost:8000/faq?page=1,2,3
     const { data: faqs = [], isError, isLoading, isSuccess } = useGetAllFaqsQuery({ page, perPage, search });
 
     const [chengeStatus, { data: dataStatus }] =  useChangeFaqStatusMutation();
-    const [deleteFaq, result] =  useDeleteFaqMutation();
+    const [deleteFaq, {result:deleteResult}] =  useDeleteFaqMutation();
 
     const handlerStatus = async (id) => {
         await chengeStatus(id);
     }
 
     useEffect(() => {
-
         dispatch(setIsLoading(isLoading));
-        dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(faqs.data?.length));
-
-    }, [isLoading, isSuccess, isError, faqs])
+    }, [isLoading]);
 
     useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success('   سوال با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
+        dispatch(setIsSuccess(isSuccess));
+    }, [isSuccess]);
+
+    useEffect(() => {      
+        dispatch(setIsError(isError));
+    }, [isError]);
+
+    useEffect(() => {    
+        dispatch(setItemLength(faqs.data?.length));
+    }, [faqs]);
+
+    useEffect(() => {
+      useToast({result:deleteResult , message: 'سوال'})
     }, [result]);
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
-
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success('     سوال  با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
-
-                toast.success('     سوال با موفقیت غیر فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+         useToast({dataStatus:dataStatus , message:'سوال'})
     }, [dataStatus])
 
     return (<>
-        <TitlePage
-            name='سوالات متداول'
-            sitemapPage=' بخش محتوایی / سوالات متداول  '
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد سوال جدید
-            </Link>
-        </TitlePage>
-
+        <TableHeader 
+        title={'سوالات متداول'}
+        href={`${pathname}/create`}
+        sitemap={' بخش محتوایی / سوالات متداول  '}
+        />
         <TableContainer
             pagination={faqs?.meta}
             deleteRecord={deleteFaq}
