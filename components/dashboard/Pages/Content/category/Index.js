@@ -47,6 +47,9 @@ const Index = () => {
     useEffect(() => {
         dispatch(setIsSuccess(isSuccess));
     }, [  isSuccess ])
+    useEffect(() => {
+        dispatch(setIsSuccess(isError));
+    }, [   isError ])
    
 
     return (<>
@@ -54,18 +57,7 @@ const Index = () => {
           title={'دسته بندی'} 
           href={`${pathname}/create`}  
           sitemap=' بخش محتوایی / دسته بندی ها  '/>
-        {/* <TitlePage
-            name='دسته بندی ها'
-            sitemapPage=' بخش محتوایی / دسته بندی ها  '
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد دسته جدید
-            </Link>
-        </TitlePage> */}
+        
 
         <TableContainer
             pagination={postCategories?.meta}
