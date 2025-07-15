@@ -1,19 +1,16 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
- 
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Image from "next/image";
-import { toast } from "react-toastify";
- 
 import Link from "next/link";
 import { useChangePageStatusMutation, useDeletePageMutation, useGetAllPageQuery } from "@/lib/content/pageApi";
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
      
     const dispatch = useDispatch();
@@ -24,71 +21,42 @@ const Index = () => {
     const { data:  pages = [], isError, isLoading, isSuccess } =  useGetAllPageQuery({ page, perPage, search });
 
     const [chengeStatus, { data: dataStatus }] =  useChangePageStatusMutation();
-    const [deletePage, result] =  useDeletePageMutation();
+    const [deletePage, {result:deleteResult}] =  useDeletePageMutation();
 
     const handlerStatus = async (id) => {
         await chengeStatus(id);
     }
 
     useEffect(() => {
+        dispatch(setIsLoading(isLoading)); 
+    }, [isLoading]);
 
-        dispatch(setIsLoading(isLoading));
+    useEffect(() => {
         dispatch(setIsSuccess(isSuccess));
+    }, [isSuccess]);
+
+    useEffect(() => {
         dispatch(setIsError(isError));
+    }, [isError]);
+
+    useEffect(() => {     
         dispatch(setItemLength(pages.data?.length));
-
-    }, [isLoading, isSuccess, isError, pages])
-
-    useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success('   صفحه با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
-    }, [result]);
+    }, [pages]);
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
+        useToast({result:deleteResult , message:'پیج ساز'})
+    }, [deleteResult]);
 
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success('     صفحه  با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
-
-                toast.success('     صفحه با موفقیت غیر فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+    useEffect(() => {
+         useToast({dataStatus:dataStatus , message:"پیج ساز"})
     }, [dataStatus])
 
     return (<>
-        <TitlePage
-            name='   پیج ساز  '
-            sitemapPage=' بخش محتوایی /  پیج ساز  '
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد   صفحه جدید
-            </Link>
-        </TitlePage>
+       <TableHeader 
+       title={'پیج ساز'}
+       href={`${pathname}/create`}
+       sitemap={'بخش محتوایی /پیج ساز'}
+       />
 
         <TableContainer
             pagination={ pages?.meta}
