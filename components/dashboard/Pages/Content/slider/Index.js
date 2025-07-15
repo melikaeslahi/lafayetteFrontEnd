@@ -1,18 +1,17 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome" 
 import Link from "next/link";
 import { useChangeSliderStatusMutation, useDeleteSliderMutation, useGetAllSliderQuery } from "@/lib/content/sliderApi";
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-    const router = useRouter();
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
@@ -21,72 +20,43 @@ const Index = () => {
     const { data:  sliders = [], isError, isLoading, isSuccess } = useGetAllSliderQuery({ page, perPage, search });
 
     const [chengeStatus, { data: dataStatus }] =  useChangeSliderStatusMutation();
-    const [deleteSlider, result] =  useDeleteSliderMutation();
+    const [deleteSlider, {result:deleteResult}] =  useDeleteSliderMutation();
 
     const handlerStatus = async (id) => {
         await chengeStatus(id);
     }
 
     useEffect(() => {
-
         dispatch(setIsLoading(isLoading));
+    }, [isLoading])
+
+    useEffect(() => {
         dispatch(setIsSuccess(isSuccess));
+    }, [isSuccess]);
+
+    useEffect(() => {
         dispatch(setIsError(isError));
+    }, [isError])
+
+    useEffect(() => {
         dispatch(setItemLength(sliders.data?.length));
-
-    }, [isLoading, isSuccess, isError,  sliders])
-
-    useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success(' اسلایدر   با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
-    }, [result]);
+    }, [sliders])
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
+        useToast({result:deleteResult , message:'اسلایدر'})
+    }, [deleteResult]);
 
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success('   اسلایدر با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
-
-                toast.success('     اسلایدر با موفقیت غیر فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+    useEffect(() => {
+     useToast({dataStatus:dataStatus , message:'اسلایدر'})    
     }, [dataStatus])
 
     return (<>
-        <TitlePage
-            name='   اسلایدر ها'
-            sitemapPage=' بخش محتوایی / اسلایدر   ها  '
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد  اسلایدر جدید
-            </Link>
-        </TitlePage>
-
+        <TableHeader 
+          title={'اسلایدر'}
+          href={`${pathname}/create`}
+          sitemap={'بخش محتوایی /اسلایدرها'}
+        />
+         
         <TableContainer
             pagination={sliders?.meta}
             deleteRecord={deleteSlider}
@@ -107,8 +77,7 @@ const Index = () => {
                         return (
                             <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
                                 <td className="pl-3 py-3">{index+=1}</td>
-                                <td className="pl-3 py-3">{slider.name}</td>
-                                
+                                <td className="pl-3 py-3">{slider.name}</td>        
                                 <td className="pl-3 py-3">
                                     {<input type="checkbox" name="status" defaultChecked={slider.status === 1 ? true : false} onChange={() => handlerStatus(slider.id)} />}
                                 </td>
