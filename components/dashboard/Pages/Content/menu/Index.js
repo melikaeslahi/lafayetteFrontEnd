@@ -2,7 +2,6 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
- 
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname, useRouter } from "next/navigation";
@@ -14,13 +13,15 @@ import { toast } from "react-toastify";
  
 import Link from "next/link";
 import { useChangeMenuStatusMutation, useDeleteMenuMutation, useGetAllMenusQuery } from "@/lib/content/menuApi";
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
-    // fetch post from localhost:8000/category?page=1,2,3
+     //fetch menus
     const { data: menus = [], isError, isLoading, isSuccess } = useGetAllMenusQuery({ page, perPage, search });
 
     const [chengeStatus, { data: dataStatus }] =   useChangeMenuStatusMutation();
@@ -31,65 +32,36 @@ const Index = () => {
     }
 
     useEffect(() => {
-
-        dispatch(setIsLoading(isLoading));
         dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(menus.data?.length));
-
-    }, [isLoading, isSuccess, isError, menus])
+    }, [isSuccess]);
 
     useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success(' منو با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
+        dispatch(setIsError(isError));
+    }, [isError]);
+
+    useEffect(() => {
+        dispatch(setItemLength(menus.data?.length));
+    }, [menus]);
+
+    useEffect(() => {
+        dispatch(setIsLoading(isLoading));
+    }, [isLoading]);
+
+    useEffect(() => {
+       useToast({result:result , message:"منو"})
     }, [result]);
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
-
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success(' منو  با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
-
-                toast.success('منو با موفقیت غیر فعال شد ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
+    useToast({dataStatus:dataStatus , message:"منو"})
 
     }, [dataStatus])
 
     return (<>
-        <TitlePage
-            name='منو ها'
-            sitemapPage=' بخش محتوایی /  منو ها  '
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد  منو جدید
-            </Link>
-        </TitlePage>
-
+    <TableHeader 
+    title={'منو ها'}
+    href={`${pathname}/create`}
+    sitemap={'بخش محتوایی / منو ها'}
+    />
         <TableContainer
             pagination={menus?.meta}
             deleteRecord={deleteMenu}
