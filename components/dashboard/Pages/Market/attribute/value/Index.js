@@ -1,71 +1,49 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
- 
-import { toast } from "react-toastify";
- 
 import Link from "next/link";
 import { useDeleteValueMutation, useGetAllValueQuery } from "@/lib/market/categoryValueApi";
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
+
 const Index = ({params}) => {
-    const router = useRouter();
     const dispatch = useDispatch();
-    const pathname = usePathname();
     const { page, perPage  } = useSelector((state) => state.util);
-
-    // fetch post from localhost:8000/category?page=1,2,3
     const { data:  values = [], isError, isLoading, isSuccess } =  useGetAllValueQuery({ page, perPage , params  });
-
- 
-
-    const [deleteValue, result] =  useDeleteValueMutation();
-
-  
+    const [deleteValue, {result:deleteResult}] =  useDeleteValueMutation();
 
     useEffect(() => {
-
         dispatch(setIsLoading(isLoading));
-        dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(values.data?.length));
-
-    }, [isLoading, isSuccess, isError, values])
+    }, [isLoading]);
 
     useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success('دسته بندی محصولات با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
-    }, [result]);
+        dispatch(setIsSuccess(isSuccess));   
+    }, [isSuccess]);
 
-   
- 
+    useEffect(() => {
+        dispatch(setIsError(isError));
+    }, [isError]);
 
-    return (<>
-        <TitlePage
-            name='   ویژگی ها  '
-            sitemapPage='بخش فروش/ویترین/ فرم کالا ها / ویژگی ها'
+    useEffect(() => {
+        dispatch(setItemLength(values.data?.length));
+    }, [values]);
 
-        >
-            <Link
-                href={`/dashboard/market/attribute/value/create/${params}`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد ویژگی جدید
-            </Link>
-        </TitlePage>
+    useEffect(() => {
+      useToast({result:deleteResult , message:"ویژگی"})
+    }, [deleteResult]);
 
+    return (
+    <>
+    <TableHeader 
+    title={'ویژگی ها'}
+    href={`/dashboard/market/attribute/value/create/${params}`}
+    sitemap={'بخش فروش/ویترین/فرم کالاها/ویژگی ها'}
+    />
         <TableContainer
             pagination={values?.meta}
             deleteRecord={deleteValue}
@@ -92,15 +70,7 @@ const Index = ({params}) => {
                         <td className="pl-3 py-3">{value.product.name }</td>
                         <td className="pl-3 py-3">{value.category_attribute?.name }</td>
                         <td className="pl-3 py-3">{value.type == 1 ? 'ساده ' : 'انتخابی'}</td>
-
-                        <td className="pl-3 py-3">{  JSON.parse(value.value).price_increase   }</td>
-
-
-
-                        
-                         
-                         
-                        
+                        <td className="pl-3 py-3">{  JSON.parse(value.value).price_increase   }</td>          
                         <td>
                             <Link href={`/dashboard/market/attribute/value/edit/${params}/${value.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  <FontAwesomeIcon icon={faEdit} />     </Link>
                             <Button type="button" onClick={() => {
