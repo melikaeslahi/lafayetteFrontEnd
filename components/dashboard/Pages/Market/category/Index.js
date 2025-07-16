@@ -1,30 +1,25 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname} from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image";
-import { toast } from "react-toastify";
 import { useChangeProductCategoryStatusMutation, useChangeShowInMenuMutation, useDeleteProductCategoryMutation, useGetAllProductCategoryQuery } from "@/lib/market/productCategoryApi";
 import Link from "next/link";
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-    const router = useRouter();
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-
-    // fetch post from localhost:8000/category?page=1,2,3
     const { data: categories = [], isError, isLoading, isSuccess } = useGetAllProductCategoryQuery({ page, perPage, search });
-
     const [chengeStatus, { data: dataStatus }] = useChangeProductCategoryStatusMutation();
     const [chengeShowInMenu, { data: dataShowInMenu }] = useChangeShowInMenuMutation();
-
-    const [deleteCategory, result] = useDeleteProductCategoryMutation();
+    const [deleteCategory, {result:deleteResult}] = useDeleteProductCategoryMutation();
 
     const handlerStatus = async (id) => {
         await chengeStatus(id);
@@ -35,90 +30,41 @@ const Index = () => {
     }
 
     useEffect(() => {
-
         dispatch(setIsLoading(isLoading));
+    }, [isLoading]);
+
+    
+    useEffect(() => {
         dispatch(setIsSuccess(isSuccess));
+    }, [isSuccess]);
+    
+    useEffect(() => {
         dispatch(setIsError(isError));
+    }, [isError]);
+    
+    useEffect(() => {
         dispatch(setItemLength(categories.data?.length));
-
-    }, [isLoading, isSuccess, isError, categories])
-
-    useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success('دسته بندی محصولات با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
-    }, [result]);
+    }, [categories]);
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
+        useToast({result:deleteResult , message:'دسته بندی'});
+    }, [deleteResult]);
 
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success('دسته بندی محصولات با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
-
-                toast.success('  دسته بندی محصولات با موفقیت غیر فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+    useEffect(() => {
+        useToast({dataStatus:dataStatus , message:'دسته بندی'});
     }, [dataStatus])
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataShowInMenu) {
-
-            if (dataShowInMenu.status === true && dataShowInMenu.checked === true) {
-                toast.success('     نمایش دسته بندی محصولات با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataShowInMenu.status === true && dataShowInMenu.checked === false) {
-
-                toast.success('  نمایش دسته بندی محصولات با موفقیت غیر فعال شد ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataShowInMenu.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+        useToast({dataStatus:dataShowInMenu , message:'نمایش دسته بندی'});
     }, [dataShowInMenu])
 
     return (<>
-        <TitlePage
-            name='دسته بندی ها'
-            sitemapPage='بخش فروش/ویترین/دسته بندی ها'
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد دسته جدید
-            </Link>
-        </TitlePage>
-
+       <TableHeader 
+       title={'دسته بندی ها'}
+       href={`${pathname}/create`}
+       sitemap={'بخش فروش/ویترین/دسته بندی ها'}
+       />
+        
         <TableContainer
             pagination={categories?.meta}
             deleteRecord={deleteCategory}
