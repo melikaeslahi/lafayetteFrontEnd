@@ -1,6 +1,5 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
@@ -9,91 +8,54 @@ import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image";
-import { toast } from "react-toastify";
 import Link from "next/link";
 import { useChangeBrandStatusMutation, useDeleteBrandMutation, useGetAllBrandQuery } from "@/lib/market/brandApi";
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
  
-const Index = () => {
-    
+const Index = () => {   
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-
-    // fetch post from localhost:8000/category?page=1,2,3
     const { data: brands = [], isError, isLoading, isSuccess } =  useGetAllBrandQuery({ page, perPage, search });
-
     const [chengeStatus, { data: dataStatus }] =   useChangeBrandStatusMutation();
-    
-
-    const [deleteBrand, result] =   useDeleteBrandMutation();
+    const [deleteBrand, {result:deleteResult}] =   useDeleteBrandMutation();
 
     const handlerStatus = async (id) => {
         await chengeStatus(id);
     }
 
-   
     useEffect(() => {
-
         dispatch(setIsLoading(isLoading));
+    }, [isLoading]);
+    
+    useEffect(() => {
         dispatch(setIsSuccess(isSuccess));
+    }, [isSuccess]);
+    
+    useEffect(() => {
         dispatch(setIsError(isError));
+    }, [isError]);
+
+    useEffect(() => {
         dispatch(setItemLength(brands.data?.length));
-
-    }, [isLoading, isSuccess, isError, brands])
-
-    useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success(' برند با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
-    }, [result]);
+    }, [ brands]);
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
+        useToast({result:deleteResult , message:'برند'});
+    }, [deleteResult]);
 
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success('     برند با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
-
-                toast.success('       برند با موفقیت غیر فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+    useEffect(() => {
+    useToast({dataStatus:dataStatus , message:'برند'})
     }, [dataStatus])
 
-   
-
     return (<>
-        <TitlePage
-            name='برند ها'
-            sitemapPage='بخش فروش/ویترین/ برند ها'
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد  برند جدید
-            </Link>
-        </TitlePage>
-
+        <TableHeader 
+        title={'برند ها'}
+        href={`${pathname}/create`}
+        sitemap={'بخش فروش/ویترین/برند ها'}
+        />
+        
         <TableContainer
             pagination={brands?.meta}
             deleteRecord={deleteBrand}
