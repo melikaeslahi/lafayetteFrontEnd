@@ -1,72 +1,52 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Image from "next/image";
-import { toast } from "react-toastify";
- 
 import Link from "next/link";
 import { useDeleteAmazingSaleMutation, useGetAllAmazingSaleQuery } from "@/lib/market/amazingSaleApi";
-const Index = () => {
-     
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
+const Index = () => { 
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-
-    // fetch post from localhost:8000/category?page=1,2,3
     const { data: amazingSales = [], isError, isLoading, isSuccess } =  useGetAllAmazingSaleQuery({ page, perPage, search });
-
+    const [deleteAmazingSale, {result:deleteResult}] =  useDeleteAmazingSaleMutation();
  
-
-    const [deleteAmazingSale, result] =  useDeleteAmazingSaleMutation();
-
-    
-
     useEffect(() => {
-
         dispatch(setIsLoading(isLoading));
-        dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(amazingSales.data?.length));
-
-    }, [isLoading, isSuccess, isError, amazingSales])
+    }, [isLoading]);
 
     useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success(' تخفیف با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
-    }, [result]);
+        dispatch(setIsSuccess(isSuccess));
+    }, [isSuccess]);
+
+    useEffect(() => {
+        dispatch(setIsError(isError));
+    }, [isError]);
+     
+    useEffect(() => {
+        dispatch(setItemLength(amazingSales.data?.length));
+    }, [amazingSales]);
+
+
+    useEffect(() => {
+         useToast({result:deleteResult})
+    }, [deleteResult]);
 
     
-
-    
-
     return (<>
-        <TitlePage
-            name=' فروش فوق العاده'
-            sitemapPage='بخش فروش/ویترین/ تخفیف ها / فروش فوقالعاده'
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد  تخفیف جدید
-            </Link>
-        </TitlePage>
-
+        <TableHeader 
+         title={' فروش فوق العاده'}
+         href={`${pathname}/create`}
+         sitemap={'بخش فروش/ویترین/ تخفیف ها / فروش فوقالعاده'}
+        />
+        
         <TableContainer
             pagination={amazingSales?.meta}
             deleteRecord={deleteAmazingSale}
