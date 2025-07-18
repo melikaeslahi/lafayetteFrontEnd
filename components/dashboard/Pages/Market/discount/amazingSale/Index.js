@@ -36,7 +36,7 @@ const Index = () => {
 
 
     useEffect(() => {
-         useToast({result:deleteResult})
+         useToast({result:deleteResult , message:'تخفیف شگفت انگیز'})
     }, [deleteResult]);
 
     
