@@ -1,77 +1,52 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Image from "next/image";
-import { toast } from "react-toastify";
- 
 import Link from "next/link";
 import { useDeleteCommonDiscountMutation, useGetAllCommonDiscountQuery } from "@/lib/market/commonDiscountApi";
-const Index = () => {
-  
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
+const Index = () => { 
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-
-    // fetch post from localhost:8000/category?page=1,2,3
     const { data:  commonDiscounts = [], isError, isLoading, isSuccess } =  useGetAllCommonDiscountQuery({ page, perPage, search });
+    const [deleteCommonDiscount, {result:deleteResult}] =  useDeleteCommonDiscountMutation();
  
 
-    const [deleteCommonDiscount, result] =  useDeleteCommonDiscountMutation();
-
-    const handlerStatus = async (id) => {
-        await chengeStatus(id);
-    }
-
-    const handlerShowInMenu = async (id) => {
-        await chengeShowInMenu(id);
-    }
-
     useEffect(() => {
-
         dispatch(setIsLoading(isLoading));
-        dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(commonDiscounts.data?.length));
-
-    }, [isLoading, isSuccess, isError, commonDiscounts])
+    }, [isLoading]);
 
     useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success('دسته بندی محصولات با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
-    }, [result]);
+        dispatch(setIsSuccess(isSuccess));
+    }, [isSuccess]);
 
-    
+    useEffect(() => {
+        dispatch(setIsError(isError));
+    }, [isError]);
 
- 
+    useEffect(() => {
+        dispatch(setItemLength(commonDiscounts.data?.length));
+    }, [commonDiscounts]);
+
+    useEffect(() => {
+         useToast({result:deleteResult , message:"تخفیف"})
+    }, [deleteResult]);
+
 
     return (<>
-        <TitlePage
-            name='دسته بندی ها'
-            sitemapPage='بخش فروش/ویترین/دسته بندی ها'
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد دسته جدید
-            </Link>
-        </TitlePage>
-
+       <TableHeader 
+        title={'تخفیف عمومی'}
+        href={`${pathname}/create`}
+        sitemap={'بخش فروش/ویترین/ تخفیف ها /تخفیف های عمومی'}
+       />
+      
         <TableContainer
             pagination={commonDiscounts?.meta}
             deleteRecord={deleteCommonDiscount}
