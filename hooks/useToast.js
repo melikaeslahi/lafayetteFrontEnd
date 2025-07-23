@@ -1,20 +1,22 @@
 import { toast } from "react-toastify"
 
-const useToast=({dataStatus=null , result=null ,  message})=>{
-   const successCheckTrueToast =(message)=>{
-             toast.success(` ${message}  با موفقیت  فعال شد `, {
+const useToast=({dataStatus=null , result=null ,  message=null , customMessage=null})=>{
+   const successCheckTrueToast =(message , customMessage)=>{
+             toast.success(`${customMessage ?? `${message}  با موفقیت  فعال شد `} `,
+              {
              position: toast.POSITION.TOP_LEFT,
              rtl: true
         })
     }
     const successCheckFalseToast =(message)=>{
-             toast.success(` ${message} با موفقیت غیر فعال شد `, {
-            position: toast.POSITION.TOP_LEFT,
-            rtl: true
-        })
+             toast.success(`${customMessage  ?? `${message}  با موفقیت غیر فعال شد `} `,
+              {
+               position: toast.POSITION.TOP_LEFT,
+               rtl: true
+                })
       }
    const errorToast =()=>{
-            toast.error('   خطایی پیش آمده است  ', {
+            toast.error('خطایی پیش آمده است ', {
             position: toast.POSITION.TOP_LEFT,
             rtl: true
         })
@@ -30,16 +32,13 @@ const useToast=({dataStatus=null , result=null ,  message})=>{
      if (dataStatus === null || dataStatus=== undefined) return;
      if (dataStatus) {
         if (dataStatus.status === true && dataStatus.checked === true) {
-            successCheckTrueToast(message);
+            successCheckTrueToast(message ,customMessage);
         } else if (dataStatus.status === true && dataStatus.checked === false) {
-            successCheckFalseToast(message);               
+            successCheckFalseToast(message , customMessage);               
         } else if (dataStatus.status === false) {
             errorToast();
         }
-        }
-
-    
-     
+        }  
 
     //show a toast when we delete an item from database
     if(result===null || result=== undefined) return;
