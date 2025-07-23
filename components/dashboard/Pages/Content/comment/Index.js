@@ -1,34 +1,22 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
- 
-import { toast } from "react-toastify";
- 
 import Link from "next/link";
 import { useChangeApprovedPostMutation, useChangeCommentPostStatusMutation, useGetAllCommentPostQuery } from "@/lib/content/commentPostApi";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
 import useToast from "@/hooks/useToast";
  
- 
 const Index = () => {
-    const router = useRouter();
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-
-    // fetch post from localhost:8000/category?page=1,2,3
     const { data: comments = [], isError, isLoading, isSuccess } =  useGetAllCommentPostQuery({ page, perPage, search });
-     
-    console.log('response' , isSuccess? comments : 'false')
     const [chengeStatus, { data: dataStatus }] =   useChangeCommentPostStatusMutation();
     const [chengeApproved, { data: dataApproved }] =    useChangeApprovedPostMutation();
-
- 
 
     const handlerStatus = async (id) => {
         await chengeStatus(id);
@@ -61,28 +49,7 @@ const Index = () => {
    },[dataStatus])
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataApproved) {
-
-            if (dataApproved.status === true && dataApproved.checked === true) {
-                toast.success('      کامنت با موفقیت   تایید شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataApproved.status === true && dataApproved.checked === false) {
-
-                toast.success('         کامنت با موفقیت   عدم تایید  شد ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataApproved.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+        useToast({dataStatus:dataApproved , customMessage:'وضعیت کامنت با موفقیت تغییر کرد'});
     }, [dataApproved])
 
     return (<>
