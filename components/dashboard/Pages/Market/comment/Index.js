@@ -1,12 +1,10 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
- 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
-
 import Link from "next/link";
 import { useChangeApprovedMutation, useChangeCommentStatusMutation, useGetAllCommentQuery } from "@/lib/market/commentApi";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
@@ -50,27 +48,15 @@ const Index = () => {
     }, [dataStatus])
 
     useEffect(() => {
-        // status checked and unchecked
+        let message;
         if (dataApproved) {
-
             if (dataApproved.status === true && dataApproved.checked === true) {
-                toast.success('      کامنت با موفقیت   تایید شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataApproved.status === true && dataApproved.checked === false) {
-
-                toast.success('         کامنت با موفقیت   عدم تایید  شد ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataApproved.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
+               message = 'کامنت با موفقیت تایید شد';
+            } else  {
+                message='کامنت با موفقیت عدم تایید شد'
             }
         }
+        useToast({dataStatus:dataApproved, customMessage:message});
 
     }, [dataApproved])
 
