@@ -1,9 +1,8 @@
 'use client'
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -14,13 +13,12 @@ import Link from "next/link";
 import useToast from "@/hooks/useToast";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-    const router = useRouter();
     const dispatch = useDispatch();
     const pathname = usePathname();
-    const { page, perPage, search } = useSelector((state) => state.util);
-
-    // fetch post from localhost:8000/banner?page=1,2,3
-    const { data: banners = [], isError, isLoading, isSuccess } = useGetAllBannerQuery({ page, perPage, search });
+    
+    const { page, perPage, search } = useSelector((state) => state.util); 
+    const query = useGetAllBannerQuery({ page, perPage, search });
+    const banners = query?.data;
 
     const [changeStatus, { data: dataStatus }] = useChangeBannerStatusMutation();
 
@@ -29,21 +27,7 @@ const Index = () => {
     const handlerStatus = async (id) => {
         await changeStatus(id);
     }
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading])
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [ isSuccess ])
-
-    useEffect(() => { 
-        dispatch(setIsError(isError));
-    }, [isError])
-    useEffect(() => {
-        dispatch(setItemLength(banners.data?.length));
-    }, [banners])
-
-
+    
     useEffect(()=>{
         useToast({dataStatus:dataStatus , message:"بنر"})
     } ,[dataStatus])
@@ -62,11 +46,9 @@ const Index = () => {
         <TableContainer
             pagination={banners?.meta}
             deleteRecord={deleteBanner}
-        >
- 
-          
+            query={query}
+        >         
             {<Table>
-                 
                 <thead className="text-pallete  shadow-md">
                     <tr className={`text-center`}>
                      <th  className="pl-3 py-3"> # </th>
@@ -79,12 +61,10 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-
                     {banners.data?.map((banner, index) => {
-                      
                         return (
-                            <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                                <td className="pl-3 py-3">{index+=1}</td>
+                            <tr key={banner.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                                <td className="pl-3 py-3">{banner.id}</td>
                                 <td className="pl-3 py-3">{banner.title}</td>
                                 <td className="pl-3 py-3"   >  
                                    <Image   src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${banner.image}`} unoptimized={true} alt="image" className="w-12 h-12" width={'100'} height={'100'} />
