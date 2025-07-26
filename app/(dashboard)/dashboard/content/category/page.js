@@ -1,13 +1,13 @@
 import Index from "@/components/dashboard/Pages/Content/category/Index";
-
+ 
 export const metadata = {
     title: 'دسته بندی',
 }
 
-const PostCategory = () => {
+const PostCategory = () => {  
     return (
         <>
-        <Index />
+          <Index />
         </>
     )
 

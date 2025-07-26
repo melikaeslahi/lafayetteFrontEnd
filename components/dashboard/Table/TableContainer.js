@@ -2,15 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "@/components/dashboard/Modal";
 import Paginate from "@/components/dashboard/Paginate";
 import TableFiltering from "./TableFiltering";
-import TableError404 from "./TableError404";
-import TableNotFound from "./TableNotFound";
-import TableLoading from "./TableLoading";
 import { modalOpenClose } from "@/store/reducers/dashboard/UtilSlice";
 import SuccessAlert from "../inputs/SuccessAlert";
+import QueryStatusHandler from "./QueryStatusHandler";
  
-const TableContainer = ({ children , pagination , deleteRecord }) => {
+const TableContainer = ({ children , pagination , deleteRecord ,query}) => {
 
-    const { openDrawer, isOpenModal, perPage, deleteID, deleteName ,isError , isSuccess , isLoading ,length , successMessage} = useSelector((state) => state.util);
+    const { openDrawer, isOpenModal, perPage, deleteID, deleteName  , successMessage} = useSelector((state) => state.util);
 
      const dispatch =useDispatch();
       //delete  record from data base
@@ -18,7 +16,8 @@ const TableContainer = ({ children , pagination , deleteRecord }) => {
     const handlerDelete = async (id) => {
         dispatch(modalOpenClose(false));
         await deleteRecord(id);
-    }
+    }  
+     
 
     return ( 
 
@@ -40,16 +39,9 @@ const TableContainer = ({ children , pagination , deleteRecord }) => {
                 <section>
 
                     <TableFiltering />
-
-                    
-
-                    {isLoading ? <TableLoading /> : isSuccess ? length > 0 ?
-                                <>
-                                    {children}
-                                </> : <TableNotFound /> : isError ? <TableError404 /> :  null
-                           
-                        }
-
+                      <QueryStatusHandler query={query} >
+                        {children}                      
+                      </QueryStatusHandler>
                              
                     {/* perPage === 2 => type 2 , means we fetch all data table  */}
                     
