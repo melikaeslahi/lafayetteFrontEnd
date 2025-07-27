@@ -2,8 +2,8 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -15,24 +15,11 @@ const Index = () => {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data:  attributes = [], isError, isLoading, isSuccess } =  useGetAllAttributeQuery({ page, perPage, search });
+
+    const query =  useGetAllAttributeQuery({ page, perPage, search });
+    const attributes = query?.data;
+
     const [deleteAttribute, {result:deleteResult}] =  useDeleteAttributeMutation();
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading)); 
-    }, [isLoading]);
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess)); 
-    }, [isSuccess]);
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {
-        dispatch(setItemLength(attributes.data?.length));
-    }, [attributes]);
 
 
     useEffect(() => {
@@ -49,6 +36,7 @@ const Index = () => {
         <TableContainer
             pagination={attributes?.meta}
             deleteRecord={deleteAttribute}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -61,11 +49,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {attributes.data?.map((attribute, index) => {
+            {attributes.data?.map((attribute) => {
                 
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={attribute.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{attribute}</td>
                         <td className="pl-3 py-3">{attribute.name}</td>               
                         <td className="pl-3 py-3">{attribute.category.name}</td>
                         <td className="pl-3 py-3">{attribute.unit}</td>                       

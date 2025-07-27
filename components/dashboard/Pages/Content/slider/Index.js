@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -16,8 +16,8 @@ const Index = () => {
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
-    // fetch post from localhost:8000/category?page=1,2,3
-    const { data:  sliders = [], isError, isLoading, isSuccess } = useGetAllSliderQuery({ page, perPage, search });
+    const query = useGetAllSliderQuery({ page, perPage, search });
+    const sliders = query?.data;
 
     const [chengeStatus, { data: dataStatus }] =  useChangeSliderStatusMutation();
     const [deleteSlider, {result:deleteResult}] =  useDeleteSliderMutation();
@@ -25,22 +25,6 @@ const Index = () => {
     const handlerStatus = async (id) => {
         await chengeStatus(id);
     }
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading])
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError])
-
-    useEffect(() => {
-        dispatch(setItemLength(sliders.data?.length));
-    }, [sliders])
 
     useEffect(() => {
         useToast({result:deleteResult , message:'اسلایدر'})
@@ -60,6 +44,7 @@ const Index = () => {
         <TableContainer
             pagination={sliders?.meta}
             deleteRecord={deleteSlider}
+            query={query}
         >
             {<Table>
                 <thead className="text-pallete  shadow-md">
@@ -72,11 +57,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {sliders.data?.map(( slider, index) => {
+                    {sliders.data?.map(( slider ) => {
                      
                         return (
-                            <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                                <td className="pl-3 py-3">{index+=1}</td>
+                            <tr key={slider.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                                <td className="pl-3 py-3">{slider.id}</td>
                                 <td className="pl-3 py-3">{slider.name}</td>        
                                 <td className="pl-3 py-3">
                                     {<input type="checkbox" name="status" defaultChecked={slider.status === 1 ? true : false} onChange={() => handlerStatus(slider.id)} />}
