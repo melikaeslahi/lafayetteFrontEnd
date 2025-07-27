@@ -1,8 +1,7 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import Link from "next/link";
@@ -11,10 +10,10 @@ import TableHeader from "@/components/dashboard/Table/TableHeader";
 import useToast from "@/hooks/useToast";
 
 const Index = () => {
-    const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data: comments = [], isError, isLoading, isSuccess } = useGetAllCommentQuery({ page, perPage, search });
+    const query = useGetAllCommentQuery({ page, perPage, search });
+    const comments = query?.data;
     const [chengeStatus, { data: dataStatus }] =  useChangeCommentStatusMutation();
     const [chengeApproved, { data: dataApproved }] =  useChangeApprovedMutation();
 
@@ -25,23 +24,6 @@ const Index = () => {
     const handlerApproved = async (id) => {
         await chengeApproved(id);
     }
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {
-        dispatch(setItemLength(comments.data?.length));
-    }, [comments]);
-
-   
 
     useEffect(() => {
        useToast({dataStatus:dataStatus , message:'کامنت'});
@@ -69,6 +51,7 @@ const Index = () => {
          
         <TableContainer
             pagination={comments?.meta}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
