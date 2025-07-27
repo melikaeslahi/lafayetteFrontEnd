@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -15,30 +15,13 @@ const Index = () => {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data:  commonDiscounts = [], isError, isLoading, isSuccess } =  useGetAllCommonDiscountQuery({ page, perPage, search });
+    const query =  useGetAllCommonDiscountQuery({ page, perPage, search });
+    const commonDiscounts = query?.data;
     const [deleteCommonDiscount, {result:deleteResult}] =  useDeleteCommonDiscountMutation();
- 
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {
-        dispatch(setItemLength(commonDiscounts.data?.length));
-    }, [commonDiscounts]);
 
     useEffect(() => {
          useToast({result:deleteResult , message:"تخفیف"})
     }, [deleteResult]);
-
 
     return (<>
        <TableHeader 
@@ -50,6 +33,7 @@ const Index = () => {
         <TableContainer
             pagination={commonDiscounts?.meta}
             deleteRecord={deleteCommonDiscount}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -65,11 +49,10 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {commonDiscounts.data?.map((commonDiscount, index) => {
-                
+            {commonDiscounts.data?.map((commonDiscount) => {      
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={commonDiscount.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{commonDiscount.id}</td>
                         <td className="pl-3 py-3">{commonDiscount.title}</td>
                         <td className="pl-3 py-3">{commonDiscount.percentage}%</td>
                         <td className="pl-3 py-3">{commonDiscount.discount_ceiling}</td>
