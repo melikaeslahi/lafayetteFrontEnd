@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -12,13 +12,13 @@ import { useChangePageStatusMutation, useDeletePageMutation, useGetAllPageQuery 
 import useToast from "@/hooks/useToast";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-     
+    
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
-    // fetch post from localhost:8000/category?page=1,2,3
-    const { data:  pages = [], isError, isLoading, isSuccess } =  useGetAllPageQuery({ page, perPage, search });
+    const query =  useGetAllPageQuery({ page, perPage, search });
+    const pages = query?.data;
 
     const [chengeStatus, { data: dataStatus }] =  useChangePageStatusMutation();
     const [deletePage, {result:deleteResult}] =  useDeletePageMutation();
@@ -26,22 +26,6 @@ const Index = () => {
     const handlerStatus = async (id) => {
         await chengeStatus(id);
     }
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading)); 
-    }, [isLoading]);
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {     
-        dispatch(setItemLength(pages.data?.length));
-    }, [pages]);
 
     useEffect(() => {
         useToast({result:deleteResult , message:'پیج ساز'})
@@ -61,6 +45,7 @@ const Index = () => {
         <TableContainer
             pagination={ pages?.meta}
             deleteRecord={deletePage}
+            query={query}
         >
             {<Table>
                 <thead className="text-pallete  shadow-md">
@@ -75,11 +60,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {pages.data?.map((page, index) => {
+                    {pages.data?.map((page) => {
                        
                         return (
-                            <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                                <td className="pl-3 py-3">{index+=1}</td>
+                            <tr key={page.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                                <td className="pl-3 py-3">{page.id}</td>
                                 <td className="pl-3 py-3">{page.title}</td>
                                 <td className="pl-3 py-3">{page.body.replace(/<(.|\n)*?>/g, '').slice(0, 10)}</td>
                                 <td className="pl-3 py-3">
