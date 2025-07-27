@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname} from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -16,7 +16,8 @@ const Index = () => {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data: categories = [], isError, isLoading, isSuccess } = useGetAllProductCategoryQuery({ page, perPage, search });
+    const query = useGetAllProductCategoryQuery({ page, perPage, search });
+    const categories = query?.data;
     const [chengeStatus, { data: dataStatus }] = useChangeProductCategoryStatusMutation();
     const [chengeShowInMenu, { data: dataShowInMenu }] = useChangeShowInMenuMutation();
     const [deleteCategory, {result:deleteResult}] = useDeleteProductCategoryMutation();
@@ -28,23 +29,6 @@ const Index = () => {
     const handlerShowInMenu = async (id) => {
         await chengeShowInMenu(id);
     }
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-
-    
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-    
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-    
-    useEffect(() => {
-        dispatch(setItemLength(categories.data?.length));
-    }, [categories]);
 
     useEffect(() => {
         useToast({result:deleteResult , message:'دسته بندی'});
@@ -68,6 +52,7 @@ const Index = () => {
         <TableContainer
             pagination={categories?.meta}
             deleteRecord={deleteCategory}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -85,11 +70,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {categories.data?.map((category, index) => {
+            {categories.data?.map((category) => {
                 const indexArray = Object.entries(category.image.indexArray);
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={category.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{category.id}</td>
                         <td className="pl-3 py-3">{category.name}</td>
                         <td className="pl-3 py-3"   > {indexArray.map(([size, value]) => (
                             category.image.currentImage === size && <Image key={size} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${value}`} unoptimized={true} alt="image" className="w-12 h-12" width={'100'} height={'100'} />
