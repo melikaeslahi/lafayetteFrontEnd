@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -16,24 +16,11 @@ const Index = () => {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data:  copans = [], isError, isLoading, isSuccess } =  useGetAllCopanQuery({ page, perPage, search });
+    const  query =  useGetAllCopanQuery({ page, perPage, search });
+    const copans = query?.data;
     const [deleteCopan, {result:deleteResult}] =  useDeleteCopanMutation();
 
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading, isSuccess, isError, copans])
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess])
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {
-        dispatch(setItemLength(copans.data?.length));
-    }, [copans]);
+    
 
     useEffect(() => {
          useToast({result:deleteResult , message:'کپن تخفیف'});
@@ -49,6 +36,7 @@ const Index = () => {
         <TableContainer
             pagination={copans?.meta}
             deleteRecord={deleteCopan}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -65,11 +53,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {copans.data?.map((copan, index) => {
+            {copans.data?.map((copan) => {
                 
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={copan.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{copan.id}</td>
                         <td className="pl-3 py-3">{copan.code}</td>
                         <td className="pl-3 py-3">{copan.amount_type === 0 ? 'درصدی' : 'عددی' }</td>
                         <td className="pl-3 py-3">{copan.type === 0 ? 'همه' :  copan.user.first_name + copan.user.last_name }</td>
