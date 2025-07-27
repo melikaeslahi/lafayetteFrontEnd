@@ -23,7 +23,6 @@ const Index = () => {
         useToast({result:deleteResult , message:'روش ارسال'})
     }, [deleteResult]);
 
-   
     return (<>
         <TableHeader 
          title={'روش های ارسال'}

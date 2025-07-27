@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -15,25 +15,9 @@ const Index = () => {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data: amazingSales = [], isError, isLoading, isSuccess } =  useGetAllAmazingSaleQuery({ page, perPage, search });
+    const query =  useGetAllAmazingSaleQuery({ page, perPage, search });
+    const amazingSales =query?.data;
     const [deleteAmazingSale, {result:deleteResult}] =  useDeleteAmazingSaleMutation();
- 
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-     
-    useEffect(() => {
-        dispatch(setItemLength(amazingSales.data?.length));
-    }, [amazingSales]);
-
 
     useEffect(() => {
          useToast({result:deleteResult , message:'تخفیف شگفت انگیز'})
@@ -50,6 +34,7 @@ const Index = () => {
         <TableContainer
             pagination={amazingSales?.meta}
             deleteRecord={deleteAmazingSale}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -63,11 +48,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {amazingSales.data?.map((amazingSale, index) => {
+            {amazingSales.data?.map((amazingSale) => {
                 
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={amazingSale.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{amazingSale.id}</td>
                         <td className="pl-3 py-3">{amazingSale.product.name}</td>
                         <td className="pl-3 py-3">{amazingSale.percentage}</td>
                         <td className="pl-3 py-3">{amazingSale.start_date}</td>
