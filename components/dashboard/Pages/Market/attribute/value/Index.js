@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -14,24 +14,11 @@ import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = ({params}) => {
     const dispatch = useDispatch();
     const { page, perPage  } = useSelector((state) => state.util);
-    const { data:  values = [], isError, isLoading, isSuccess } =  useGetAllValueQuery({ page, perPage , params  });
+    
+    const query =  useGetAllValueQuery({ page, perPage , params  });
+    const values =query?.data;
+
     const [deleteValue, {result:deleteResult}] =  useDeleteValueMutation();
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));   
-    }, [isSuccess]);
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {
-        dispatch(setItemLength(values.data?.length));
-    }, [values]);
 
     useEffect(() => {
       useToast({result:deleteResult , message:"ویژگی"})
@@ -61,16 +48,16 @@ const Index = ({params}) => {
                     </tr>
                 </thead>
                 <tbody>
-            {values.data?.map((value, index) => {
+            {values.data?.map((value) => {
                 
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={value.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{value.id}</td>
                         <td className="pl-3 py-3">{JSON.parse(value.value).value  }</td>
                         <td className="pl-3 py-3">{value.product.name }</td>
                         <td className="pl-3 py-3">{value.category_attribute?.name }</td>
                         <td className="pl-3 py-3">{value.type == 1 ? 'ساده ' : 'انتخابی'}</td>
-                        <td className="pl-3 py-3">{  JSON.parse(value.value).price_increase   }</td>          
+                        <td className="pl-3 py-3">{JSON.parse(value.value).price_increase}</td>          
                         <td>
                             <Link href={`/dashboard/market/attribute/value/edit/${params}/${value.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  <FontAwesomeIcon icon={faEdit} />     </Link>
                             <Button type="button" onClick={() => {
