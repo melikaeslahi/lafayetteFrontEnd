@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname} from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -15,27 +15,9 @@ const Index = () => {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data:  deliveries = [], isError, isLoading, isSuccess } =  useGetAllDeliveryQuery({ page, perPage, search });
+    const query =  useGetAllDeliveryQuery({ page, perPage, search });
+    const deliveries =query?.data;
     const [deleteDelivery, {result:deleteResult}] =  useDeleteDeliveryMutation();
-
- 
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading])
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess])
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError])
-
-    useEffect(() => {
-        dispatch(setItemLength(deliveries.data?.length));
-    }, [deliveries])
-
 
     useEffect(() => {
         useToast({result:deleteResult , message:'روش ارسال'})
@@ -52,6 +34,7 @@ const Index = () => {
         <TableContainer
             pagination={deliveries?.meta}
             deleteRecord={deleteDelivery}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -65,11 +48,10 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {deliveries.data?.map((delivery, index) => {
-               
+            {deliveries.data?.map((delivery) => {
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={delivery.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{delivery.id}</td>
                         <td className="pl-3 py-3">{delivery.name}</td>
                         <td className="pl-3 py-3">{delivery.amount}</td>
                         <td className="pl-3 py-3">{delivery.delivery_time}</td>
