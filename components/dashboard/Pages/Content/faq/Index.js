@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -16,9 +16,9 @@ const Index = () => {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-
-    // fetch post from localhost:8000/faq?page=1,2,3
-    const { data: faqs = [], isError, isLoading, isSuccess } = useGetAllFaqsQuery({ page, perPage, search });
+ 
+    const  query = useGetAllFaqsQuery({ page, perPage, search });
+    const faqs = query?.data;
 
     const [chengeStatus, { data: dataStatus }] =  useChangeFaqStatusMutation();
     const [deleteFaq, {result:deleteResult}] =  useDeleteFaqMutation();
@@ -27,22 +27,7 @@ const Index = () => {
         await chengeStatus(id);
     }
 
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-
-    useEffect(() => {      
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {    
-        dispatch(setItemLength(faqs.data?.length));
-    }, [faqs]);
-
+    
     useEffect(() => {
       useToast({result:deleteResult , message: 'سوال'})
     }, [result]);
@@ -58,7 +43,6 @@ const Index = () => {
         sitemap={' بخش محتوایی / سوالات متداول'}
         />
         
-
         <TableContainer
             pagination={faqs?.meta}
             deleteRecord={deleteFaq}
@@ -76,11 +60,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {faqs.data?.map((faq, index) => {
+                    {faqs.data?.map((faq) => {
 
                         return (
-                            <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                                <td className="pl-3 py-3">{index+=1}</td>
+                            <tr key={faq.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                                <td className="pl-3 py-3">{faq.id}</td>
                                 <td className="pl-3 py-3">{faq.question.replace(/<(.|\n)*?>/g, '').slice(0, 10)}</td>
                                 <td className="pl-3 py-3">{faq.answer.replace(/<(.|\n)*?>/g, '').slice(0, 10)}</td>
 
