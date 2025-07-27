@@ -68,10 +68,10 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {comments.data?.map((comment, index) => {          
+            {comments.data?.map((comment) => {          
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>     
+                    <tr key={comment.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{comment.id}</td>     
                         <td className="pl-3 py-3">{comment.body.replace(/<(.|\n)*?>/g, '').slice(0, 10)}</td>
                         <td className="pl-3 py-3">{comment.parent_id ? comment.parent_id.user.first_name + '' +comment.parent_id.user.last_name : ' '}</td>
                         <td className="pl-3 py-3">{comment.user.id  }</td>
