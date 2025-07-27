@@ -31,7 +31,15 @@ const Index = () => {
    },[dataStatus])
 
     useEffect(() => {
-        useToast({dataStatus:dataApproved , customMessage:'وضعیت کامنت با موفقیت تغییر کرد'});
+        let message;
+        if (dataApproved) {
+            if (dataApproved.status === true && dataApproved.checked === true) {
+               message = 'کامنت با موفقیت تایید شد';
+            } else  {
+                message='کامنت با موفقیت عدم تایید شد'
+            }
+        }
+        useToast({dataStatus:dataApproved, customMessage:message});
     }, [dataApproved])
 
     return (<>
