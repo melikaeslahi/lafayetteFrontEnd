@@ -1,7 +1,7 @@
 'use client'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal} from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -13,13 +13,12 @@ import Link from "next/link";
 import useToast from "@/hooks/useToast";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-  
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
-    // fetch post from localhost:8000/category?page=1,2,3
-    const { data: posts = [], isError, isLoading, isSuccess } =   useGetAllPostQuery({ page, perPage, search });
+    const query = useGetAllPostQuery({ page, perPage, search });
+    const posts = query?.data;
 
     const [changeStatus, { data: dataStatus }] =  useChangePostStatusMutation();
     const [changeCommentable, { data: dataCommentable }] =  useChangePostCommentableMutation();
@@ -33,24 +32,7 @@ const Index = () => {
         await changeCommentable(id);
     }
 
-    useEffect(()=>{
-        dispatch(setIsLoading(isLoading));
-} , [isLoading]);
-
-    useEffect(()=>{
-        dispatch(setIsSuccess(isSuccess)); 
-    } , [isSuccess]);
-
-    useEffect(()=>{
-        dispatch(setIsError(isError));
-    } , [isError]);
-
-    useEffect(()=>{
-        dispatch(setItemLength(posts.data?.length));
-    } , [posts]);
-
-
-
+    
     useEffect(() => {
          useToast({result:deleteResult , message:'پست'})
     }, [deleteResult]);
@@ -74,6 +56,7 @@ const Index = () => {
         <TableContainer
             pagination={posts?.meta}
             deleteRecord={deletePost}
+            query={query}
         >
             {<Table > 
             <thead className="text-pallete  shadow-md">
@@ -93,11 +76,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {posts.data?.map((post, index) => {
+            {posts.data?.map((post) => {
                 const indexArray = Object.entries(post.image.indexArray);
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={post.is} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{post.id}</td>
                         <td className="pl-3 py-3">{post.title}</td>
                         <td className="pl-3 py-3"   > {indexArray.map(([size, value]) => (
                             post.image.currentImage === size && <Image key={size} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${value}`} unoptimized={true} alt="image" className="w-12 h-12" width={'100'} height={'100'} />
