@@ -17,29 +17,14 @@ const Index = () => {
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data: brands = [], isError, isLoading, isSuccess } =  useGetAllBrandQuery({ page, perPage, search });
+    const  query =  useGetAllBrandQuery({ page, perPage, search });
+    const brands=query?.data;
     const [chengeStatus, { data: dataStatus }] =   useChangeBrandStatusMutation();
     const [deleteBrand, {result:deleteResult}] =   useDeleteBrandMutation();
 
     const handlerStatus = async (id) => {
         await chengeStatus(id);
     }
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-    
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-    
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {
-        dispatch(setItemLength(brands.data?.length));
-    }, [ brands]);
 
     useEffect(() => {
         useToast({result:deleteResult , message:'برند'});
@@ -59,6 +44,7 @@ const Index = () => {
         <TableContainer
             pagination={brands?.meta}
             deleteRecord={deleteBrand}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -77,11 +63,10 @@ const Index = () => {
             { brands.data?.map((brand, index) => {
                 const indexArray = Object.entries(brand.logo?.indexArray);
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={brand.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{brand.id}</td>
                         <td className="pl-3 py-3">{brand.persian_name}</td>
                         <td className="pl-3 py-3">{brand.original_name}</td>
-
                         <td className="pl-3 py-3"   > {indexArray.map(([size, value]) => (
                             brand.logo.currentImage === size && <Image key={size} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${value}`} unoptimized={true} alt="image" className="w-12 h-12" width={'100'} height={'100'} />
                         ))}   </td>
