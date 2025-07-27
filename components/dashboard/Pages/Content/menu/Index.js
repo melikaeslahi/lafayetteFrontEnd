@@ -27,8 +27,6 @@ const Index = () => {
         await chengeStatus(id);
     }
 
-   
-
     useEffect(() => {
        useToast({result:result , message:"منو"})
     }, [result]);

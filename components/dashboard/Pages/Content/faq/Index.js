@@ -46,6 +46,7 @@ const Index = () => {
         <TableContainer
             pagination={faqs?.meta}
             deleteRecord={deleteFaq}
+            query={query}
         >
             {<Table>
                 <thead className="text-pallete  shadow-md">
