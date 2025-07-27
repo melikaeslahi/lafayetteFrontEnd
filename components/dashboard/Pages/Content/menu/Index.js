@@ -1,29 +1,25 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Image from "next/image";
-import { toast } from "react-toastify";
- 
 import Link from "next/link";
 import { useChangeMenuStatusMutation, useDeleteMenuMutation, useGetAllMenusQuery } from "@/lib/content/menuApi";
 import useToast from "@/hooks/useToast";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-    const router = useRouter();
+ ;
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
      //fetch menus
-    const { data: menus = [], isError, isLoading, isSuccess } = useGetAllMenusQuery({ page, perPage, search });
-
+    const  query = useGetAllMenusQuery({ page, perPage, search });
+    const menus =query?.data;
     const [chengeStatus, { data: dataStatus }] =   useChangeMenuStatusMutation();
     const [deleteMenu, result] =  useDeleteMenuMutation();
 
@@ -31,21 +27,7 @@ const Index = () => {
         await chengeStatus(id);
     }
 
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {
-        dispatch(setItemLength(menus.data?.length));
-    }, [menus]);
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
+   
 
     useEffect(() => {
        useToast({result:result , message:"منو"})
@@ -65,6 +47,7 @@ const Index = () => {
         <TableContainer
             pagination={menus?.meta}
             deleteRecord={deleteMenu}
+            query={query}
         >
             {<Table>
                 <thead className="text-pallete  shadow-md">
@@ -78,11 +61,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {menus.data?.map((menu, index) => {
+                    {menus.data?.map((menu) => {
                         
                         return (
-                            <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                                <td className="pl-3 py-3">{index+=1}</td>
+                            <tr key={menu.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                                <td className="pl-3 py-3">{menu.id}</td>
                                 <td className="pl-3 py-3">{menu.name}</td>
                                 <td className="pl-3 py-3">{menu.url}</td>  
                                 <td className="pl-3 py-3">
