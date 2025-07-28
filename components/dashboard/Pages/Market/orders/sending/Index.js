@@ -24,9 +24,6 @@ const Index = () => {
     const [changeOrderStatus, { data: dataOrderStatus }] =  useChangeOrderStatusMutation();
     const [cancelOrder, { data: dataCancelOrder }] = useCancelOrderMutation();
 
-
-
-
     const handlerSetting = (productId) => {
         setSetting(!setting);
         setSettingId(productId)
@@ -43,8 +40,6 @@ const Index = () => {
     const handlerCancelOrder = async (id) => {
         await cancelOrder(id);
     }
-
-
 
     useEffect(() => {
         let message;
