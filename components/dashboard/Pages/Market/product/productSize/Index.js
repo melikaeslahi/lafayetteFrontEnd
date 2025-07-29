@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect  } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { Button } from "@/components/dashboard/inputs";
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -12,33 +12,13 @@ import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = ({params}) => {
     const dispatch = useDispatch();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data:  productSizes = [], isLoading, isSuccess , isError  } =    useGetAllProductSizeQuery({ page, perPage, params , search  });
+    const  query = useGetAllProductSizeQuery({ page, perPage, params , search  });
+    const productSizes =query?.data;
     const [deleteProductSize, {result:deleteResult}] =   useDeleteProductSizeMutation();
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-
-    useEffect(() => {
-        dispatch(setItemLength(productSizes.data?.length));
-    }, [productSizes]);
-
 
     useEffect(() => {
          useToast({result:deleteResult , message:'سایز محصول'})
     }, [deleteResult]);
-
-    
-
- 
 
     return (<>
         <TableHeader  
@@ -50,6 +30,7 @@ const Index = ({params}) => {
         <TableContainer
             pagination={productSizes?.meta}
             deleteRecord={deleteProductSize}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -63,12 +44,11 @@ const Index = ({params}) => {
                     </tr>
                 </thead>
                 <tbody >
-            {productSizes.data?.map((productSize, index) => {
-           
+            {productSizes.data?.map((productSize) => {
                 return (
                     <> 
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={productSize} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{productSize.id}</td>
                         <td className="pl-3 py-3">{productSize.product?.name}</td>
                         <td className="pl-3 py-3">{productSize.size_name}</td>
                         <td className="pl-3 py-3">{productSize.size}</td>
@@ -81,7 +61,6 @@ const Index = ({params}) => {
                         </td>                     
                     </tr>                  
                      </>)
-
             })}
                 </tbody>    
              </Table>}
