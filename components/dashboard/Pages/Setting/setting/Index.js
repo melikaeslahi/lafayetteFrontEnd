@@ -1,64 +1,32 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import TitlePage from "@/components/dashboard/TitlePage";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
-import { Button } from "@/components/dashboard/inputs";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { useSelector } from "react-redux";
+import { usePathname } from "next/navigation";
+import { faEdit } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image";
-import { toast } from "react-toastify";
-import { useChangeProductCategoryStatusMutation, useChangeShowInMenuMutation, useDeleteProductCategoryMutation, useGetAllProductCategoryQuery } from "@/lib/market/productCategoryApi";
 import Link from "next/link";
 import { useGetAllSettingQuery } from "@/lib/setting/settingApi";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-    const router = useRouter();
-    const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
-    // fetch post from localhost:8000/category?page=1,2,3
-    const { data:  settings = [], isError, isLoading, isSuccess } =   useGetAllSettingQuery({ page, perPage, search });
+    const  query =   useGetAllSettingQuery({ page, perPage, search });
+    const settings = query?.data;
 
-     
-
- 
-
-  
-
-    useEffect(() => {
-
-        dispatch(setIsLoading(isLoading));
-        dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(settings.data?.length));
-
-    }, [isLoading, isSuccess, isError, settings])
-
-    
-     
-
-    
 
     return (<>
-        <TitlePage
-            name='تنظیمات'
-            sitemapPage='  تنظیمات'
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد  تنظیمات جدید
-            </Link>
-        </TitlePage>
-
+        <TableHeader 
+         title={'تنظیمات'}
+         sitemap={'  تنظیمات'}
+         href={`${pathname}/create`}
+        />
+       
         <TableContainer
             pagination={settings?.meta}
-    
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -73,12 +41,10 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            {settings.data?.map((setting, index) => {
-             
-
+            {settings.data?.map((setting) => {
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={setting.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{setting.id}</td>
                         <td className="pl-3 py-3">{setting.title}</td>
                         <td className="pl-3 py-3"   >  
                             <Image   src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${setting.logo}`} unoptimized={true} alt="image" className="w-12 h-12" width={'100'} height={'100'} />
