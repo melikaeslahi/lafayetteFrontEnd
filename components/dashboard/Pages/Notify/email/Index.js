@@ -1,27 +1,23 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
- 
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { modalOpenClose, setHandlerModal} from "@/store/reducers/dashboard/UtilSlice";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
- 
-import { toast } from "react-toastify";
- 
 import Link from "next/link";
 import { useChangeEmailStatusMutation, useDeleteEmailMutation, useGetAllEmailQuery } from "@/lib/notify/EmailApi";
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-    const router = useRouter();
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
-    // fetch post from localhost:8000/category?page=1,2,3
-    const { data:  emails = [], isError, isLoading, isSuccess } =  useGetAllEmailQuery({ page, perPage, search });
+    const  query =  useGetAllEmailQuery({ page, perPage, search });
+    const emails =query?.data;
 
     const [chengeStatus, { data: dataStatus }] =   useChangeEmailStatusMutation();
     const [deleteEmail, result] =  useDeleteEmailMutation();
@@ -31,68 +27,23 @@ const Index = () => {
     }
 
     useEffect(() => {
-
-        dispatch(setIsLoading(isLoading));
-        dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(emails.data?.length));
-
-    }, [isLoading, isSuccess, isError, emails])
-
-    useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success('   ایمیل با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
+       useToast({result:result , message:'ایمیل'});
     }, [result]);
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
-
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success('     ایمیل  با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
-
-                toast.success('     ایمیل با موفقیت غیر فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+      useToast({dataStatus:dataStatus , message:'ایمیل'});
     }, [dataStatus])
 
     return (<>
-        <TitlePage
-            name='   ایمیل ها'
-            sitemapPage=' بخش  اطلاع رسانی /    ایمیل ها  '
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد  ایمیل جدید
-            </Link>
-        </TitlePage>
-
+       <TableHeader 
+        title={' ایمیل ها'}
+        sitemap={' بخش  اطلاع رسانی / ایمیل ها  '}
+        href={`${pathname}/create`}
+       />
         <TableContainer
-            pagination={ emails?.meta}
+            pagination={emails?.meta}
             deleteRecord={deleteEmail}
+            query={query}
         >
             {<Table>
                 <thead className="text-pallete  shadow-md">
@@ -101,8 +52,7 @@ const Index = () => {
                         <th className="pl-3 py-3">   موضوع   </th>
                         <th className="pl-3 py-3">  وضعیت   </th>
                         <th className="pl-3 py-3">  توضیحات </th>
-                        <th className="pl-3 py-3"> تاریخ انتشار    </th>
-                       
+                        <th className="pl-3 py-3"> تاریخ انتشار    </th>                     
                         <th className="pl-3 py-3">     تنظیمات   </th>
                     </tr>
                 </thead>
