@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import {   useCanceledPaymentMutation ,   useGetOfflinePaymentQuery,  useReturnedPaymentMutation  } from "@/lib/market/paymentApi";
 import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
  
     const dispatch = useDispatch();
@@ -54,23 +55,15 @@ const Index = () => {
 
 
     return (<>
-        <TitlePage
-            name='پرداخت ها'
-            sitemapPage='بخش فروش/ویترین/  پرداخت  ها'
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                aria-disabled={true}
-                className="py-4 px-8 bg-pallete rounded text-white"   >
-                {' '}
-                ایجاد   پرداخت جدید
-            </Link>
-        </TitlePage>
+      <TableHeader
+        title={'پرداخت ها'}
+        sitemap={'بخش فروش/ویترین/  پرداخت  ها'}
+        href={`${pathname}/create`}
+      />
 
         <TableContainer
             pagination={payments?.meta}
-           
+            query={query}           
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -86,11 +79,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-            { payments.data?.map((payment, index) => {
+            { payments.data?.map((payment) => {
                  
                 return (
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={payment.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{payment.id}</td>
                         <td className="pl-3 py-3">{payment.payments?.transaction_id}</td>
                         <td className="pl-3 py-3">{payment.payments?.gateway}</td>
                         <td className="pl-3 py-3">{payment.user_id.first_name + ' ' + payment.user_id.last_name }</td>
