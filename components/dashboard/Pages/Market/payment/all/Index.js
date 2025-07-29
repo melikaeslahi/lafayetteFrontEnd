@@ -1,12 +1,9 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect} from "react";
-import {  setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
-import { toast } from "react-toastify";
 import Link from "next/link";
 import { useCanceledPaymentMutation, useGetAllPaymentQuery, useReturnedPaymentMutation } from "@/lib/market/paymentApi";
 import useToast from "@/hooks/useToast";
@@ -58,7 +55,7 @@ const Index = () => {
     />
         <TableContainer
             pagination={payments?.meta}
-           
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
