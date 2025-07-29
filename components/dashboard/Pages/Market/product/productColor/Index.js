@@ -1,14 +1,11 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import { Button } from "@/components/dashboard/inputs";
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { toast } from "react-toastify";
-import Link from "next/link";
 import { useDeleteProductColorMutation, useGetAllProductColorQuery } from "@/lib/market/productColorApi";
 import useToast from "@/hooks/useToast";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
@@ -17,30 +14,13 @@ const Index = ({params}) => {
 
     const dispatch = useDispatch();
     const { page, perPage, search } = useSelector((state) => state.util);
-    const { data:  productColors = [], isLoading, isSuccess , isError  } =   useGetAllProductColorQuery({ page, perPage, params , search  });
+    const  query =   useGetAllProductColorQuery({ page, perPage, params , search  });
+    const  productColors =query?.data;
     const [deleteProductColor, {result:deleteResult}] =  useDeleteProductColorMutation();
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-    
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-    useEffect(() => { 
-        dispatch(setItemLength(productColors.data?.length));
-    }, [productColors]);
 
     useEffect(() => {
         useToast({result:deleteResult , message:'رنگ محصول'})
     }, [deleteResult]);
-
-    
-
  
 
     return (
@@ -54,6 +34,7 @@ const Index = ({params}) => {
         <TableContainer
             pagination={productColors?.meta}
             deleteRecord={deleteProductColor}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -67,12 +48,11 @@ const Index = ({params}) => {
                     </tr>
                 </thead>
                 <tbody >
-            {productColors.data?.map((productColor, index) => {
-           
+            {productColors.data?.map((productColor) => { 
                 return (
                     <> 
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>
+                    <tr key={productColor.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{productColor.id}</td>
                         <td className="pl-3 py-3">{productColor.product?.name}</td>
                         <td className="pl-3 py-3">{productColor.color_name}</td>
                         <td className="pl-3 py-3">{productColor.color}</td>
