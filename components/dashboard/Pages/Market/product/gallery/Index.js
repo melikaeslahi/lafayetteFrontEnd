@@ -2,7 +2,7 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { Button } from "@/components/dashboard/inputs";
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -14,24 +14,9 @@ import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = ({params}) => {
     const dispatch = useDispatch();
     const { page, perPage  } = useSelector((state) => state.util);
-    const { data:  galleries = [], isError, isLoading, isSuccess } =  useGetAllGalleryQuery({ page, perPage , params});
+    const  query =  useGetAllGalleryQuery({ page, perPage , params});
+    const galleries = query?.data;
     const [deleteImage, {result:deleteResult}] =  useDeleteGalleryMutation();
-
-    useEffect(() => {
-        dispatch(setIsLoading(isLoading));
-    }, [isLoading]);
-
-    useEffect(() => {
-        dispatch(setIsSuccess(isSuccess));
-    }, [isSuccess]);
-    
-    useEffect(() => {
-        dispatch(setIsError(isError));
-    }, [isError]);
-    
-    useEffect(() => {
-        dispatch(setItemLength(galleries.data?.length));
-    }, [galleries]);
 
     useEffect(() => { 
          useToast({result:deleteResult , message:'گالری'})
@@ -47,6 +32,7 @@ const Index = ({params}) => {
         <TableContainer
             pagination={galleries?.meta}
             deleteRecord={deleteImage}
+            query={query}
         >
             {<Table> 
             <thead className="text-pallete  shadow-md">
@@ -58,12 +44,12 @@ const Index = ({params}) => {
                     </tr>
                 </thead>
                 <tbody >
-            {galleries.data?.map((gallery, index) => {
+            {galleries.data?.map((gallery) => {
                 const indexArray = Object.entries(gallery.image.indexArray);
                 return (
                     <> 
-                    <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{index+=1}</td>     
+                    <tr key={gallery.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                        <td className="pl-3 py-3">{gallery.id}</td>     
                         <td className="pl-3 py-3"   > {indexArray.map(([size, value]) => (
                             gallery.image.currentImage === size && <Image key={size} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${value}`} unoptimized={true} alt="image" className="w-12 h-12" width={'100'} height={'100'} />
                         ))}   </td>
