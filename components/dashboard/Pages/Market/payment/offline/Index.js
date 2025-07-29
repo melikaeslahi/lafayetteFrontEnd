@@ -2,24 +2,22 @@
 import { Table, TableContainer } from "@/components/dashboard/Table";
 import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {  setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
- 
 import { toast } from "react-toastify";
- 
 import Link from "next/link";
 import {   useCanceledPaymentMutation ,   useGetOfflinePaymentQuery,  useReturnedPaymentMutation  } from "@/lib/market/paymentApi";
+import useToast from "@/hooks/useToast";
 const Index = () => {
-    const router = useRouter();
+ 
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
- 
-
-    // fetch post from localhost:8000/category?page=1,2,3
-    const { data:  payments = [], isError, isLoading, isSuccess } =   useGetOfflinePaymentQuery({ page, perPage, search });
+  
+    const query =   useGetOfflinePaymentQuery({ page, perPage, search });
+    const payments = query?.data;
 
     const [ canceled , {data:dataCanceled}] =   useCanceledPaymentMutation( );
     const  [returned , {data:dataReturned}] =    useReturnedPaymentMutation( );
@@ -35,53 +33,23 @@ const Index = () => {
     }
 
     useEffect(() => {
-
-        dispatch(setIsLoading(isLoading));
-        dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(payments.data?.length));
-
-    }, [isLoading, isSuccess, isError, payments ])
-
-  
-
-    useEffect(() => {
-         
-        // status checked and unchecked
-        if (dataCanceled) {
-
-            if (dataCanceled.status === 200) {
-                toast.success('     پرداخت با  با موفقیت  باطل شد     ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }   else if (dataCanceled.status === 404 ) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
+         let message;
+            if (dataCanceled?.status === 200) {
+                message =' پرداخت با  با موفقیت  باطل شد ' 
+            }   else {
+                 message=' خطایی پیش آمده است  '
             }
-        }
-
+            useToast({dataStatus:dataCanceled , customMessage:message});
     }, [dataCanceled ])
  
     useEffect(() => {
-        // status checked and unchecked
-        if (dataReturned) {
-
-            if (dataReturned.status ===  200 ) {
-                toast.success(' پرداخت با موفقیت برگشت داده شد ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }   else if (dataReturned.status ===  404) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
+         let message;
+            if (dataReturned?.status ===  200 ) {
+                message =' پرداخت با موفقیت برگشت داده شد ' 
+            } else {
+                message =' خطایی پیش آمده است  ' 
             }
-        }
-
+            useToast({dataStatus:dataReturned , customMessage:message})   
     }, [dataReturned])
 
 

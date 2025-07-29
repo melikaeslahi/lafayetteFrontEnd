@@ -7,6 +7,7 @@ import { Button } from "@/components/dashboard/inputs";
 import Link from "next/link";
 import { useCanceledPaymentMutation, useGetCashPaymentQuery, useReturnedPaymentMutation  } from "@/lib/market/paymentApi";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
+import useToast from "@/hooks/useToast";
 const Index = () => {
     
     const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const Index = () => {
         }   else  {
             message =' خطایی پیش آمده است ';
         }
+        useToast({dataStatus:dataCanceled , customMessage:message})
     }, [dataCanceled ]);
  
     useEffect(() => {
@@ -43,7 +45,7 @@ const Index = () => {
             }
             else{ message ='خطایی پیش آمده است' 
             }
-
+        useToast({dataStatus:dataReturned , customMessage:message});
     }, [dataReturned]);
 
 
