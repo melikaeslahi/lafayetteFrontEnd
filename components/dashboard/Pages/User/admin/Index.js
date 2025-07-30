@@ -1,26 +1,23 @@
 'use client'
 import { Table, TableContainer } from "@/components/dashboard/Table";
-import TitlePage from "@/components/dashboard/TitlePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
+import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname  } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Image from "next/image";
-import { toast } from "react-toastify";
- 
 import Link from "next/link";
 import { useChangeActivationMutation, useChangeAdminStatusMutation, useDeleteAdminMutation, useGetAllAdminQuery } from "@/lib/user/adminUserApi";
+import useToast from "@/hooks/useToast";
+import TableHeader from "@/components/dashboard/Table/TableHeader";
 const Index = () => {
-    
     const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
-    // fetch post from localhost:8000/category?page=1,2,3
-    const { data: admins = [], isError, isLoading, isSuccess } = useGetAllAdminQuery({ page, perPage, search });
+    const  query = useGetAllAdminQuery({ page, perPage, search });
+    const admins = query?.data; 
 
     const [chengeStatus, { data: dataStatus }] = useChangeAdminStatusMutation();
     const [chengeActivation, { data: dataActivation }] = useChangeActivationMutation();
@@ -34,95 +31,30 @@ const Index = () => {
     const handlerActivation = async (id) => {
         await chengeActivation(id);
     }
-
+     
     useEffect(() => {
-
-        dispatch(setIsLoading(isLoading));
-        dispatch(setIsSuccess(isSuccess));
-        dispatch(setIsError(isError));
-        dispatch(setItemLength(admins.data?.length));
-
-    }, [isLoading, isSuccess, isError, admins])
-
-    useEffect(() => {
-        //result is response from useDeletePostCategoryMutation 
-        if (result.data) {
-            if (result.data.status === 200) {
-                toast.success('  ادمین با موفقیت حذف شد.', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                });
-            }
-        }
+        useToast({result:result , message:'ادمین'})
     }, [result]);
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataStatus) {
-
-            if (dataStatus.status === true && dataStatus.checked === true) {
-                toast.success('     ادمین با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === true && dataStatus.checked === false) {
-
-                toast.success('  ادمین با موفقیت غیر فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataStatus.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+         useToast({dataStatus:dataStatus , message:'ادمین'})
     }, [dataStatus])
 
     useEffect(() => {
-        // status checked and unchecked
-        if (dataActivation) {
-
-            if (dataActivation.status === true && dataActivation.checked === true) {
-                toast.success('            ادمین با موفقیت  فعال شد  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataActivation.status === true && dataActivation.checked === false) {
-
-                toast.success(' ادمین با موفقیت غیر فعال شد ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            } else if (dataActivation.status === false) {
-                toast.error('   خطایی پیش آمده است  ', {
-                    position: toast.POSITION.TOP_LEFT,
-                    rtl: true
-                })
-            }
-        }
-
+         useToast({dataStatus:dataActivation , message:'ادمین'})
     }, [dataActivation])
 
     return (<>
-        <TitlePage
-            name=' کاربران ادمین'
-            sitemapPage='بخش  کاربران / کاربران ادمین '
-
-        >
-            <Link
-                href={`${pathname}/create`}
-                className="py-4 px-8 bg-pallete rounded text-white" >
-                {' '}
-                ایجاد  ادمین جدید
-            </Link>
-        </TitlePage>
-
+        <TableHeader 
+          title={' کاربران ادمین'}
+          sitemap={'بخش  کاربران / کاربران ادمین '}
+          href={`${pathname}/create`}
+        />
+         
         <TableContainer
             pagination={admins?.meta}
             deleteRecord={deleteAdmin}
+            query={query}
         >
             {<Table>
                 <thead className="text-pallete  shadow-md">
@@ -140,11 +72,11 @@ const Index = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {admins.data?.map((admin, index) => {
+                    {admins.data?.map((admin) => {
                         // const indexArray = Object.entries(admin.profile_photo_path?.indexArray);
                         return (
-                            <tr key={index} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                                <td className="pl-3 py-3">{index += 1}</td>
+                            <tr key={admin.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                                <td className="pl-3 py-3">{admin.id}</td>
                                 <td className="pl-3 py-3">{admin.first_name + ' ' + admin.last_name}</td>
                                 {/* <td className="pl-3 py-3"   > {indexArray?.map(([size, value]) => (
                                     admin.profile_photo_path.currentImage === size && <Image key={size} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${value}`} unoptimized={true} alt="image" className="w-12 h-12" width={'100'} height={'100'} />

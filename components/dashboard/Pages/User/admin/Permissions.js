@@ -92,12 +92,7 @@ const CreateAdminPermissions = ({params}) => {
                 initialValues={initialValues}
                 validationSchema={PermissionSchema}
                 handlerSubmit={handlerSubmit}>
-                
-
-            
-
-
-             
+                 
               <MultipleSelect 
                 name={'permissions'}
                  placeholder={'محصولات مورد نظر را انتخاب نمایید'}
