@@ -1,5 +1,5 @@
 'use client'
-import { Table, TableContainer } from "@/components/dashboard/Table";
+import { TableContainer } from "@/components/dashboard/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { modalOpenClose, setHandlerModal} from "@/store/reducers/dashboard/UtilSlice";
@@ -12,6 +12,10 @@ import { useChangePostCategoryStatusMutation, useDeletePostCategoryMutation, use
 import Link from "next/link";
 import useToast from "@/hooks/useToast";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
+import CustomTable from "@/components/dashboard/Table/CostumTable";
+ 
+const headers =['نام دسته', 'تصویر' , 'وضعیت' , 'توضیحات' , 'برچسب ها' , 'دسته والد' , 'اسلاگ']
+
 const Index = () => { 
     const dispatch = useDispatch();
     const pathname = usePathname();
@@ -44,25 +48,9 @@ const Index = () => {
             pagination={query?.meta}
             deleteRecord={deleteCategory}
             query={query}
-            
-        >
-             
-            {<Table>
-                <thead className="text-pallete  shadow-md">
-                    <tr className={`text-center`}>
-                        <th className="pl-3 py-3"> # </th>
-                        <th className="pl-3 py-3">  نام دسته </th>
-                        <th className="pl-3 py-3">    تصویر   </th>
-                        <th className="pl-3 py-3">  وضعیت   </th>
-                        <th className="pl-3 py-3">  توضیحات </th>
-                        <th className="pl-3 py-3">       برچسب ها    </th>
-                        <th className="pl-3 py-3">  دسته والد </th>
-                        <th className="pl-3 py-3">   اسلاگ   </th>
-                        <th className="pl-3 py-3">     تنظیمات   </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {query.data?.data?.map((itemCategory, index) => {
+        >   
+            {<CustomTable headers={headers}>
+                    {query.data?.data?.map((itemCategory) => {
                         const indexArray = itemCategory.image && Object.entries(itemCategory.image?.indexArray);
                         return (
                             <tr key={itemCategory.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
@@ -86,7 +74,8 @@ const Index = () => {
                                     }} className="py-2 px-4 bg-red-500 hover:bg-red-600 rounded text-white">  <FontAwesomeIcon icon={faTrash} />     </Button>
                                 </td>
                             </tr>)
-                    })}</tbody> </Table>}
+                    })}
+                     </CustomTable>}
         </TableContainer>
     </>
     )
