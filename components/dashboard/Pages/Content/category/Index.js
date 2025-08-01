@@ -13,6 +13,7 @@ import Link from "next/link";
 import useToast from "@/hooks/useToast";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
 import CustomTable from "@/components/dashboard/Table/CostumTable";
+import ShowImage from "@/components/dashboard/Table/ShowImage";
  
 const headers =['نام دسته', 'تصویر' , 'وضعیت' , 'توضیحات' , 'برچسب ها' , 'دسته والد' , 'اسلاگ']
 
@@ -51,14 +52,14 @@ const Index = () => {
         >   
             {<CustomTable headers={headers}>
                     {query.data?.data?.map((itemCategory) => {
-                        const indexArray = itemCategory.image && Object.entries(itemCategory.image?.indexArray);
+                        // const indexArray = itemCategory.image && Object.entries(itemCategory.image?.indexArray);
                         return (
                             <tr key={itemCategory.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
                                 <td className="pl-3 py-3">{itemCategory.id}</td>
                                 <td className="pl-3 py-3">{itemCategory.name}</td>
-                                <td className="pl-3 py-3"   > {indexArray?.map(([size, value]) => (
-                                    itemCategory.image.currentImage === size && <Image key={size} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${value}`} unoptimized={true} alt="image" className="w-12 h-12" width={'100'} height={'100'} />
-                                ))}   </td>
+                                <td className="pl-3 py-3"   >
+                                <ShowImage image={itemCategory.image}  />
+                                 </td>
                                 <td className="pl-3 py-3">
                                     {<input type="checkbox" name="status" defaultChecked={itemCategory.status === 1 ? true : false} onChange={() => handlerStatus(itemCategory.id)} />}
                                 </td>
