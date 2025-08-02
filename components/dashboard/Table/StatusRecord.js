@@ -1,4 +1,4 @@
-const StatusRecord=({status , id})=>{
+const StatusRecord=({status , id , chengeStatus})=>{
     const handlerStatus = async (id) => {
         await chengeStatus(id);
     }
