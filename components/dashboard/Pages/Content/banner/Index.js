@@ -1,14 +1,9 @@
 'use client'
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { TableContainer } from "@/components/dashboard/Table";
+import { TableContainer,TableHeader ,SettingRecord , ShowImage , CustomTable ,StatusRecord } from "@/components/dashboard/Table";
 import { useChangeBannerStatusMutation, useDeleteBannerMutation, useGetAllBannerQuery } from "@/lib/content/bannerApi";
 import useToast from "@/hooks/useToast";
-import TableHeader from "@/components/dashboard/Table/TableHeader";
-import SettingRecord from "@/components/dashboard/Table/SettingRecord";
-import ShowImage from "@/components/dashboard/Table/ShowImage";
-import CustomTable from "@/components/dashboard/Table/CostumTable";
-import StatusRecord from "@/components/dashboard/Table/StatusRecord";
  
 const headers=['عنوان بنر ' , ' تصویر بنر ' ,'وضعیت بنر ' ,'موقعیت بنر ' ,'لینک ' ] 
 
