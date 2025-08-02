@@ -1,14 +1,9 @@
 'use client'
-import { TableContainer } from "@/components/dashboard/Table";
+import { TableContainer ,TableHeader ,CustomTable , ShowImage , StatusRecord , SettingRecord } from "@/components/dashboard/Table";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useChangePostCategoryStatusMutation, useDeletePostCategoryMutation, useGetAllPostCategoryQuery } from "@/lib/content/postCategoryApi";
 import useToast from "@/hooks/useToast";
-import TableHeader from "@/components/dashboard/Table/TableHeader";
-import CustomTable from "@/components/dashboard/Table/CostumTable";
-import ShowImage from "@/components/dashboard/Table/ShowImage";
-import StatusRecord from "@/components/dashboard/Table/StatusRecord";
-import SettingRecord from "@/components/dashboard/Table/SettingRecord";
 
 const headers =['نام دسته', 'تصویر' , 'وضعیت' , 'توضیحات' , 'برچسب ها' , 'دسته والد' , 'اسلاگ']
 

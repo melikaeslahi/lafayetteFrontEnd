@@ -4,5 +4,9 @@ export {default as TableFiltering} from './TableFiltering';
 export {default as TableLoading} from './TableLoading';
 export {default as TableNotFound} from './TableNotFound';
 export {default as  TableContainer} from './TableContainer';
-
-
+export {default as  ShowImage} from './ShowImage';
+export {default as  SettingRecord} from './SettingRecord';
+export {default as  StatusRecord} from './StatusRecord';
+export {default as  CustomTable} from './CostumTable';
+export {default as  QueryStatusHandler} from './QueryStatusHandler';
+export {default as  TableHeader} from './TableHeader';
