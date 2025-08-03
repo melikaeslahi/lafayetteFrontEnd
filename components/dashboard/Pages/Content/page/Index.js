@@ -1,31 +1,24 @@
 'use client'
-import { Table, TableContainer } from "@/components/dashboard/Table";
-import { useDispatch, useSelector } from "react-redux";
+import { CustomTable, SettingRecord, StatusRecord, TableHeader, TableContainer } from "@/components/dashboard/Table";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/dashboard/inputs";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Link from "next/link";
 import { useChangePageStatusMutation, useDeletePageMutation, useGetAllPageQuery } from "@/lib/content/pageApi";
 import useToast from "@/hooks/useToast";
 import TableHeader from "@/components/dashboard/Table/TableHeader";
+
+const headers =['عنوان صفحه','بدنه صفحه','وضعیت','برچسب ها','اسلاگ']
+
 const Index = () => {
-    
-    const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
     const query =  useGetAllPageQuery({ page, perPage, search });
     const pages = query?.data;
 
-    const [chengeStatus, { data: dataStatus }] =  useChangePageStatusMutation();
+    const [changeStatus, { data: dataStatus }] =  useChangePageStatusMutation();
     const [deletePage, {result:deleteResult}] =  useDeletePageMutation();
 
-    const handlerStatus = async (id) => {
-        await chengeStatus(id);
-    }
 
     useEffect(() => {
         useToast({result:deleteResult , message:'پیج ساز'})
@@ -47,41 +40,26 @@ const Index = () => {
             deleteRecord={deletePage}
             query={query}
         >
-            {<Table>
-                <thead className="text-pallete  shadow-md">
-                    <tr className={`text-center`}>
-                        <th className="pl-3 py-3"> # </th>
-                        <th className="pl-3 py-3">   عنوان صفحه </th>
-                        <th className="pl-3 py-3">   بدنه صفحه  </th>
-                        <th className="pl-3 py-3">  وضعیت   </th>
-                        <th className="pl-3 py-3">       برچسب ها    </th>
-                        <th className="pl-3 py-3">   اسلاگ   </th>
-                        <th className="pl-3 py-3">     تنظیمات   </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pages.data?.map((page) => {
-                       
+            {<CustomTable headers={headers}>    
+                    {pages.data?.map((page) => { 
                         return (
                             <tr key={page.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
                                 <td className="pl-3 py-3">{page.id}</td>
                                 <td className="pl-3 py-3">{page.title}</td>
                                 <td className="pl-3 py-3">{page.body.replace(/<(.|\n)*?>/g, '').slice(0, 10)}</td>
                                 <td className="pl-3 py-3">
-                                    {<input type="checkbox" name="status" defaultChecked={page.status === 1 ? true : false} onChange={() => handlerStatus(page.id)} />}
+                                    <StatusRecord id={page.id}
+                                      status={page.status}
+                                      changeStatus={changeStatus}
+                                    />
                                 </td>
-                            
                                 <td className="pl-3 py-3">{page.tags}</td> 
                                 <td className="pl-3 py-3">{page.slug}</td>
                                 <td>
-                                    <Link href={`${pathname}/edit/${page.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  <FontAwesomeIcon icon={faEdit} />     </Link>
-                                    <Button type="button" onClick={() => {
-                                        dispatch(setHandlerModal([page.title, page.id]))
-                                        dispatch(modalOpenClose(true));
-                                    }} className="py-2 px-4 bg-red-500 hover:bg-red-600 rounded text-white">  <FontAwesomeIcon icon={faTrash} />     </Button>
+                                    <SettingRecord id={page.id} title={page.title}/>
                                 </td>
                             </tr>)
-                    })}</tbody> </Table>}
+                    })}</CustomTable>}
         </TableContainer>
     </>
     )

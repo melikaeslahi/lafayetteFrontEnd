@@ -1,6 +1,6 @@
-const StatusRecord=({status , id , chengeStatus})=>{
+const StatusRecord=({status , id , changeStatus})=>{
     const handlerStatus = async (id) => {
-        await chengeStatus(id);
+        await changeStatus(id);
     }
     return(
         <>

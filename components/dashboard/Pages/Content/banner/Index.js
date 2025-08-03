@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import { TableContainer,TableHeader ,SettingRecord , ShowImage , CustomTable ,StatusRecord } from "@/components/dashboard/Table";
 import { useChangeBannerStatusMutation, useDeleteBannerMutation, useGetAllBannerQuery } from "@/lib/content/bannerApi";
 import useToast from "@/hooks/useToast";
+import { usePathname } from "next/navigation";
  
 const headers=['عنوان بنر ' , ' تصویر بنر ' ,'وضعیت بنر ' ,'موقعیت بنر ' ,'لینک ' ] 
 
 const Index = () => {
+    const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util); 
     const query = useGetAllBannerQuery({ page, perPage, search });
     const banners = query?.data;

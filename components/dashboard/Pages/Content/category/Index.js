@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useChangePostCategoryStatusMutation, useDeletePostCategoryMutation, useGetAllPostCategoryQuery } from "@/lib/content/postCategoryApi";
 import useToast from "@/hooks/useToast";
+import { usePathname } from "next/navigation";
 
 const headers =['نام دسته', 'تصویر' , 'وضعیت' , 'توضیحات' , 'برچسب ها' , 'دسته والد' , 'اسلاگ']
 
 const Index = () => { 
+    const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
     const query = useGetAllPostCategoryQuery({ page, perPage, search });
 

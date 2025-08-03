@@ -1,31 +1,22 @@
 'use client'
-import { Table, TableContainer } from "@/components/dashboard/Table";
-import { useDispatch, useSelector } from "react-redux";
+import { CustomTable, SettingRecord, StatusRecord,  TableHeader, TableContainer } from "@/components/dashboard/Table";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/dashboard/inputs";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Link from "next/link";
 import { useChangeMenuStatusMutation, useDeleteMenuMutation, useGetAllMenusQuery } from "@/lib/content/menuApi";
 import useToast from "@/hooks/useToast";
-import TableHeader from "@/components/dashboard/Table/TableHeader";
+ 
+const headers = ['نام منو' , 'آدرس', 'وضعیت' ,'منو والد']
+
 const Index = () => {
- ;
-    const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
      //fetch menus
     const  query = useGetAllMenusQuery({ page, perPage, search });
     const menus =query?.data;
-    const [chengeStatus, { data: dataStatus }] =   useChangeMenuStatusMutation();
+    const [changeStatus, { data: dataStatus }] =   useChangeMenuStatusMutation();
     const [deleteMenu, result] =  useDeleteMenuMutation();
-
-    const handlerStatus = async (id) => {
-        await chengeStatus(id);
-    }
 
     useEffect(() => {
        useToast({result:result , message:"منو"})
@@ -47,38 +38,28 @@ const Index = () => {
             deleteRecord={deleteMenu}
             query={query}
         >
-            {<Table>
-                <thead className="text-pallete  shadow-md">
-                    <tr className={`text-center`}>
-                        <th className="pl-3 py-3"> # </th>
-                        <th className="pl-3 py-3">  نام  منو </th>
-                        <th className="pl-3 py-3">     آدرس   </th>
-                        <th className="pl-3 py-3">   وضعیت </th>
-                        <th className="pl-3 py-3">   منو والد   </th>
-                        <th className="pl-3 py-3">     تنظیمات   </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {menus.data?.map((menu) => {
-                        
-                        return (
-                            <tr key={menu.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                                <td className="pl-3 py-3">{menu.id}</td>
-                                <td className="pl-3 py-3">{menu.name}</td>
-                                <td className="pl-3 py-3">{menu.url}</td>  
-                                <td className="pl-3 py-3">
-                                    {<input type="checkbox" name="status" defaultChecked={menu.status === 1 ? true : false} onChange={() => handlerStatus(menu.id)} />}
-                                </td>       
-                                <td className="pl-3 py-3">{menu.parent !== null ? menu.parent.name : ' منو اصلی'}</td>
-                                <td>
-                                    <Link href={`${pathname}/edit/${menu.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  <FontAwesomeIcon icon={faEdit} />     </Link>
-                                    <Button type="button" onClick={() => {
-                                        dispatch(setHandlerModal([menu.name, menu.id]))
-                                        dispatch(modalOpenClose(true));
-                                    }} className="py-2 px-4 bg-red-500 hover:bg-red-600 rounded text-white">  <FontAwesomeIcon icon={faTrash} />     </Button>
-                                </td>
-                            </tr>)
-                    })}</tbody> </Table>}
+            {<CustomTable headers={headers}>
+                {menus.data?.map((menu) => {   
+                    return (
+                        <tr key={menu.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
+                            <td className="pl-3 py-3">{menu.id}</td>
+                            <td className="pl-3 py-3">{menu.name}</td>
+                            <td className="pl-3 py-3">{menu.url}</td>  
+                            <td className="pl-3 py-3">
+                                <StatusRecord id={menu.id}
+                                    status={menu.status}
+                                    changeStatus={changeStatus}
+                                 />
+                            </td>       
+                            <td className="pl-3 py-3">
+                                {menu.parent !== null ? menu.parent.name : ' منو اصلی'}
+                            </td>
+                            <td>
+                                <SettingRecord  id={menu.id} title={menu.name} />
+                            </td>
+                        </tr>)
+                })} 
+            </CustomTable>}
         </TableContainer>
     </>
     )
