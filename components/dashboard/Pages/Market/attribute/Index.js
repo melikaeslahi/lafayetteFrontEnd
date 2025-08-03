@@ -1,18 +1,14 @@
 'use client'
-import { Table, TableContainer } from "@/components/dashboard/Table";
-import { useDispatch, useSelector } from "react-redux";
+import { CustomTable, SettingRecord, TableHeader, TableContainer } from "@/components/dashboard/Table";
+import {  useSelector } from "react-redux";
 import { useEffect } from "react";
-import { modalOpenClose, setHandlerModal } from "@/store/reducers/dashboard/UtilSlice";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/dashboard/inputs";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Link from "next/link";
 import { useDeleteAttributeMutation, useGetAllAttributeQuery } from "@/lib/market/categoryAttributeApi";
 import useToast from "@/hooks/useToast";
-import TableHeader from "@/components/dashboard/Table/TableHeader";
+
+const headers = ['نام' , 'دسته بندی' , 'واحد']
+
 const Index = () => {
-    const dispatch = useDispatch();
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
@@ -20,7 +16,6 @@ const Index = () => {
     const attributes = query?.data;
 
     const [deleteAttribute, {result:deleteResult}] =  useDeleteAttributeMutation();
-
 
     useEffect(() => {
       useToast({result:deleteResult , message:'فرم کالا'})
@@ -38,37 +33,18 @@ const Index = () => {
             deleteRecord={deleteAttribute}
             query={query}
         >
-            {<Table> 
-            <thead className="text-pallete  shadow-md">
-                    <tr className={`text-center`}>
-                        <th className="pl-3 py-3"> # </th>
-                        <th className="pl-3 py-3">  نام   </th>
-                        <th className="pl-3 py-3">     دسته بندی   </th>
-                        <th className="pl-3 py-3">   واحد   </th>
-                        <th className="pl-3 py-3">     تنظیمات   </th>
-                    </tr>
-                </thead>
-                <tbody>
-            {attributes.data?.map((attribute) => {
-                
+          {<CustomTable headers={headers}> 
+            {attributes.data?.map((attribute) => {  
                 return (
                     <tr key={attribute.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{attribute}</td>
-                        <td className="pl-3 py-3">{attribute.name}</td>               
-                        <td className="pl-3 py-3">{attribute.category.name}</td>
-                        <td className="pl-3 py-3">{attribute.unit}</td>                       
-                        <td>
-                            <Link href={`${pathname}/edit/${attribute.id}`}  className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  <FontAwesomeIcon icon={faEdit} />     </Link>
-                            <Link href={`${pathname}/value/${attribute.id}`} className="py-2 px-4 bg-blue-500 hover:bg-blue-600  rounded text-white">   ویژگی ها     </Link>
-                            <Button type="button" onClick={() => {
-                                dispatch(setHandlerModal([attribute.name, attribute.id]))
-                                dispatch(modalOpenClose(true));
-                            }} className="py-2 px-4 bg-red-500 hover:bg-red-600 rounded text-white">  <FontAwesomeIcon icon={faTrash} />     </Button>
-                        </td>
+                      <td className="pl-3 py-3">{attribute}</td>
+                      <td className="pl-3 py-3">{attribute.name}</td>               
+                      <td className="pl-3 py-3">{attribute.category.name}</td>
+                      <td className="pl-3 py-3">{attribute.unit}</td>                       
+                      <td><SettingRecord id={attribute.id} title={attribute.name}/></td>
                     </tr>)
             })}
-                </tbody>    
-             </Table>}
+             </CustomTable>}
         </TableContainer>
     </>
     )
