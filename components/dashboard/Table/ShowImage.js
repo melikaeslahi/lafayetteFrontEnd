@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const ShowImage = ({image})=>{
     const indexArray = image && Object.entries(image?.indexArray);
 
