@@ -1,22 +1,50 @@
-const CustomTable=({children, className, headers})=>{
+import { usePathname } from "next/navigation";
+import {TableHeader , TableContainer} from "./index";
+
+const CustomTable=({title ,sitemap , className,  columns, data ,deleteRecord })=>{
+    const pathname = usePathname();
+
+   const style="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete w-full border-b-2 border-pallete";
+
     return(
         <>
+        <TableHeader 
+          title={title} 
+          href={`${pathname}/create`}  
+          sitemap={sitemap}/>
+
+        <TableContainer
+            pagination={data?.meta}
+            deleteRecord={deleteRecord}
+            query={data}
+        >     
          <table className={`${className} w-full font-lotus overflow-x-scroll dark:text-gray-100 text-black p-3 shadow-lg`}>
             <thead className="text-pallete shadow-md">
                 <tr className={`text-center`}>
                     <th className="pl-3 py-3">#</th>
-                    {headers?.map((header)=>
-                    <th key={header} 
+                    {columns?.map((col)=>
+                    <th key={col.key} 
                      className="pl-3 py-3"
-                    >{header}</th>
+                    >{col.label}</th>
                     )}
-                    <th className="pl-3 py-3">تنظیمات</th>
+                    
                 </tr>
             </thead>
              <tbody>
-                {children}
+                {data.data?.data?.map((row) => (
+                   <tr key={row.id} className={style}>
+                    <td className="pl-3 py-3">{row.id}</td>
+                     {columns.map((col)=>(
+                      <td className="pl-3 py-3">
+                        {col.render ? col.render(row[col.key],row):row[col.key]}
+                      </td>
+                       )   
+                     )}   
+                    </tr>
+                ))}
              </tbody>
          </table>
+         </TableContainer>
         </>
     );
 }

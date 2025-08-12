@@ -1,21 +1,27 @@
 'use client'
-import { TableContainer ,TableHeader ,CustomTable , ShowImage , StatusRecord , SettingRecord } from "@/components/dashboard/Table";
+import { CustomTable , ShowImage , StatusRecord , SettingRecord } from "@/components/dashboard/Table";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useChangePostCategoryStatusMutation, useDeletePostCategoryMutation, useGetAllPostCategoryQuery } from "@/lib/content/postCategoryApi";
 import useToast from "@/hooks/useToast";
-import { usePathname } from "next/navigation";
-
-const headers =['نام دسته', 'تصویر' , 'وضعیت' , 'توضیحات' , 'برچسب ها' , 'دسته والد' , 'اسلاگ']
-
+ 
 const Index = () => { 
-    const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
     const query = useGetAllPostCategoryQuery({ page, perPage, search });
 
     const [changeStatus, { data: dataStatus }] = useChangePostCategoryStatusMutation();
     const [deleteCategory, result] = useDeletePostCategoryMutation();
 
+    const  columns =[
+      {key:'name', label:'نام دسته'},
+      {key:'image' , label:'تصویر' , render:(_ , row)=><ShowImage image={row.image} />}, 
+      {key:'status' ,label:'وضعیت', render:(_ , row)=><StatusRecord status={row.status} id={row.id} changeStatus={changeStatus}/> } , 
+      {key:'description' ,label:'توضیحات' ,render:(_,row)=>row.description.replace(/<(.|\n)*?>/g, '').slice(0, 10) },
+      {key:'tags' ,label:'برچسب ها'},
+      {key:'parent' ,label:'دسته والد', render:(_ , row)=>row.parent !== null ? row.parent.name : 'دسته اصلی'},
+      {key:'slug',label:'اسلاگ'},
+      {key:'setting' , label:'تنظیمات', render:(_,row)=><SettingRecord id={row.id} title={row.name} />}
+    ]
 
     useEffect(()=>{
          useToast({ dataStatus:dataStatus ,  message:"دسته بندی"})
@@ -27,43 +33,13 @@ const Index = () => {
     }, [result]);
 
     return (<>
-        <TableHeader 
-          title={'دسته بندی'} 
-          href={`${pathname}/create`}  
-          sitemap=' بخش محتوایی / دسته بندی ها'/>
-        
-        <TableContainer
-            pagination={query?.meta}
-            deleteRecord={deleteCategory}
-            query={query}
-        >   
-            {<CustomTable headers={headers}>
-                 {query.data?.data?.map((itemCategory) => {
-                     return (
-                         <tr key={itemCategory.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                             <td className="pl-3 py-3">{itemCategory.id}</td>
-                             <td className="pl-3 py-3">{itemCategory.name}</td>
-                             <td className="pl-3 py-3" ><ShowImage image={itemCategory.image} /></td>
-                                 <td className="pl-3 py-3">
-                                   <StatusRecord 
-                                   status={itemCategory.status} 
-                                   id={itemCategory.id}
-                                   changeStatus={changeStatus} />
-                             </td>
-                             <td className="pl-3 py-3">{itemCategory.description.replace(/<(.|\n)*?>/g, '').slice(0, 10)}</td>
-                             <td className="pl-3 py-3">{itemCategory.tags}</td>
-                             <td className="pl-3 py-3">{itemCategory.parent !== null ? itemCategory.parent.name : 'دسته اصلی'}</td>
-                             <td className="pl-3 py-3">{itemCategory.slug}</td>
-                             <td>
-                              <SettingRecord 
-                                id={itemCategory.id}
-                                title={itemCategory.name}
-                              />
-                             </td>
-                         </tr>)
-                    })}
-                     </CustomTable>}
-        </TableContainer>
+            <CustomTable 
+               title={'دسته بندی'}
+               sitemap=' بخش محتوایی / دسته بندی ها'
+               pagination={query?.meta}
+               deleteRecord={deleteCategory}
+               columns={columns}
+               data={query} />
     </>
     )
 }
