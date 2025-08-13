@@ -1,21 +1,27 @@
 'use client'
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { TableContainer,TableHeader ,SettingRecord , ShowImage , CustomTable ,StatusRecord } from "@/components/dashboard/Table";
+import { SettingRecord , ShowImage , CustomTable ,StatusRecord } from "@/components/dashboard/Table";
 import { useChangeBannerStatusMutation, useDeleteBannerMutation, useGetAllBannerQuery } from "@/lib/content/bannerApi";
 import useToast from "@/hooks/useToast";
-import { usePathname } from "next/navigation";
  
-const headers=['عنوان بنر ' , ' تصویر بنر ' ,'وضعیت بنر ' ,'موقعیت بنر ' ,'لینک ' ] 
-
 const Index = () => {
-    const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util); 
     const query = useGetAllBannerQuery({ page, perPage, search });
     const banners = query?.data;
 
     const [changeStatus, {data: dataStatus }] = useChangeBannerStatusMutation();
     const [deleteBanner, {result:deleteResult}] = useDeleteBannerMutation();
+
+    const  columns =[
+        {key:'title', label:'عنوان بنر'},
+        {key:'image' , label:'تصویر' , render:(_ , row)=><ShowImage image={row.image} />}, 
+        {key:'status' ,label:'وضعیت', render:(_ , row)=><StatusRecord status={row.status} id={row.id} changeStatus={changeStatus}/> } , 
+        {key:'positions' ,label:'موقعیت' ,render:(_,row)=>row.positions.map((position, index) => (
+            row.position === index ? position : null))},
+        {key:'url',label:'لینک'},
+        {key:'setting',label:'تنظیمات', render:(_,row)=><SettingRecord id={row.id} title={row.title} />}
+      ]
 
     useEffect(()=>{
         useToast({dataStatus:dataStatus , message:"بنر"})
@@ -25,46 +31,14 @@ const Index = () => {
         useToast({result:deleteResult , message:"بنر"})
     } ,[result])
 
-    return (<>
-    <TableHeader
-      title={'بنر ها'}
-      href={`${pathname}/create`}
-      sitemap={'بخش محتوایی / بنر ها'}
-    />
-        <TableContainer
-            pagination={banners?.meta}
-            deleteRecord={deleteBanner}
-            query={query}
-        >         
-            {<CustomTable headers={headers}>  
-                {banners.data?.map((banner) => {
-                    return (
-                      <tr key={banner.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete w-full border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{banner.id}</td>
-                        <td className="pl-3 py-3">{banner.title}</td>
-                        <td className="pl-3 py-3"   > 
-                        <ShowImage image={banner.image} />  </td>
-                        <td className="pl-3 py-3">
-                            <StatusRecord 
-                              status={banner.status}
-                              id={banner.id}
-                              changeStatus={changeStatus}/>
-                        </td>
-                        <td className="pl-3 py-3">
-                            {banner.positions.map((position, index) => (
-                            banner.position === index ? position : null))}
-                        </td>
-                        <td className="pl-3 py-3">{banner.url}</td>
-                        <td>
-                             <SettingRecord 
-                               id={banner.id}
-                               title={banner.title} />
-                        </td>
-                    </tr>)
-                    })} 
-                     </CustomTable>}
-        </TableContainer>
-    </>
+    return (         
+            <CustomTable
+             title={'بنر ها'}
+             sitemap={'بخش محتوایی / بنر ها'}
+             pagination={banners?.meta}
+             deleteRecord={deleteBanner}
+             data={query}
+             columns={columns} />  
     )
 }
 export default Index;
