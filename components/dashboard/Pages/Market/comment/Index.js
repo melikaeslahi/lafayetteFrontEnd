@@ -1,13 +1,11 @@
 'use client'
-import { CustomTable, SettingRecord, StatusRecord ,CustomTable, TableContainer ,TableHeader } from "@/components/dashboard/Table";
+import { CustomTable, StatusRecord ,CustomTable } from "@/components/dashboard/Table";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import { useChangeApprovedMutation, useChangeCommentStatusMutation, useGetAllCommentQuery } from "@/lib/market/commentApi";
 import useToast from "@/hooks/useToast";
-
-const headers= ['نظر' , 'پاسخ به' , 'کد کاربر' ,'نویسنده نظر' , 'کد محصول' , 'محصول' , 'وضعیت کامنت' , 'وضعیت' ,'تنظیمات' ] 
 
 const Index = () => {
     const pathname = usePathname();
@@ -16,6 +14,25 @@ const Index = () => {
     const comments = query?.data;
     const [changeStatus, { data: dataStatus }] =  useChangeCommentStatusMutation();
     const [changeApproved, { data: dataApproved }] =  useChangeApprovedMutation();
+
+    const  columns =[
+        {key:'body', label:'نظر' ,render:(_ , row)=>row.body.replace(/<(.|\n)*?>/g, '').slice(0, 10)},
+        {key:'parent_id' , label:'پاسخ به' , render:(_ , row)=> row.parent_id ?? `${row.parent_id.user.first_name} ${row.parent_id.user.last_name}`}, 
+        {key:'user' ,label:'کد کاربر', render:(_ , row)=>row.user.id} , 
+        {key:'user' ,label:'نویسنده نظر' ,render:(_,row)=>`${row.user.first_name} ${row.user.last_name}` },
+        {key:'commentable' ,label:'کد محصول',render:(_,row)=>row.commentable.id},
+        {key:'commentable' ,label:'محصول', render:(_ , row)=>row.commentable.title },
+        {key:'approved',label:'وضعیت کامنت',render:(_,row)=>row.approved == 1 ? 'تایید شده': 'تایید نشده'},   
+        {key:'status',label:'وضعیت' , render:()=><StatusRecord status={row.status} id={row.id} changeStatus={changeStatus}/> },
+        {key:'setting' , label:'تنظیمات', render:(_,row)=><> 
+        <Link href={`${pathname}/show/${row.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  نمایش     </Link>
+        <Button type="button" onClick={() => {handlerApproved(row.id)}} 
+          className={`py-2 px-4 rounded text-white
+          ${row.approved == 1 ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}`}> 
+          {row.approved == 1 ? "عدم تایید":"تایید"}   
+        </Button>  
+        </>}
+      ]
 
     const handlerApproved = async (id) => {
         await changeApproved(id);
@@ -38,47 +55,13 @@ const Index = () => {
 
     }, [dataApproved])
 
-    return (<>
-        <TableHeader 
+    return (
+      <CustomTable
         title={'کامنت'}
         sitemap={'بخش فروش/ویترین/ کامنت ها'}
-        href={`${pathname}/create`}
-        />
-         
-        <TableContainer
-            pagination={comments?.meta}
-            query={query}
-        >
-          {<CustomTable headers={headers}>  
-            {comments.data?.map((comment) => {
-                return (
-                  <tr key={comment.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                    <td className="pl-3 py-3">{comment.id}</td> 
-                    <td className="pl-3 py-3">{comment.body.replace(/<(.|\n)*?>/g, '').slice(0, 10)}</td>
-                    <td className="pl-3 py-3">{comment.parent ? comment.parent.user.first_name + '' +comment.parent.user.last_name : ' '}</td>
-                    <td className="pl-3 py-3">{comment.author_id  }</td>
-                    <td className="pl-3 py-3">{comment.user.first_name + '' + comment.user.last_name  }</td>
-                    <td className="pl-3 py-3">{comment.commentable.id  }</td>
-                    <td className="pl-3 py-3">{comment.commentable?.name  }</td>
-                    <td className="pl-3 py-3">{comment.approved == 1 ? 'تایید شده': 'تایید نشده'  }</td>
-                    <td className="pl-3 py-3">
-                        <StatusRecord status={comment.status} id={comment.id} changeStatus={changeStatus} />
-                    </td>
-                    <td>
-                          <SettingRecord id={comment.id}/>
-                          <Button type="button" onClick={() => { handlerApproved(comment.id)}}
-                              className={`${comment.approved == 1 
-                                ?'bg-red-500 hover:bg-red-600'
-                                :'bg-green-500 hover:bg-green-600'}
-                               py-2 px-4 rounded text-white`}> 
-                                {comment.approved === 1 ? 'عدم تایید' : تایید} 
-                          </Button>  
-                    </td>
-                </tr>)
-            })}   
-             </CustomTable>}
-        </TableContainer>
-    </>
+        pagination={comments?.meta}
+        data={query}
+        columns={columns} />      
     )
 }
 export default Index;

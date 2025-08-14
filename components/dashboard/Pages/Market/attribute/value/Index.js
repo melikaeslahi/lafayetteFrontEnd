@@ -1,11 +1,9 @@
 'use client'
-import { CustomTable, SettingRecord, TableHeader, TableContainer } from "@/components/dashboard/Table";
+import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
 import {  useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDeleteValueMutation, useGetAllValueQuery } from "@/lib/market/categoryValueApi";
 import useToast from "@/hooks/useToast";
-
-const headers = ['مقدار' , 'نام محصول' , 'نام فرم' , 'تایپ' , 'افزایش قیمت'];
 
 const Index = ({params}) => {
     const { page, perPage  } = useSelector((state) => state.util);
@@ -14,40 +12,29 @@ const Index = ({params}) => {
     const values =query?.data;
 
     const [deleteValue, {result:deleteResult}] =  useDeleteValueMutation();
+    
+    const  columns =[
+        {key:'value', label:'مقدار',render:(_,row)=>JSON.parse(row.value).value},
+        {key:'product' , label:'نام محصول' , render:(_ , row)=>row.product.name }, 
+        {key:'category_attribute' ,label:'نام فرم', render:(_ , row)=>row.category_attribute?.name} , 
+        {key:'type' ,label:'تابپ' ,render:(_,row)=>row.type == 1 ? 'ساده ' : 'انتخابی' },
+        {key:'value' ,label:'افزایش قیمت',render:(_,row)=>JSON.parse(row.value).price_increase},
+        {key:'setting' , label:'تنظیمات', render:(_,row)=><SettingRecord id={row.id} title={JSON.parse(row.value).value} />}
+      ]
 
     useEffect(() => {
       useToast({result:deleteResult , message:"ویژگی"})
     }, [deleteResult]);
 
     return (
-    <>
-    <TableHeader 
-    title={'ویژگی ها'}
-    href={`/dashboard/market/attribute/value/create/${params}`}
-    sitemap={'بخش فروش/ویترین/فرم کالاها/ویژگی ها'}
-    />
-        <TableContainer
+         <CustomTable 
+            title={'ویژگی ها'}
+            href={`/dashboard/market/attribute/value/create/${params}`}
+            sitemap={'بخش فروش/ویترین/فرم کالاها/ویژگی ها'}
             pagination={values?.meta}
             deleteRecord={deleteValue}
-        >
-            {<CustomTable headers={headers}> 
-              {values.data?.map((value) => {     
-                return (
-                    <tr key={value.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{value.id}</td>
-                        <td className="pl-3 py-3">{JSON.parse(value.value).value  }</td>
-                        <td className="pl-3 py-3">{value.product.name }</td>
-                        <td className="pl-3 py-3">{value.category_attribute?.name }</td>
-                        <td className="pl-3 py-3">{value.type == 1 ? 'ساده ' : 'انتخابی'}</td>
-                        <td className="pl-3 py-3">{JSON.parse(value.value).price_increase}</td>          
-                        <td>
-                            <SettingRecord id={value.id} title={JSON.parse(value.value).value} />
-                        </td>
-                    </tr>)
-            })}         
-             </CustomTable>}
-        </TableContainer>
-    </>
+            data={query}
+            columns={columns} /> 
     )
 }
 export default Index;

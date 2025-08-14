@@ -1,7 +1,7 @@
 import { usePathname } from "next/navigation";
 import {TableHeader , TableContainer} from "./index";
 
-const CustomTable=({title ,sitemap , className,  columns, data ,deleteRecord })=>{
+const CustomTable=({title ,href,sitemap , className,  columns, data ,deleteRecord })=>{
     const pathname = usePathname();
 
    const style="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete w-full border-b-2 border-pallete";
@@ -10,7 +10,7 @@ const CustomTable=({title ,sitemap , className,  columns, data ,deleteRecord })=
         <>
         <TableHeader 
           title={title} 
-          href={`${pathname}/create`}  
+          href={href?href:`${pathname}/create`}  
           sitemap={sitemap}/>
 
         <TableContainer

@@ -1,53 +1,39 @@
 'use client'
-import { CustomTable, SettingRecord, TableHeader, TableContainer } from "@/components/dashboard/Table";
+import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 import { useDeleteCopanMutation, useGetAllCopanQuery } from "@/lib/market/copanApi";
 import useToast from "@/hooks/useToast";
 
-const headers =['کد کپن', 'نوع تخفیف', 'تخفیف برای', 'میزان تخفیف', 'حداکثر تخفیف', 'تاریخ شروع', 'تاریخ پایان']
-
 const Index = () => {
-    const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
     const  query =  useGetAllCopanQuery({ page, perPage, search });
     const copans = query?.data;
     const [deleteCopan, {result:deleteResult}] =  useDeleteCopanMutation();
+    
+    const  columns =[
+        {key:'code', label:'کد کپن'},
+        {key:'amount_type' , label:'نوع تخفیف' , render:(_ , row)=>row.amount_type === 0 ? 'درصدی' : 'عددی'}, 
+        {key:'type' ,label:'تخفیف برای', render:(_ , row)=> row.type === 0 ? 'همه' : `${ row.user.first_name}  ${row.user.last_name}` } , 
+        {key:'amount_type' ,label:'میزان تخفیف' ,render:(_,row)=>row.description.replace(/<(.|\n)*?>/g, '').slice(0, 10) },
+        {key:'discount_ceiling' ,label:'حداکثر تخیف' , render:(_,row)=>row.amount_type ===0 ? `${row.amount}'%'`  : `${row.amount} 'تومان'` },
+        {key:'start_date' ,label:'تاریخ شروع', render:(_ , row)=>row.parent !== null ? row.parent.name : 'دسته اصلی'},
+        {key:'end_date',label:'تاریخ پایان'},
+        {key:'setting' , label:'تنظیمات', render:(_,row)=><SettingRecord id={row.id} title={row.code} />}
+      ]
 
     useEffect(() => {
          useToast({result:deleteResult , message:'کپن تخفیف'});
     }, [deleteResult]);
 
-    return (<>
-    <TableHeader 
-    title={'کپن تخفیف'}
-    href={`${pathname}/create`}
-    sitemap={'بخش فروش/ویترین/ تخفیف ها / کپن تخفیف'}
-    />     
-        <TableContainer
-            pagination={copans?.meta}
-            deleteRecord={deleteCopan}
-            query={query}
-        >
-          <CustomTable headers={headers}> 
-            {copans.data?.map((copan) => {    
-                return (
-                    <tr key={copan.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                        <td className="pl-3 py-3">{copan.id}</td>
-                        <td className="pl-3 py-3">{copan.code}</td>
-                        <td className="pl-3 py-3">{copan.amount_type === 0 ? 'درصدی' : 'عددی' }</td>
-                        <td className="pl-3 py-3">{copan.type === 0 ? 'همه' :  copan.user.first_name + copan.user.last_name }</td>
-                        <td className="pl-3 py-3">{ copan.amount_type ===0 ? copan.amount + '%'  : copan.amount + 'تومان' }</td>
-                        <td className="pl-3 py-3">{copan.discount_ceiling}</td>
-                        <td className="pl-3 py-3">{copan.start_date}</td>
-                        <td className="pl-3 py-3">{copan.end_date}</td>
-                        <td> <SettingRecord id={copan.id} title={copan.code} /></td>
-                    </tr>)
-            })}    
-             </CustomTable>
-        </TableContainer>
-    </>
+    return (
+          <CustomTable 
+           title={'کپن تخفیف'}
+           sitemap={'بخش فروش/ویترین/ تخفیف ها / کپن تخفیف'}
+           pagination={copans?.meta}
+           deleteRecord={deleteCopan}
+           data={query}
+           columns={columns} />
     )
 }
 export default Index;
