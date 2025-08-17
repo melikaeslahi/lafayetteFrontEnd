@@ -1,12 +1,11 @@
 'use client'
-import { Table, TableContainer } from "@/components/dashboard/Table";
+import { CustomTable } from "@/components/dashboard/Table";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import Link from "next/link";
 import { useChangeMutation, useGetAllTicketsQuery } from "@/lib/ticket/ticketApi";
-import TableHeader from "@/components/dashboard/Table/TableHeader";
 import useToast from "@/hooks/useToast";
  
 const Index = () => {
@@ -16,11 +15,34 @@ const Index = () => {
     const  query =  useGetAllTicketsQuery({ page, perPage, search });
     const tickets= query;
      
-    const [chenge, { data: dataStatus }] =  useChangeMutation();
- 
-    const handlerChange = async (id) => {
-        await chenge(id);
-    }
+    const [change, { data: dataStatus }] =  useChangeMutation();
+    
+    const  columns =[
+        {key:'user', label:'نویسنده تیکت' ,render:(value)=>`${value.first_name} ${value.last_name}`},
+        {key:'subject' , label:'عنوان تیکت ' }, 
+        {key:'category' ,label:'دسته تیکت' ,render:(value)=>value.name },
+        {key:'priority' ,label:'اولویت',render:(value)=>value.name},
+        {key:'admin' ,label:'ارجاع شده از', render:(value)=>value ? `${value.admin.first_name } ${value.admin.last_name }`: 'نامشخص' },
+        {key:'parent',label:'تیکت مرجع' , render:(value)=> value?.subject ?? '_'},
+        {key:'status' ,label:'وضعیت', render:(value)=> value == 1 ? 'بسته' : 'باز' } , 
+        {key:'setting' , label:'تنظیمات', render:(_,row)=>
+        <>
+         <Link href={`${pathname}/show/${row.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  نمایش     </Link>
+         <Button type="button" onClick={() => {
+          handlerChange(row.id)}} 
+          className={`py-2 px-4 rounded text-white
+          ${row.status == 1 ? 
+          ' bg-red-500 hover:bg-red-600' : 
+          'bg-green-500 hover:bg-green-600' }  `}>  
+          {row.status == 1 ?'باز کردن' : 'بستن'} 
+          </Button>         
+        </>
+        }
+      ]
+
+      const handlerChange = async (id) => {
+         await change(id);
+      }
 
     useEffect(() => {
           let message;
@@ -36,57 +58,12 @@ const Index = () => {
     }, [dataStatus])
 
    
-    return (<>
-      <TableHeader 
-       title={' تیکت ها '}
-       href={`${pathname}/create`}
-       sitemap={'بخش فروش/ویترین/ تیکت ها'}
-      />
-
-        <TableContainer
-            pagination={tickets?.meta}
-            query={query}
-        >
-            {<Table>
-                <thead className="text-pallete  shadow-md">
-                    <tr className={`text-center`}>
-                        <th className="pl-3 py-3">#</th>
-                        <th className="pl-3 py-3"> نویسنده تیکت </th>
-                        <th className="pl-3 py-3"> عنوان تیکت </th>
-                        <th className="pl-3 py-3"> دسته تیکت </th>
-                        <th className="pl-3 py-3"> اولویت </th>
-                        <th className="pl-3 py-3"> ارجاع شده از</th>
-                        <th className="pl-3 py-3"> تیکت مرجع </th>
-                        <th className="pl-3 py-3">    وضعیت </th>
-                        <th className="pl-3 py-3">     تنظیمات   </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tickets.data?.map((ticket) => {
-                        return (
-                            <tr key={ticket.id} className="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete  w-full  border-b-2 border-pallete">
-                                <td className="pl-3 py-3">{ticket.id}</td>
-                                <td className="pl-3 py-3">{ticket.user.first_name + '' + ticket.user.last_name }</td>
-                                <td className="pl-3 py-3">{ticket.subject}</td>
-                                <td className="pl-3 py-3">{ticket.category.name}</td>
-                                <td className="pl-3 py-3">{ticket.priority.name}</td>
-                                <td className="pl-3 py-3">{ticket.admin ? ticket.admin.admin.first_name + ' ' + ticket.admin.admin.last_name : 'نامشخص' }</td>
-                                <td className="pl-3 py-3">{ticket.parent?.subject ?? '_' }</td>
-                                <td className="pl-3 py-3">{ticket.status == 1 ? 'بسته' : 'باز' }</td>
-                                <td>
-                                    <Link href={`${pathname}/show/${ticket.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  نمایش     </Link>
-
-                                    <Button type="button" onClick={() => {
-                                         handlerChange(ticket.id)
-                                    }} className={`py-2 px-4   ${ticket.status == 1 ? ' bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' }  rounded text-white`}>  { ticket.status == 1 ?     'باز کردن' : 'بستن'   }  </Button>         
-
-                                </td>
-                            </tr>)
-                    })}
-                </tbody>
-            </Table>}
-        </TableContainer>
-    </>
+    return (<CustomTable 
+             title={' تیکت ها '}
+             sitemap={'بخش فروش/ویترین/ تیکت ها'}
+             pagination={tickets?.meta}
+             data={query}
+             columns={columns} />
     )
 }
 export default Index;
