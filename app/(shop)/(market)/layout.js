@@ -40,10 +40,10 @@ const StoreLayout = ({ children }) => {
     // })
 
     return (
-        <Providers >
-
-            <html>
+        
+        <html>
                 <body dir='rtl' className={`dark:bg-zinc-700 ${vazirmatn.className}`}>
+                <Providers >
                     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                         { isMobile ? <MobileHeader /> : <Header />}
                         <main  >
@@ -53,10 +53,10 @@ const StoreLayout = ({ children }) => {
 
                         <ToastContainer />
                     </ThemeProvider>
+               </Providers>
                 </body>
             </html>
 
-        </Providers>
     )
 }
 

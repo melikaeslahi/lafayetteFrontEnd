@@ -32,26 +32,24 @@ import {ScheherazadeNew} from 'next/font/google'
 const RootLayout = ({ children }) => {
     // const { user } = useAuth({ middleware: 'auth' });
 
-    return (
-
-        < >
-            <Providers  >
-            {/* ${scheherazadeNew.className} */}
-                <html>
-                    <body dir='rtl' className={`dark:bg-zinc-700 `}>
-                        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                            <Drawer />
-                            <Header />
-                            <main className={`bg-white dark:bg-zinc-700 w-full`}>
-                                {children}
-                            </main>
-                            <ToastContainer />
-                        </ThemeProvider>
-                    </body>
-                </html>
-
+return (
+< >
+     {/* ${scheherazadeNew.className} */}
+        <html>
+          <body dir='rtl' className={`dark:bg-zinc-700 `}>
+             <Providers >
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                  <Drawer />
+                  <Header />
+                  <main className={`bg-white dark:bg-zinc-700 w-full`}>
+                      {children}
+                  </main>
+                  <ToastContainer />
+                </ThemeProvider>
             </Providers>
-        </>
+         </body>
+        </html>
+</>
     )
 }
 

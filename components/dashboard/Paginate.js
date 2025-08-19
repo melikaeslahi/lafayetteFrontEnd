@@ -1,3 +1,4 @@
+'use client'
 import { setPage } from '@/store/reducers/dashboard/UtilSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'

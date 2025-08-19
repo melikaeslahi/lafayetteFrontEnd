@@ -32,10 +32,10 @@ const  ProductLayout = ({ children }) => {
     // const { user } = useAuth({ middleware: 'auth' });
            console.log(isBrowser);
     return (
-         <Providers>
-
-            <html>
+        
+        <html>
                 <body dir='rtl' className={`dark:bg-zinc-700 ${vazirmatn.className}`}>
+                <Providers>
                     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                         {  isMobile ?  <ProductHeader /> : <Header />    }
                      
@@ -46,10 +46,10 @@ const  ProductLayout = ({ children }) => {
                       
                         <ToastContainer />
                     </ThemeProvider>
+            </Providers>
                 </body>
             </html>
 
-            </Providers>
     )
 }
 
