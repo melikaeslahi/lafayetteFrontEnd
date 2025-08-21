@@ -12,7 +12,7 @@ const Index = () => {
     const pathname = usePathname();
     const { page, perPage, search } = useSelector((state) => state.util);
 
-    const  query =   useGetOpenTicketsQuery({ page, perPage, search });
+    const  query = useGetOpenTicketsQuery({ page, perPage, search });
     const tickets = query?.data;
 
     const [chenge, { data: dataStatus }] =  useChangeMutation();
@@ -51,7 +51,7 @@ const Index = () => {
             } else if (dataStatus.status === true && dataStatus.checked === false) {
                 message=' با موفقیت بسته  شد  ' 
             } else if (dataStatus.status === false) {
-                message='   خطایی پیش آمده است  '     
+                message=' خطایی پیش آمده است  '     
             }
             useToast({dataStatus:dataStatus , customMessage: message})
 
@@ -62,7 +62,7 @@ const Index = () => {
         title={' تیکت ها '}
         sitemap={'بخش فروش/ویترین/   تیکت ها'}
         pagination={tickets?.meta}
-        data={query}
+        query={useGetOpenTicketsQuery}
         columns={columns} />  
     )
 }

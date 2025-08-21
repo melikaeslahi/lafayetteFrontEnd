@@ -1,6 +1,5 @@
 'use client'
 import { CustomTable  } from "@/components/dashboard/Table";
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Button } from "@/components/dashboard/inputs";
 import {  faTrash } from "@fortawesome/free-solid-svg-icons"
@@ -9,11 +8,7 @@ import { useChangeTicketAdminStatusMutation, useGetAllTicketAdminQuery } from "@
 import useToast from "@/hooks/useToast";
  
 const Index = () => {
-   
-    const { page, perPage, search } = useSelector((state) => state.util);
 
-    const  query =  useGetAllTicketAdminQuery({ page, perPage, search });
-    const admins = query?.data;
     const [changeStatus, { data: dataStatus }] = useChangeTicketAdminStatusMutation();
     const handlerStatus = async (id) => {
         await changeStatus(id);
@@ -33,8 +28,6 @@ const Index = () => {
          <FontAwesomeIcon icon={faTrash} />  
             </Button>}
       ]
-
-   
  
     useEffect(() => {
            let message;
@@ -48,8 +41,7 @@ const Index = () => {
      <CustomTable
         title={'  تیکت ادمین'}
         sitemap={'بخش  تیکت ها/  تیکت ادمین'}
-        pagination={ admins?.meta}
-        data={query}
+        query={useGetAllTicketAdminQuery}
         columns={columns} /> 
     )
 }

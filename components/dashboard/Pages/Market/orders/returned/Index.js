@@ -1,6 +1,5 @@
 'use client'
 import { CustomTable } from "@/components/dashboard/Table";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
@@ -14,11 +13,7 @@ const Index = () => {
     const pathname = usePathname();
     const [setting, setSetting] =  useState(false);
     const [settingId, setSettingId] = useState('');
-    const { page, perPage, search } = useSelector((state) => state.util);
-
-    const query =   useGetReturnOrderQuery({ page, perPage, search });
-    const orders= query?.id;
-
+  
     const [chengeSendStatus, { data: dataSendStatus }] =   useChangeSendStatusMutation();
     const [changeOrderStatus, { data: dataOrderStatus }] =  useChangeOrderStatusMutation();
     const [cancelOrder, { data: dataCancelOrder }] = useCancelOrderMutation();
@@ -104,10 +99,8 @@ const Index = () => {
     return ( 
             <CustomTable
             title={'سفارشات'}
-            href={`${pathname}/create`}
-            sitemap={'بخش فروش/ویترین/ سفارشات'}
-            pagination={orders?.meta}
-            data={query}
+            sitemap={'بخش فروش/ویترین/ سفارشات'} 
+            query={useGetReturnOrderQuery}
             columns={columns} />
                 
     )

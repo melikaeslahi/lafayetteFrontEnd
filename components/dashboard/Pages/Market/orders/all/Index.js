@@ -1,6 +1,5 @@
 'use client'
-import { CustomTable, TableHeader, TableContainer } from "@/components/dashboard/Table";
-import { useSelector } from "react-redux";
+import { CustomTable } from "@/components/dashboard/Table";
 import { useEffect, useState } from "react";
 import { usePathname} from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
@@ -16,11 +15,7 @@ const Index = () => {
     const pathname = usePathname();
     const [setting, setSetting] =  useState(false);
     const [settingId, setSettingId] = useState('');
-    const { page, perPage, search } = useSelector((state) => state.util);
-
-    const query = useGetAllOrderQuery({ page, perPage, search });
-    const orders =query?.data;
-
+  
     const [chengeSendStatus, { data: dataSendStatus }] =   useChangeSendStatusMutation();
     const [changeOrderStatus, { data: dataOrderStatus }] =  useChangeOrderStatusMutation();
     const [cancelOrder, { data: dataCancelOrder }] = useCancelOrderMutation();
@@ -107,8 +102,7 @@ const Index = () => {
      <CustomTable 
         title={"سفارشات"}
         sitemap={'بخش فروش/ویترین/ سفارشات'}
-        pagination={orders?.meta}
-        data={query}
+        query={useGetAllOrderQuery}
         columns={columns} />
     )
 }

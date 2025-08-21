@@ -1,6 +1,5 @@
 'use client'
 import { CustomTable } from "@/components/dashboard/Table";
-import {  useSelector } from "react-redux";
 import { useEffect } from "react"; 
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs"; 
@@ -9,10 +8,6 @@ import { useCanceledPaymentMutation, useGetCashPaymentQuery, useReturnedPaymentM
 import useToast from "@/hooks/useToast";
 const Index = () => {
     const pathname = usePathname();
-    const { page, perPage, search } = useSelector((state) => state.util);
- 
-    const  query =   useGetCashPaymentQuery({ page, perPage, search });
-    const payments= query?.id;
 
     const [ canceled , {data:dataCanceled}] =   useCanceledPaymentMutation( );
     const  [returned , {data:dataReturned}] =    useReturnedPaymentMutation( );
@@ -67,8 +62,7 @@ const Index = () => {
      <CustomTable 
         title={'پرداخت ها'}
         sitemap={'بخش فروش/ویترین/  پرداخت  ها'}
-        pagination={payments?.meta}
-        data={query} 
+        query={useGetCashPaymentQuery} 
         columns={columns} /> 
     )
 }

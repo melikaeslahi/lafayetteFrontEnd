@@ -11,9 +11,7 @@ import useToast from "@/hooks/useToast";
  
 const Index = () => {
     const pathname = usePathname();
-    const { page, perPage, search } = useSelector((state) => state.util);
-    const  query =   useGetNewTicketsQuery({ page, perPage, search });
-    const tickets = query?.data;
+ 
     const [chenge, { data: dataStatus }] =  useChangeMutation();
      
     const  columns =[
@@ -59,8 +57,7 @@ const Index = () => {
         <CustomTable 
           title={' تیکت ها '}
           sitemap={'بخش فروش/ویترین/   تیکت ها'}
-          pagination={tickets?.meta}
-          data={query}
+          query={useGetNewTicketsQuery}
           columns={columns} />          
     )
 }

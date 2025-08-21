@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import useToast from "@/hooks/useToast";
  
 
-const SettingRecord =({id ,title , query , message})=>{
+const SettingRecord =({edit=true, id ,title , query , message})=>{
     const {isOpenModal,  deleteID, deleteName } =  useSelector((state) => state.util);
     const [deleteRecord, result] = query();
     const pathname =  usePathname();
@@ -27,19 +27,19 @@ const SettingRecord =({id ,title , query , message})=>{
     }, [result]);
     return(
         <>
-         {isOpenModal ? <Modal name={deleteName}  >
+         {isOpenModal ?? <Modal name={deleteName}  >
                 <button className="bg-clifford text-pallete border rounded-lg border-pallete px-4 py-1 m-2" onClick={() => handlerDelete(deleteID)}> حذف </button>
-            </Modal> : null}
+            </Modal>}
          
-       <Link 
+        {edit ?? <Link 
           href={`${pathname}/edit/${id}`}
           className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">
           <FontAwesomeIcon icon={faEdit} />  
-         </Link>
+         </Link>  } 
          <Button type="button" 
           onClick={() => {
              dispatch(setHandlerModal([title, id]))
-                dispatch(modalOpenClose(true));
+             dispatch(modalOpenClose(true));
          }} 
           className="py-2 px-4 bg-red-500 hover:bg-red-600 rounded text-white">
           <FontAwesomeIcon icon={faTrash} /> 

@@ -1,16 +1,8 @@
 'use client'
 import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import { useDeleteCopanMutation, useGetAllCopanQuery } from "@/lib/market/copanApi";
-import useToast from "@/hooks/useToast";
-
-const Index = () => {
-    const { page, perPage, search } = useSelector((state) => state.util);
-    const  query =  useGetAllCopanQuery({ page, perPage, search });
-    const copans = query?.data;
-    const [deleteCopan, {result:deleteResult}] =  useDeleteCopanMutation();
-    
+ 
+const Index = () => {  
     const  columns =[
         {key:'code', label:'کد کپن'},
         {key:'amount_type' , label:'نوع تخفیف' , render:(_ , row)=>row.amount_type === 0 ? 'درصدی' : 'عددی'}, 
@@ -19,20 +11,13 @@ const Index = () => {
         {key:'discount_ceiling' ,label:'حداکثر تخیف' , render:(_,row)=>row.amount_type ===0 ? `${row.amount}'%'`  : `${row.amount} 'تومان'` },
         {key:'start_date' ,label:'تاریخ شروع', render:(_ , row)=>row.parent !== null ? row.parent.name : 'دسته اصلی'},
         {key:'end_date',label:'تاریخ پایان'},
-        {key:'setting' , label:'تنظیمات', render:(_,row)=><SettingRecord id={row.id} title={row.code} />}
+        {key:'setting' , label:'تنظیمات', render:(_,row)=><SettingRecord message={'کپن تخفیف'} query={useDeleteCopanMutation} id={row.id} title={row.code} />}
       ]
-
-    useEffect(() => {
-         useToast({result:deleteResult , message:'کپن تخفیف'});
-    }, [deleteResult]);
-
     return (
           <CustomTable 
            title={'کپن تخفیف'}
            sitemap={'بخش فروش/ویترین/ تخفیف ها / کپن تخفیف'}
-           pagination={copans?.meta}
-           deleteRecord={deleteCopan}
-           data={query}
+           query={useGetAllCopanQuery}
            columns={columns} />
     )
 }

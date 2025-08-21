@@ -1,14 +1,7 @@
 'use client'
 import { CustomTable, SettingRecord, ShowImage} from "@/components/dashboard/Table";
-import { useSelector } from "react-redux";
 import { useGetAllSettingQuery } from "@/lib/setting/settingApi";
-const Index = () => {
- 
-    const { page, perPage, search } = useSelector((state) => state.util);
-
-    const  query =   useGetAllSettingQuery({ page, perPage, search });
-    const settings = query?.data;
-    
+const Index = () => {    
     const  columns =[
         {key:'title', label:'عنوان'},
         {key:'logo' , label:'لوگو' , render:(value)=><ShowImage image={value} />}, 
@@ -22,8 +15,7 @@ const Index = () => {
      <CustomTable 
         title={'تنظیمات'}
         sitemap={'  تنظیمات'}
-        pagination={settings?.meta}
-        data={query}
+        query={useGetAllSettingQuery}
         columns={columns} />
     )
 }

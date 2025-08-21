@@ -1,6 +1,5 @@
 'use client'
 import { CustomTable } from "@/components/dashboard/Table";
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
@@ -10,11 +9,7 @@ import useToast from "@/hooks/useToast";
  
  
 const Index = () => {
-    const pathname = usePathname();
-    const { page, perPage, search } = useSelector((state) => state.util);
-
-    const query =  useGetCloseTicketsQuery({ page, perPage, search });
-    const tickets =query?.data;
+    const pathname = usePathname(); 
     const [chenge, { data: dataStatus }] =  useChangeMutation();
     
     const  columns =[
@@ -61,8 +56,7 @@ const Index = () => {
       <CustomTable 
         title={' تیکت ها '}
         sitemap={'بخش فروش/ویترین/ تیکت ها'}
-        pagination={tickets?.meta}
-        data={query}
+        query={useGetCloseTicketsQuery}
         columns={columns} />
     )
 }

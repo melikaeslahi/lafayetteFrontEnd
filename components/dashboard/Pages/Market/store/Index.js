@@ -1,6 +1,5 @@
 'use client'
 import { CustomTable, ShowImage } from "@/components/dashboard/Table";
-import { useSelector } from "react-redux";
 import { usePathname  } from "next/navigation";
 import { faEdit  } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -9,10 +8,6 @@ import { useGetAllProductQuery } from "@/lib/market/storeApi";
  
 const Index = () => {   
     const pathname = usePathname();
-    const { page, perPage, search } = useSelector((state) => state.util);
-
-    const query =  useGetAllProductQuery({ page, perPage, search });
-    const products = query?.data;
 
     const  columns =[
         {key:'name', label:'نام محصول'},
@@ -30,8 +25,7 @@ const Index = () => {
       <CustomTable
          title={'دسته بندی ها'}
          sitemap={'بخش فروش/ویترین/دسته بندی ها'}
-         pagination={products?.meta}
-         data={query}
+         query={useGetAllProductQuery}
          columns={columns} /> 
     )
 }

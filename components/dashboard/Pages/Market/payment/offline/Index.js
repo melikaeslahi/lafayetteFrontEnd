@@ -10,11 +10,6 @@ import useToast from "@/hooks/useToast";
 
 const Index = () => {
     const pathname = usePathname();
-    const { page, perPage, search } = useSelector((state) => state.util);
-  
-    const query =   useGetOfflinePaymentQuery({ page, perPage, search });
-    const payments = query?.data;
-
     const [ canceled , {data:dataCanceled}] =   useCanceledPaymentMutation( );
     const  [returned , {data:dataReturned}] =    useReturnedPaymentMutation( );
 
@@ -68,8 +63,7 @@ const Index = () => {
       <CustomTable 
         title={'پرداخت ها'}
         sitemap={'بخش فروش/ویترین/  پرداخت  ها'}
-        pagination={payments?.meta}
-        data={query} 
+        query={useGetOfflinePaymentQuery} 
         columns={columns} /> 
     )
 }

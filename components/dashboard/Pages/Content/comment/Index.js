@@ -1,6 +1,5 @@
 'use client'
 import { CustomTable, StatusRecord } from "@/components/dashboard/Table";
- 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
@@ -51,8 +50,7 @@ const Index = () => {
     return (   
             <CustomTable 
              title={'کامنت ها'}
-             sitemap={'بخش فروش/ویترین/کامنت ها'}
-              
+             sitemap={'بخش فروش/ویترین/کامنت ها'}       
              query={useGetAllCommentPostQuery}
              columns={columns}
             />  

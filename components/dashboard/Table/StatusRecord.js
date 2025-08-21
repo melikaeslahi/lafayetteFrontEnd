@@ -2,7 +2,7 @@
 import useToast from "@/hooks/useToast";
 import { useEffect } from "react";
 
-const StatusRecord=({status , id  , message , query})=>{
+const StatusRecord=({ name,status , id  , message , query})=>{
 
     const [changeStatus, { data: dataStatus }] =  query();
 
@@ -17,7 +17,7 @@ const StatusRecord=({status , id  , message , query})=>{
     return(
         <>
          <input type="checkbox" 
-         name="status"
+         name={name ? name : 'status'}
           defaultChecked={status === 1 ? true : false} 
           onChange={() => handlerStatus(id)} />
         </>

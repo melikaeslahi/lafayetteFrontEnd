@@ -9,15 +9,8 @@ import useToast from "@/hooks/useToast";
  
 const Index = () => {
     const pathname = usePathname();
-    const { page, perPage, search } = useSelector((state) => state.util);
 
-    const  query = useGetAllAdminQuery({ page, perPage, search });
-    const admins = query?.data; 
-
-    const [changeStatus, { data: dataStatus }] = useChangeAdminStatusMutation();
-    const [changeActivation, { data: dataActivation }] = useChangeActivationMutation();
-
-    const [deleteAdmin, result] = useDeleteAdminMutation();
+ 
 
     const  columns =[
         {key:'first_name', label:' نام ونام خانوادگی ' ,render:(value , row)=>`${value} ${row.last_name}`},
@@ -29,37 +22,22 @@ const Index = () => {
         {key:'permissions' ,label:'دسترسی ها' ,render:(value)=> value ?  value.map(( permission) => (
             <p key={permission.id}>{ permission.name}</p>
         )) : 'نقشی وجود ندارد'  },
-        {key:'status' ,label:'وضعیت', render:(_ , row)=><StatusRecord status={row.status} id={row.id} changeStatus={changeStatus}/> } , 
-        {key:'activation' ,label:'وضعیت فعالیت', render:(_ , row)=><StatusRecord status={row.status} id={row.id} changeStatus={changeActivation}/> } ,  
+        {key:'status' ,label:'وضعیت', render:(_ , row)=><StatusRecord message={'ادمین'} query={useChangeAdminStatusMutation} status={row.status} id={row.id}  /> } , 
+        {key:'activation' ,label:'وضعیت فعالیت', render:(_ , row)=><StatusRecord message={'ادمین'} name={'activation'} query={useChangeActivationMutation} status={row.status} id={row.id}/> } ,  
         {key:'setting' , label:'تنظیمات', render:(_,row)=>
         <>
+         <SettingRecord message={'ادمین'} query={useDeleteAdminMutation} id={row.id} title={row.name} />
          <Link href={`${pathname}/roles/${row.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">    نقش   </Link>
          <Link href={`${pathname}/permissions/${row.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">    دسترسی    </Link>
-        <SettingRecord id={row.id} title={row.name} />
         </>}
       ]
 
-    
-     
-    useEffect(() => {
-        useToast({result:result , message:'ادمین'})
-    }, [result]);
-
-    useEffect(() => {
-         useToast({dataStatus:dataStatus , message:'ادمین'})
-    }, [dataStatus])
-
-    useEffect(() => {
-         useToast({dataStatus:dataActivation , message:'ادمین'})
-    }, [dataActivation])
 
     return ( 
       <CustomTable 
         title={' کاربران ادمین'}
         sitemap={'بخش  کاربران / کاربران ادمین '}
-        pagination={admins?.meta}
-        deleteRecord={deleteAdmin}
-        data={query}
+        query={useGetAllAdminQuery}
         columns={columns} />
                 
     )
