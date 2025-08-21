@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, StatusRecord } from "@/components/dashboard/Table";
-import { useSelector } from "react-redux";
+ 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
@@ -10,11 +10,8 @@ import useToast from "@/hooks/useToast";
  
 const Index = () => {
     const pathname = usePathname();
-    const { page, perPage, search } = useSelector((state) => state.util);
-    const  query =  useGetAllCommentPostQuery({ page, perPage, search });
-    const comments = query?.data;
-    const [changeStatus, { data: dataStatus }] =   useChangeCommentPostStatusMutation();
-    const [changeApproved, { data: dataApproved }] =    useChangeApprovedPostMutation();
+  
+    const [changeApproved, { data: dataApproved }] = useChangeApprovedPostMutation();
     const handlerApproved = async (id) => {
         await changeApproved(id);
     }
@@ -26,7 +23,7 @@ const Index = () => {
         {key:'commentable' ,label:'کد پست',render:(_,row)=>row.commentable.id},
         {key:'commentable' ,label:'پست', render:(_ , row)=>row.commentable.title },
         {key:'approved',label:'وضعیت کامنت',render:(_,row)=>row.approved == 1 ? 'تایید شده': 'تایید نشده'},   
-        {key:'status',label:'وضعیت' , render:()=><StatusRecord status={row.status} id={row.id} changeStatus={changeStatus}/> },
+        {key:'status',label:'وضعیت' , render:()=><StatusRecord message={'کامنت'} query={useChangeCommentPostStatusMutation} status={row.status} id={row.id} changeStatus={changeStatus}/> },
         {key:'setting' , label:'تنظیمات', render:(_,row)=><> 
         <Link href={`${pathname}/show/${row.id}`} className="py-2 px-4 bg-green-500 hover:bg-green-600  rounded text-white">  نمایش     </Link>
         <Button type="button" onClick={() => {
@@ -38,9 +35,6 @@ const Index = () => {
         </>}
       ]
 
-   useEffect(()=>{
-    useToast({dataStatus:dataStatus , message:"کامنت"})
-   },[dataStatus])
 
     useEffect(() => {
         let message;
@@ -58,8 +52,8 @@ const Index = () => {
             <CustomTable 
              title={'کامنت ها'}
              sitemap={'بخش فروش/ویترین/کامنت ها'}
-             pagination={comments?.meta}
-             data={query}
+              
+             query={useGetAllCommentPostQuery}
              columns={columns}
             />  
     )
