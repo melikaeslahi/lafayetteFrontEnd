@@ -32,9 +32,16 @@ const useToast=({dataStatus=null , result=null ,  message=null , customMessage=n
      if (dataStatus === null || dataStatus=== undefined) return;
      if (dataStatus) {
         if (dataStatus.status === true && dataStatus.checked === true) {
-            successCheckTrueToast(message ,customMessage);
+            if(customMessage)  
+                successCheckTrueToast(_,customMessage[0]);
+            else
+                successCheckTrueToast(message);
+
         } else if (dataStatus.status === true && dataStatus.checked === false) {
-            successCheckFalseToast(message , customMessage);               
+            if(customMessage)  
+                successCheckFalseToast(_,customMessage[1]);
+            else
+                successCheckFalseToast(message);          
         } else if (dataStatus.status === false) {
             errorToast();
         }
