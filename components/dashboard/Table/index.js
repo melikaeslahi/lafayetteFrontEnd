@@ -10,3 +10,4 @@ export {default as  StatusRecord} from './StatusRecord';
 export {default as  CustomTable} from './CostumTable';
 export {default as  QueryStatusHandler} from './QueryStatusHandler';
 export {default as  TableHeader} from './TableHeader';
+export {default as   SettingCommentRecord} from './SettingCommentRecord';
