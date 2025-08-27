@@ -1,5 +1,5 @@
 'use client'
-import { CustomTable, SettingCommentRecord } from "@/components/dashboard/Table";
+import { CustomTable, SettingOrdersRecord } from "@/components/dashboard/Table";
 import {useGetAllOrderQuery } from "@/lib/market/orderApi";
 
 const Index = () => {
@@ -15,7 +15,7 @@ const Index = () => {
         {key:'deliveryStatusValue',label:'وضعیت ارسال '},
         {key:'delivery',label:'شیوه ی ارسال ' , render:(value)=>value.name},
         {key:'orderStatusValue',label:'وضعیت سفارش ' },
-        {key:'setting' , label:'تنظیمات', render:(_,row)=> <SettingCommentRecord id={row.id} />}
+        {key:'setting' , label:'تنظیمات', render:(_,row)=> <SettingOrdersRecord id={row.id} />}
       ]
 
 
