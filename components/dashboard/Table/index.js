@@ -12,3 +12,4 @@ export {default as QueryStatusHandler} from './QueryStatusHandler';
 export {default as TableHeader} from './TableHeader';
 export {default as SettingCommentRecord} from './SettingCommentRecord';
 export {default as SettingOrdersRecord} from './SettingOrdersRecord';
+export {default as SettingPaymentRecord} from './SettingPaymentRecord';
