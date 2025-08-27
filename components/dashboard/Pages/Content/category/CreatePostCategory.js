@@ -1,7 +1,7 @@
 'use client'
 import CreateCategorySchema from '@/validation/doshboard/content/category/createCategory'
 import Button from '@/components/dashboard/inputs/Button'
-import {   useEffect } from 'react'
+import { useEffect } from 'react'
 import { Editor, Input, InputTags } from '@/components/dashboard/inputs'
 import { useAddNewPostCategoryMutation, useGetAllParentIdQuery } from '@/lib/content/postCategoryApi'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
@@ -26,7 +26,7 @@ const CreatePostCategory = () => {
         if(Success){
         dispatch(setSuccessMessage(' دسته بندی با موفقیت ایجاد شد.')); 
         }
-    }, [data,  Success]);
+    }, [data, Success]);
 
     const handlerSubmit = async (values) => {
 
@@ -92,13 +92,7 @@ const CreatePostCategory = () => {
                     }}
                 </Input>
                 <Editor name='description' title='   توضیحات ' />
-                <Button
-                 disabled={isSend ? true : false}
-                    type="submit"
-                    className="text-white hover:bg-clifford hover:text-pallete bg-pallete py-4 px-8 basis-1/2 rounded-lg">
-                    {' '}
-                    ایجاد دسته بندی
-                </Button>
+                 
             </InputContainer>
 
 
