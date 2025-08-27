@@ -1,10 +1,10 @@
 import { useQueryStatus } from "@/hooks/useQueryStatus"
-import TableNotFound from "./TableNotFound"
+import TableNotFound from "./Table/TableNotFound"
 import React from "react"
  
 
-const { default: TableError404 } = require("./TableError404")
-const { default: TableLoading } = require("./TableLoading")
+const { default: TableError404 } = require("./Table/TableError404")
+const { default: TableLoading } = require("./Table/TableLoading")
 
 const QueryStatusHandler = ({ query , children })=>{
     const {data, isLoading , isError , isSuccess } =useQueryStatus(query);

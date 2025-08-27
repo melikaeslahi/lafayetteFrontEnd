@@ -1,10 +1,7 @@
 'use client'
 import CreateCategorySchema from '@/validation/doshboard/content/category/createCategory'
 import Button from '@/components/dashboard/inputs/Button'
-import { useRouter } from 'next/navigation'
-import TitlePage from '@/components/dashboard/TitlePage'
 import {   useEffect } from 'react'
- 
 import { Editor, Input, InputTags } from '@/components/dashboard/inputs'
 import { useAddNewPostCategoryMutation, useGetAllParentIdQuery } from '@/lib/content/postCategoryApi'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
@@ -12,7 +9,6 @@ import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 const CreatePostCategory = () => {
     const { data: parentId = [] } = useGetAllParentIdQuery();
-    const router = useRouter();
     const dispatch =useDispatch();
  
     const parent_id = parentId && parentId.status === 200 && parentId.data;
@@ -52,23 +48,13 @@ const CreatePostCategory = () => {
 
     return (
         <>
-            <TitlePage
-                name="ایجاد دسته بندی"
-                sitemapPage="بخش محتوایی / دسته بندی ها / ایجاد دسته بندی"
-            >
-                <button
-                    type="button"
-                    onClick={() => { router.back() }}
-                    className=" py-4 px-8 bg-pallete rounded text-white" >
-                    {' '}
-                    بازگشت
-                </button>
-            </TitlePage>
-
             <InputContainer  
                 initialValues={initialValues}
                 validationSchema={CreateCategorySchema}
-                handlerSubmit={handlerSubmit} >
+                handlerSubmit={handlerSubmit}
+                name={"ایجاد دسته بندی"}
+                sitemap={"بخش محتوایی / دسته بندی ها / ایجاد دسته بندی"}
+                >
                 <Input name='name' title={'دسته بندی'} type='text' placeholder={'نام دسته یندی'} />
                 <InputTags name='tags' placeHolder={'برچسب ها'} title="برچسب ها" />
                 <Input name='parent_id' title={' دسته والد  '} select={'select'} className={'text-left'} >

@@ -4,7 +4,8 @@ import Paginate from "@/components/dashboard/Paginate";
 import TableFiltering from "./TableFiltering";
  
 import SuccessAlert from "../inputs/SuccessAlert";
-import QueryStatusHandler from "./QueryStatusHandler";
+import QueryStatusHandler from "../QueryStatusHandler";
+ 
  
 const TableContainer = ({ children , pagination  ,query}) => {
 

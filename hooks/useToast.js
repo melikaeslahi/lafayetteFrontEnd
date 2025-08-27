@@ -1,6 +1,6 @@
 import { toast } from "react-toastify"
 
-const useToast=({dataStatus=null , result=null ,  message=null , customMessage=null})=>{
+const useToast=({dataStatus=null , result=null ,  message=null , customMessage=null ,inputs=false ,isSuccess})=>{
    const successCheckTrueToast =(message , customMessage)=>{
              toast.success(`${customMessage ?? `${message}  با موفقیت  فعال شد `} `,
               {
@@ -55,6 +55,13 @@ const useToast=({dataStatus=null , result=null ,  message=null , customMessage=n
         }else{
             errorToast();
         }
+    }
+
+    //if we add a record with inputs in database
+    if(inputs && isSuccess){
+        successCheckTrueToast(customMessage);
+    }else{
+        errorToast();
     }
 }
 
