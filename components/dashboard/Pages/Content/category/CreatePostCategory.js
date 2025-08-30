@@ -20,13 +20,13 @@ const CreatePostCategory = () => {
         status: '',
         tags: ''
     }
-    const [addNewCategory, { data , isLoading: isSend ,isSuccess:Success }] = useAddNewPostCategoryMutation()
-    useEffect(() => {
-        dispatch(setErrorData(data)); 
-        if(Success){
-        dispatch(setSuccessMessage(' دسته بندی با موفقیت ایجاد شد.')); 
-        }
-    }, [data, Success]);
+    // const [addNewCategory, { data , isLoading: isSend ,isSuccess:Success }] = useAddNewPostCategoryMutation()
+    // useEffect(() => {
+    //     dispatch(setErrorData(data)); 
+    //     if(Success){
+    //     dispatch(setSuccessMessage(' دسته بندی با موفقیت ایجاد شد.')); 
+    //     }
+    // }, [data, Success]);
 
     const handlerSubmit = async (values) => {
 
@@ -51,9 +51,12 @@ const CreatePostCategory = () => {
             <InputContainer  
                 initialValues={initialValues}
                 validationSchema={CreateCategorySchema}
-                handlerSubmit={handlerSubmit}
+                // handlerSubmit={handlerSubmit}
                 name={"ایجاد دسته بندی"}
                 sitemap={"بخش محتوایی / دسته بندی ها / ایجاد دسته بندی"}
+                query={useAddNewPostCategoryMutation}
+                message={'دسته بندی با موفقیت ایجاد شد.'}
+                edit={false}
                 >
                 <Input name='name' title={'دسته بندی'} type='text' placeholder={'نام دسته یندی'} />
                 <InputTags name='tags' placeHolder={'برچسب ها'} title="برچسب ها" />

@@ -6,13 +6,16 @@ import { Button } from "@/components/dashboard/inputs";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import Modal from "../Modal";
 import { useEffect } from "react";
 import useToast from "@/hooks/useToast";
+import Modal from "../Modal";
+
  
 
-const SettingRecord =({edit=true, id ,title , query , message})=>{
-    const {isOpenModal,  deleteID, deleteName } =  useSelector((state) => state.util);
+const SettingRecord =({edit, id ,title , query , message})=>{
+    console.log(id ,'id');
+    console.log(title , 'title')
+    const {isOpenModal,  deleteID, deleteName } =   useSelector((state) => state.util);
     const [deleteRecord, result] = query();
     const pathname =  usePathname();
     const dispatch =  useDispatch();

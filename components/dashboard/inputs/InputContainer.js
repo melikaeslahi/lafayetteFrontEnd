@@ -3,12 +3,14 @@ import { Form, Formik } from 'formik'
 import { redirect, useRouter } from "next/navigation";
 import TitlePage from "../TitlePage";
 import useToast from "@/hooks/useToast";
-import QueryStatusHandler from "./QueryStatusHandler";
 import Button from './Button';
-const InputContainer = ({query, message,edit,columns,children  ,initialValues , validationSchema , name , sitemap, handlerSubmit ,className}) => {
+import { useEffect } from 'react';
+import QueryStatusHandler from '../QueryStatusHandler';
+import InputLayout from './InputLayout';
+const InputContainer = ({ itemQuery, query, message,edit,columns,children  ,initialValues , validationSchema , name , sitemap, handlerSubmits ,className}) => {
     const router = useRouter();
     const [ addRecord, { data :isError ,isLoading,isSuccess }] =  query();
-    useEffect(() => {
+     useEffect(() => {
         if(isSuccess){
             useToast({inputs:true , isSuccess:isSuccess, customMessage:message})
             redirect(router.back());
@@ -16,36 +18,23 @@ const InputContainer = ({query, message,edit,columns,children  ,initialValues , 
     }, [isSuccess]);
 
     const handlerSubmit = async (values) => {
-        const formData = new FormData();
-        if (edit) {
-        formData.append('_method', 'PUT');
-        }
-        columns.forEach(col => {
-            formData.append(`${col}`, values.columns[col]);
-        }) 
-        await addRecord(formData);
+        console.log(values)
+        // const formData = new FormData();
+        // if (edit) {
+        // formData.append('_method', 'PUT');
+        // }
+        // columns.forEach(col => {
+        //     formData.append(`${col}`, values.columns[col]);
+        // }) 
+        // await addRecord(formData);
 
     }
 
     const { openDrawer } = useSelector((state) => state.util);
     return (<>
-         <TitlePage
-                name={name}
-                sitemapPage={sitemap}
-            >
-                <button
-                    type="button"
-                    onClick={() => { router.back() }}
-                    className=" py-4 px-8 bg-pallete rounded text-white" >
-                    {' '}
-                    بازگشت
-                </button>
-            </TitlePage>
+     
         
-         <section
-                className={`absolute top-40 left-0 z-0 w-full md:w-full dark:bg-zinc-700 bg-white ${openDrawer ? 'lg:w-full xl:w-screen' : 'lg:w-4/5 xl:w-4/5'}    flex flex-col justify-center items-center my-5 rounded`}>
-
-                <QueryStatusHandler isError={isError} isSuccess={isSuccess} isLoading={isLoading} >
+        <InputLayout name={name} query={itemQuery} sitemap={sitemap} >
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -67,9 +56,8 @@ const InputContainer = ({query, message,edit,columns,children  ,initialValues , 
                              </section>
                          </Form>  
                 </Formik>
-                </QueryStatusHandler>
-                 
-            </section>  
+                </InputLayout>
+            
     </>)
 }
 export default InputContainer;
