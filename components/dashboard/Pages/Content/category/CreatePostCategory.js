@@ -20,31 +20,34 @@ const CreatePostCategory = () => {
         status: '',
         tags: ''
     }
-    // const [addNewCategory, { data , isLoading: isSend ,isSuccess:Success }] = useAddNewPostCategoryMutation()
-    // useEffect(() => {
-    //     dispatch(setErrorData(data)); 
-    //     if(Success){
-    //     dispatch(setSuccessMessage(' دسته بندی با موفقیت ایجاد شد.')); 
+    const columns=[
+        {key:'image'},
+        {key:'name'},
+        {key:'parent_id'},
+        {key:'description'},
+        {key:'status'},
+        {key:'tags'},
+        {key:'currentImage'},
+    
+    ]
+
+    // const handlerSubmit = async (values) => {
+
+    //     // Create an object of formData
+    //     const formData = new FormData();
+    //     // Update the formData object
+    //     formData.append("image", values.image);
+    //     formData.append("name", values.name);
+    //     if (values.parent_id) {
+    //         formData.append("parent_id", values.parent_id);
     //     }
-    // }, [data, Success]);
+    //     formData.append("description", values.description);
+    //     formData.append("status", values.status);
+    //     formData.append("tags", values.tags);
 
-    const handlerSubmit = async (values) => {
+    //     await addNewCategory(formData);
 
-        // Create an object of formData
-        const formData = new FormData();
-        // Update the formData object
-        formData.append("image", values.image);
-        formData.append("name", values.name);
-        if (values.parent_id) {
-            formData.append("parent_id", values.parent_id);
-        }
-        formData.append("description", values.description);
-        formData.append("status", values.status);
-        formData.append("tags", values.tags);
-
-        await addNewCategory(formData);
-
-    }
+    // }
 
     return (
         <>
@@ -57,6 +60,7 @@ const CreatePostCategory = () => {
                 query={useAddNewPostCategoryMutation}
                 message={'دسته بندی با موفقیت ایجاد شد.'}
                 edit={false}
+                columns={columns}
                 >
                 <Input name='name' title={'دسته بندی'} type='text' placeholder={'نام دسته یندی'} />
                 <InputTags name='tags' placeHolder={'برچسب ها'} title="برچسب ها" />

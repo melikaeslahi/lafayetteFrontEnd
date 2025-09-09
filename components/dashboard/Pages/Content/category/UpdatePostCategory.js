@@ -23,13 +23,13 @@ const UpdataPostCategory = ({ params }) => {
     }
 
     const columns=[
-    {key:'image' , value:'image'},
-    {key:'name' , value:'name'},
-    {key:'parent_id' , value:'parent_id'},
-    {key:'description' , value:'description'},
-    {key:'status' , value:'status'},
-    {key:'tags' , value:'tags'},
-    {key:'currentImage' , value:'currentImage'},
+    {key:'image'},
+    {key:'name'},
+    {key:'parent_id'},
+    {key:'description'},
+    {key:'status'},
+    {key:'tags'},
+    {key:'currentImage'},
 
 ]
     // const [UpdateCategory, { data , isLoading: isSend ,isSuccess:Success }] = useUpdatePostCategoryMutation()

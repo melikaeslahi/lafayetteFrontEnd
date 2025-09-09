@@ -7,8 +7,10 @@ import Button from './Button';
 import { useEffect } from 'react';
 import QueryStatusHandler from '../QueryStatusHandler';
 import InputLayout from './InputLayout';
-const InputContainer = ({ itemQuery, query, message,edit,columns,children  ,initialValues , validationSchema , name , sitemap, handlerSubmits ,className}) => {
+import { useGetCsrfQuery } from '@/lib/content/postCategoryApi';
+const InputContainer = ({ itemQuery, edit, columns, query, message,children  ,initialValues , validationSchema , name , sitemap,className}) => {
     const router = useRouter();
+    useGetCsrfQuery();
     const [ addRecord, { data :isError ,isLoading,isSuccess }] =  query();
      useEffect(() => {
         if(isSuccess){
@@ -19,18 +21,21 @@ const InputContainer = ({ itemQuery, query, message,edit,columns,children  ,init
 
     const handlerSubmit = async (values) => {
         console.log(values)
-        // const formData = new FormData();
-        // if (edit) {
-        // formData.append('_method', 'PUT');
-        // }
-        // columns.forEach(col => {
-        //     formData.append(`${col}`, values.columns[col]);
-        // }) 
-        // await addRecord(formData);
+        const formData = new FormData();
+        if (edit) {
+        formData.append('_method', 'PUT');
+        }
+        columns.forEach(col => {      
+           Object.keys(values).map((value)=>  
+             value === col.key ?? formData.append(`${col.key}`, values[col.key])
+           );    
+        }) 
+        
+        await addRecord(formData);
 
     }
 
-    const { openDrawer } = useSelector((state) => state.util);
+    
     return (<>
      
         
