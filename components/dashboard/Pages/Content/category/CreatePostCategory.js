@@ -3,10 +3,10 @@ import CreateCategorySchema from '@/validation/doshboard/content/category/create
 import Button from '@/components/dashboard/inputs/Button'
 import { useEffect } from 'react'
 import { Editor, Input, InputTags } from '@/components/dashboard/inputs'
-import { useAddNewPostCategoryMutation, useGetAllParentIdQuery } from '@/lib/content/postCategoryApi'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
+import { useAddNewPostCategoryMutation, useGetAllParentIdQuery } from '@/services/content/postCategoryApi'
 const CreatePostCategory = () => {
     const { data: parentId = [] } = useGetAllParentIdQuery();
     const dispatch =useDispatch();

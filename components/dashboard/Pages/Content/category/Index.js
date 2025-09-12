@@ -1,14 +1,14 @@
 'use client' 
 import { CustomTable , ShowImage , StatusRecord , SettingRecord } from "@/components/dashboard/Table"; 
-import { useChangePostCategoryStatusMutation, useDeletePostCategoryMutation, useGetAllPostCategoryQuery } from "@/lib/content/postCategoryApi";
+import { useChangePostCategoryStatusMutation, useDeletePostCategoryMutation, useGetAllPostCategoryQuery } from "@/services/content/postCategoryApi";
  
  
 const Index = () => { 
-  
+ 
     const  columns =[
       {key:'name', label:'نام دسته'},
       {key:'image' , label:'تصویر' , render:(_ , row)=><ShowImage image={row.image} />}, 
-      {key:'status' ,label:'وضعیت', render:(_ , row)=><StatusRecord status={row.status} id={row.id}   message={'دسته بندی'} query={useChangePostCategoryStatusMutation}/> } , 
+      {key:'status' ,label:'وضعیت', render:(_ , row)=><StatusRecord status={row.status} id={row.id}   message={'دسته بندی'} query={ useChangePostCategoryStatusMutation}/> } , 
       {key:'description' ,label:'توضیحات' ,render:(_,row)=>row.description.replace(/<(.|\n)*?>/g, '').slice(0, 10) },
       {key:'tags' ,label:'برچسب ها'},
       {key:'parent' ,label:'دسته والد', render:(_ , row)=>row.parent !== null ? row.parent.name : 'دسته اصلی'},

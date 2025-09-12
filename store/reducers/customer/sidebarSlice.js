@@ -7,11 +7,12 @@ import { toast } from "react-toastify";
 
 
 const initialState = {
-    menuItems: localStorage.getItem('menuItems') ? JSON.parse(localStorage.getItem("menuItems")) || '{}' : [],
+    menuItems:null,
+    // menuItems: localStorage.getItem('menuItems') ? JSON.parse(localStorage.getItem("menuItems")) || '{}' : [],
     isOpenItem: {},
 }
 
-console.log(initialState)
+// console.log(initialState)
 
 
 

@@ -13,7 +13,7 @@ import Header from "@/components/dashboard/Header/Header";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@/app/theme-provider";
-import { Providers } from '@/app/Provider';
+import ClientProvider  from '@/app/Provider';
 import {ScheherazadeNew} from 'next/font/google'
 // export const scheherazadeNew = ScheherazadeNew({
 //     display: 'swap'
@@ -37,7 +37,7 @@ return (
      {/* ${scheherazadeNew.className} */}
         <html>
           <body dir='rtl' className={`dark:bg-zinc-700 `}>
-             <Providers >
+             <ClientProvider >
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                   <Drawer />
                   <Header />
@@ -46,7 +46,7 @@ return (
                   </main>
                   <ToastContainer />
                 </ThemeProvider>
-            </Providers>
+            </ClientProvider>
          </body>
         </html>
 </>

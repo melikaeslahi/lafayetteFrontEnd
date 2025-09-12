@@ -5,16 +5,18 @@ import TitlePage from "../TitlePage";
 import useToast from "@/hooks/useToast";
 import Button from './Button';
 import { useEffect } from 'react';
-import QueryStatusHandler from '../QueryStatusHandler';
+ 
 import InputLayout from './InputLayout';
-import { useGetCsrfQuery } from '@/lib/content/postCategoryApi';
+import QueryStatusHandler from './QueryStatusHandler';
+ 
 const InputContainer = ({ itemQuery, edit, columns, query, message,children  ,initialValues , validationSchema , name , sitemap,className}) => {
     const router = useRouter();
-    useGetCsrfQuery();
-    const [ addRecord, { data :isError ,isLoading,isSuccess }] =  query();
+    
+    const [ addRecord, { data  ,isLoading,isSuccess }] =  query();
      useEffect(() => {
         if(isSuccess){
             useToast({inputs:true , isSuccess:isSuccess, customMessage:message})
+            if(data?.success)
             redirect(router.back());
         }
     }, [isSuccess]);
@@ -47,6 +49,8 @@ const InputContainer = ({ itemQuery, edit, columns, query, message,children  ,in
                         // same shape as initial values
                         handlerSubmit(values)
                     }}>
+                        <>
+                        <QueryStatusHandler data={data} isLoading={isLoading}  />
                              <Form
                              className={ `  dark:bg-zinc-700  bg-white  shadow-md rounded px-8 pt-6 pb-8 mb-4  font-lotus flex  justify-center items-center`}>
                              <section className={`${className} flex  flex-wrap  justify-center items-center`}>
@@ -60,6 +64,7 @@ const InputContainer = ({ itemQuery, edit, columns, query, message,children  ,in
                                  </Button>
                              </section>
                          </Form>  
+                         </>
                 </Formik>
                 </InputLayout>
             

@@ -4,9 +4,9 @@ import { TableLoading } from "../Table"
  
  
 
-const QueryStatusHandler = ({ isSuccess , isError, isLoading, children })=>{
+const QueryStatusHandler = ({ data, isLoading, children })=>{
     if(isLoading) return <TableLoading />
-    if(isError) return <ResponseError />  
-    if(isSuccess) return children;
+    if(!data?.success) return <ResponseError data={data} />  
+     return children;
 }
 export default QueryStatusHandler;

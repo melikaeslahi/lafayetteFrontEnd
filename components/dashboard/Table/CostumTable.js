@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 const CustomTable=({title ,href,sitemap , className,  columns, query ,deleteRecord })=>{
     const pathname = usePathname();
     const { page, perPage, search } =  useSelector((state) => state.util);
-    const data = query({ page, perPage, search });
+    const data = query({page , perPage , search});
+ 
    const style="text-center hover:bg-pallete hover:bg-opacity-20 hover:text-pallete w-full border-b-2 border-pallete";
 
     return(
