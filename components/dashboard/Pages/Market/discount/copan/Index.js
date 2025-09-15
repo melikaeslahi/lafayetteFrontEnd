@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
-import { useDeleteCopanMutation, useGetAllCopanQuery } from "@/lib/market/copanApi";
+import { useDeleteCopanMutation, useGetAllCopanQuery } from "@/services/market/copanApi";
  
 const Index = () => {  
     const  columns =[

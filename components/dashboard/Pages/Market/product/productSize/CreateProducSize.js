@@ -7,12 +7,12 @@ import {  useEffect } from 'react'
 import {   Input  } from '@/components/dashboard/inputs'
 
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewProductColorMutation } from '@/lib/market/productColorApi'
+import { useAddNewProductColorMutation } from '@/services/market/productColorApi'
 import CreateProductColorSchema from '@/validation/doshboard/market/productColor/createProductColorValidation'
 
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
-import { useAddNewProductSizeMutation } from '@/lib/market/productSizeApi'
+import { useAddNewProductSizeMutation } from '@/services/market/productSizeApi'
 
 const CreateProductSize = ({ params }) => {
 

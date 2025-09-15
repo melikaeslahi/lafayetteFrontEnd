@@ -6,7 +6,7 @@ import {   useEffect } from 'react'
 import { useDispatch } from 'react-redux'
  
 import { Editor, Input, InputFrame, InputTags, SelectImage } from '@/components/dashboard/inputs'
-import { useGetAllParentIdQuery, useGetProductCategoryQuery, useUpdateProductCategoryMutation } from '@/lib/market/productCategoryApi'
+import { useGetAllParentIdQuery, useGetProductCategoryQuery, useUpdateProductCategoryMutation } from '@/services/market/productCategoryApi'
 import EditCategorySchema from '@/validation/doshboard/market/category/editCategory'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'

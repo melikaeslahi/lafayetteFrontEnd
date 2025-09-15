@@ -5,11 +5,11 @@ import TitlePage from '@/components/dashboard/TitlePage'
 import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { Editor, Input, InputTags } from '@/components/dashboard/inputs'
-import { useAddNewProductCategoryMutation, useGetAllParentIdQuery } from '@/lib/market/productCategoryApi'
+import { useAddNewProductCategoryMutation, useGetAllParentIdQuery } from '@/services/market/productCategoryApi'
 import CreateCategorySchema from '@/validation/doshboard/market/category/createCategory'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { Table, TableContainer, TableError404, TableLoading, TableNotFound } from '@/components/dashboard/Table'
-import { useGetDetailOrderQuery } from '@/lib/market/orderApi'
+import { useGetDetailOrderQuery } from '@/services/market/orderApi'
 import { modalOpenClose, setHandlerModal, setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import { useDispatch, useSelector } from 'react-redux'
 

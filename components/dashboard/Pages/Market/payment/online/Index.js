@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingPaymentRecord } from "@/components/dashboard/Table";
-import { useGetOnlinePaymentQuery  } from "@/lib/market/paymentApi";
+import { useGetOnlinePaymentQuery  } from "@/services/market/paymentApi";
 
 const Index = () => {
     const  columns =[

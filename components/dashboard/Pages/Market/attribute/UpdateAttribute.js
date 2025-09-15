@@ -8,7 +8,7 @@ import {   Input  } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import EditAttributeSchema from '@/validation/doshboard/market/categoryAttribute/editAttributeValidation'
-import { useGetAttributeQuery, useGetCategoriesQuery, useUpdateAttributeMutation } from '@/lib/market/categoryAttributeApi'
+import { useGetAttributeQuery, useGetCategoriesQuery, useUpdateAttributeMutation } from '@/services/market/categoryAttributeApi'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 const UpdateAttribute = ({ params }) => {
     const { data: categories = [] } =   useGetCategoriesQuery();

@@ -6,7 +6,7 @@ import {  useEffect } from 'react'
  
 import { Input, InputTags } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewBrandMutation } from '@/lib/market/brandApi'
+import { useAddNewBrandMutation } from '@/services/market/brandApi'
 import CreateBrandSchema from '@/validation/doshboard/market/brand/createBrandValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

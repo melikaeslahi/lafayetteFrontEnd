@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
-import { useDeleteCommonDiscountMutation, useGetAllCommonDiscountQuery } from "@/lib/market/commonDiscountApi";
+import { useDeleteCommonDiscountMutation, useGetAllCommonDiscountQuery } from "@/services/market/commonDiscountApi";
  
 const Index = () => { 
     const  columns =[

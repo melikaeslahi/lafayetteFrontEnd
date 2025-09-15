@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, StatusRecord } from "@/components/dashboard/Table";
-import { useChangePageStatusMutation, useDeletePageMutation, useGetAllPageQuery } from "@/lib/content/pageApi";
+import { useChangePageStatusMutation, useDeletePageMutation, useGetAllPageQuery } from "@/services/content/pageApi";
  
 
 const Index = () => { 

@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, ShowImage, StatusRecord } from "@/components/dashboard/Table";
-import { useChangeProductCategoryStatusMutation, useChangeShowInMenuMutation, useDeleteProductCategoryMutation, useGetAllProductCategoryQuery } from "@/lib/market/productCategoryApi";
+import { useChangeProductCategoryStatusMutation, useChangeShowInMenuMutation, useDeleteProductCategoryMutation, useGetAllProductCategoryQuery } from "@/services/market/productCategoryApi";
  
 
 const Index = () => {

@@ -6,7 +6,7 @@ import {   useEffect } from 'react'
  
 import {   Input  } from '@/components/dashboard/inputs' 
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewMenuMutation, useGetAllParentIdQuery } from '@/lib/content/menuApi'
+import { useAddNewMenuMutation, useGetAllParentIdQuery } from '@/services/content/menuApi'
 import CreateMenuSchema from '@/validation/doshboard/content/menu/createMenuValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

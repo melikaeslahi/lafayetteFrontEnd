@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, ShowImage } from "@/components/dashboard/Table";
-import { useDeleteGalleryMutation, useGetAllGalleryQuery } from "@/lib/market/galleryApi";
+import { useDeleteGalleryMutation, useGetAllGalleryQuery } from "@/services/market/galleryApi";
 
 
 const Index = ({params}) => {

@@ -7,7 +7,7 @@ import {   useEffect } from 'react'
 import { Editor, Input, InputTags } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import CreateFaqSchema from '@/validation/doshboard/content/faq/createFaq'
-import { useAddNewFaqMutation } from '@/lib/content/faqApi'
+import { useAddNewFaqMutation } from '@/services/content/faqApi'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 const CreateFaq = () => {

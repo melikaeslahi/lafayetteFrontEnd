@@ -8,7 +8,7 @@ import {  Input  } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import CreateAttributeSchema from '@/validation/doshboard/market/categoryAttribute/createAttributeValidation'
-import { useAddNewAttributeMutation, useGetCategoriesQuery } from '@/lib/market/categoryAttributeApi'
+import { useAddNewAttributeMutation, useGetCategoriesQuery } from '@/services/market/categoryAttributeApi'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 

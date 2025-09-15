@@ -1,6 +1,6 @@
 'use client'
 import { SettingRecord, CustomTable } from "@/components/dashboard/Table";
-import { useDeleteDeliveryMutation, useGetAllDeliveryQuery } from "@/lib/market/deliveryApi";
+import { useDeleteDeliveryMutation, useGetAllDeliveryQuery } from "@/services/market/deliveryApi";
  
 const Index = () => {
     const  columns =[

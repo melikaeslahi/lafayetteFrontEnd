@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord} from "@/components/dashboard/Table";
-import { useDeleteAmazingSaleMutation, useGetAllAmazingSaleQuery } from "@/lib/market/amazingSaleApi";
+import { useDeleteAmazingSaleMutation, useGetAllAmazingSaleQuery } from "@/services/market/amazingSaleApi";
 
 const Index = () => {
     const  columns =[

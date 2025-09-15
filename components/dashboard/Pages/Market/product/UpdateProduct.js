@@ -6,7 +6,7 @@ import {   useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
  
 import { Editor, Input, InputFrame, InputTags, ResponseError, SelectImage } from '@/components/dashboard/inputs'
-import { useGetCategoriesAndBrandsQuery, useGetProductQuery, useUpdateProductMutation } from '@/lib/market/productApi'
+import { useGetCategoriesAndBrandsQuery, useGetProductQuery, useUpdateProductMutation } from '@/services/market/productApi'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import EditProductSchema from '@/validation/doshboard/market/product/editProduct'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'

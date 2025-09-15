@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingOrdersRecord } from "@/components/dashboard/Table";
-import { useGetNewOrdersQuery } from "@/lib/market/orderApi";
+import { useGetNewOrdersQuery } from "@/services/market/orderApi";
  
 const Index = () => {
     const  columns =[

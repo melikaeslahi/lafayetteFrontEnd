@@ -9,7 +9,7 @@ import {  Input  } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import EditValueSchema from '@/validation/doshboard/market/categoryValue/editValueValidation'
-import { useGetValueQuery, useProductsAndAttributesQuery, useUpdateValueMutation } from '@/lib/market/categoryValueApi'
+import { useGetValueQuery, useProductsAndAttributesQuery, useUpdateValueMutation } from '@/services/market/categoryValueApi'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 
 const UpdateValue = ({ params }) => {

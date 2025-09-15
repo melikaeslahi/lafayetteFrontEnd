@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingPaymentRecord } from "@/components/dashboard/Table";
-import { useGetCashPaymentQuery } from "@/lib/market/paymentApi";
+import { useGetCashPaymentQuery } from "@/services/market/paymentApi";
 const Index = () => {
     const  columns =[
         {key:'payments', label:' کد تراکنش ', render:(value)=>value.transaction_id},

@@ -8,7 +8,7 @@ import {   Input  } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import CreateValueSchema from '@/validation/doshboard/market/categoryValue/createValueValidation'
-import { useAddNewValueMutation, useProductsAndAttributesQuery } from '@/lib/market/categoryValueApi'
+import { useAddNewValueMutation, useProductsAndAttributesQuery } from '@/services/market/categoryValueApi'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 

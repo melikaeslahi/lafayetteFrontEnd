@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, ShowImage, StatusRecord } from "@/components/dashboard/Table";
-import { useChangeBrandStatusMutation, useDeleteBrandMutation, useGetAllBrandQuery } from "@/lib/market/brandApi";
+import { useChangeBrandStatusMutation, useDeleteBrandMutation, useGetAllBrandQuery } from "@/services/market/brandApi";
  
 const Index = () => {   
     const  columns =[

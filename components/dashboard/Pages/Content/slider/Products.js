@@ -8,7 +8,7 @@ import {   MultipleSelect  } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { useDispatch } from 'react-redux'
-import { useAddNewProductsMutation, useGetProductsQuery } from '@/lib/content/sliderApi'
+import { useAddNewProductsMutation, useGetProductsQuery } from '@/services/content/sliderApi'
 import ProductSliderSchema from '@/validation/doshboard/content/slider/productsValidation'
  
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

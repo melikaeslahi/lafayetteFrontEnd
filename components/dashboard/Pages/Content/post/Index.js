@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, ShowImage, StatusRecord } from "@/components/dashboard/Table";
-import { useChangePostCommentableMutation, useChangePostStatusMutation, useDeletePostMutation, useGetAllPostQuery } from "@/lib/content/postApi";
+import { useChangePostCommentableMutation, useChangePostStatusMutation, useDeletePostMutation, useGetAllPostQuery } from "@/services/content/postApi";
  
 
 const Index = () => {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "../inputs";
 import { usePathname } from "next/navigation";
-import { useCanceledPaymentMutation, useReturnedPaymentMutation } from "@/lib/market/paymentApi";
+import { useCanceledPaymentMutation, useReturnedPaymentMutation } from "@/services/market/paymentApi";
 import { useEffect } from "react";
 import { useToast } from "react-toastify";
 

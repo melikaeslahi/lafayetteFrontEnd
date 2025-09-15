@@ -11,7 +11,7 @@ import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboa
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
  
 import EditStoreSchema from '@/validation/doshboard/market/store/editStoreValidation'
-import { useGetProductQuery, useUpdateStoreMutation } from '@/lib/market/storeApi'
+import { useGetProductQuery, useUpdateStoreMutation } from '@/services/market/storeApi'
  
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 const UpdateStore = ({ params }) => {

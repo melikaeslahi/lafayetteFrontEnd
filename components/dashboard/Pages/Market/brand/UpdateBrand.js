@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { Input, InputFrame, InputTags, SelectImage } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer' 
-import { useGetBrandQuery, useUpdateBrandMutation } from '@/lib/market/brandApi'
+import { useGetBrandQuery, useUpdateBrandMutation } from '@/services/market/brandApi'
 import EditBrandSchema from '@/validation/doshboard/market/brand/editBrandValidation' 
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 const UpdateBrand = ({ params }) => {

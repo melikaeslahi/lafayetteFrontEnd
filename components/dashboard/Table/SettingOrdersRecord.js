@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../inputs";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useChangeSendStatusMutation,useChangeOrderStatusMutation ,useCancelOrderMutation } from "@/lib/market/orderApi";
+import { useChangeSendStatusMutation,useChangeOrderStatusMutation ,useCancelOrderMutation } from "@/services/market/orderApi";
 
 const SettinOrdersRecord=({id , })=>{
     const pathname = usePathname();

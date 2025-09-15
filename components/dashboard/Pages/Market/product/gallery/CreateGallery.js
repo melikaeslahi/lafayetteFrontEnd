@@ -9,7 +9,7 @@ import {   Input   } from '@/components/dashboard/inputs'
  
  
 import CreateGallerySchema from '@/validation/doshboard/market/gallery/createGalleryValidations'
-import { useAddNewGalleryMutation } from '@/lib/market/galleryApi'
+import { useAddNewGalleryMutation } from '@/services/market/galleryApi'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

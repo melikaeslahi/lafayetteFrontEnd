@@ -6,7 +6,7 @@ import {   useEffect } from 'react'
  
 import {   Input } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewAmazingSaleMutation, useGetProductsQuery } from '@/lib/market/amazingSaleApi'
+import { useAddNewAmazingSaleMutation, useGetProductsQuery } from '@/services/market/amazingSaleApi'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

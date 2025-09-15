@@ -7,7 +7,7 @@ import {   useEffect } from 'react'
 import {   Input  } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewDeliveryMutation } from '@/lib/market/deliveryApi'
+import { useAddNewDeliveryMutation } from '@/services/market/deliveryApi'
 import DeliverySchema from '@/validation/doshboard/market/delivery/DeliveryValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

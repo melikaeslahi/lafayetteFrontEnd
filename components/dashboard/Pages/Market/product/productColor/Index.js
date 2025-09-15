@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
-import { useDeleteProductColorMutation, useGetAllProductColorQuery } from "@/lib/market/productColorApi";
+import { useDeleteProductColorMutation, useGetAllProductColorQuery } from "@/services/market/productColorApi";
  
 
 const Index = ({params}) => {

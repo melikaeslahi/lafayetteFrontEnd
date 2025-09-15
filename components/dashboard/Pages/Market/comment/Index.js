@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, StatusRecord ,CustomTable, SettingCommentRecord } from "@/components/dashboard/Table";
-import { useChangeApprovedMutation, useChangeCommentStatusMutation, useGetAllCommentQuery } from "@/lib/market/commentApi";
+import { useChangeApprovedMutation, useChangeCommentStatusMutation, useGetAllCommentQuery } from "@/services/market/commentApi";
  
 const Index = () => {
     const  columns =[

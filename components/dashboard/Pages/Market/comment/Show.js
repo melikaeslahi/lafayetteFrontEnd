@@ -7,7 +7,7 @@ import {   useEffect } from 'react'
 import { Editor } from '@/components/dashboard/inputs'
 
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useGetCommentQuery, useAddNewAnswerMutation } from '@/lib/market/commentApi'
+import { useGetCommentQuery, useAddNewAnswerMutation } from '@/services/market/commentApi'
 import ShowCommentSchema from '@/validation/doshboard/market/comment/showValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

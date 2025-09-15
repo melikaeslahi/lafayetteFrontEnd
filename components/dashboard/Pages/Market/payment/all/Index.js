@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingCommentRecord } from "@/components/dashboard/Table";
-import { useGetAllPaymentQuery } from "@/lib/market/paymentApi";
+import { useGetAllPaymentQuery } from "@/services/market/paymentApi";
 
 const Index = () => {
    

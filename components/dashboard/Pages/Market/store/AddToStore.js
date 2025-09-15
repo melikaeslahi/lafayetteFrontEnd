@@ -6,7 +6,7 @@ import {   useEffect } from 'react'
  
 import { Editor, Input  } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddToStoreMutation } from '@/lib/market/storeApi'
+import { useAddToStoreMutation } from '@/services/market/storeApi'
 import CreateStoreSchema from '@/validation/doshboard/market/store/createStoreValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

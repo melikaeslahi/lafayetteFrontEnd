@@ -11,7 +11,7 @@ import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboa
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
  
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
-import { useGetCopanQuery, useGetUsersQuery, useUpdateCopanMutation } from '@/lib/market/copanApi'
+import { useGetCopanQuery, useGetUsersQuery, useUpdateCopanMutation } from '@/services/market/copanApi'
 import CopanSchema from '@/validation/doshboard/market/discount/copan/copanValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

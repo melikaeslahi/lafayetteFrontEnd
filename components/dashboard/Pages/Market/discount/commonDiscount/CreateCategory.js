@@ -6,7 +6,7 @@ import {   useEffect } from 'react'
  
 import {  Input  } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewCommonDiscountMutation } from '@/lib/market/commonDiscountApi'
+import { useAddNewCommonDiscountMutation } from '@/services/market/commonDiscountApi'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
  
 import { useDispatch  } from 'react-redux'

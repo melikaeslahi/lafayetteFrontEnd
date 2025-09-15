@@ -4,7 +4,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { faEllipsisV, faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useChangeProductStatusMutation, useChangeMarketableMutation, useDeleteProductMutation, useGetAllProductQuery } from "@/lib/market/productApi";
+import { useChangeProductStatusMutation, useChangeMarketableMutation, useDeleteProductMutation, useGetAllProductQuery } from "@/services/market/productApi";
 import Link from "next/link";
  
 const Index = () => {

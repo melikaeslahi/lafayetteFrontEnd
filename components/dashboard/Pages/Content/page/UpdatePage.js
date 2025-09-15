@@ -9,7 +9,7 @@ import { Editor, Input,InputTags } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
  
-import { useGetPageQuery, useUpdatePageMutation } from '@/lib/content/pageApi'
+import { useGetPageQuery, useUpdatePageMutation } from '@/services/content/pageApi'
 import EditPageSchema from '@/validation/doshboard/content/page/editPageValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

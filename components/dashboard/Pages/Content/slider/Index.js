@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, StatusRecord } from "@/components/dashboard/Table";
-import { useChangeSliderStatusMutation, useDeleteSliderMutation, useGetAllSliderQuery } from "@/lib/content/sliderApi";
+import { useChangeSliderStatusMutation, useDeleteSliderMutation, useGetAllSliderQuery } from "@/services/content/sliderApi";
  
 const Index = () => {    
     const  columns =[

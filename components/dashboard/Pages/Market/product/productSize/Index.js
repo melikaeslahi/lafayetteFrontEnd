@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
-import { useDeleteProductSizeMutation, useGetAllProductSizeQuery } from "@/lib/market/productSizeApi";
+import { useDeleteProductSizeMutation, useGetAllProductSizeQuery } from "@/services/market/productSizeApi";
  
 const Index = ({params}) => {    
     const  columns =[

@@ -4,7 +4,7 @@ import { usePathname  } from "next/navigation";
 import { faEdit  } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link";
-import { useGetAllProductQuery } from "@/lib/market/storeApi";
+import { useGetAllProductQuery } from "@/services/market/storeApi";
  
 const Index = () => {   
     const pathname = usePathname();

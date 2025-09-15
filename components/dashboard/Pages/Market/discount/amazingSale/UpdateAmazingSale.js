@@ -9,7 +9,7 @@ import {   Input  } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer' 
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
-import { useGetAmazingSaleQuery, useGetProductsQuery, useUpdateAmazingSaleMutation } from '@/lib/market/amazingSaleApi'
+import { useGetAmazingSaleQuery, useGetProductsQuery, useUpdateAmazingSaleMutation } from '@/services/market/amazingSaleApi'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 import AmazingSaleSchema from '@/validation/doshboard/market/discount/AmazingSale/amazingSaleValidation'
 const UpdateAmazingSale = ({ params }) => {

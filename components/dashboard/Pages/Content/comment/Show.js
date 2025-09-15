@@ -8,7 +8,7 @@ import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import ShowCommentSchema from '@/validation/doshboard/market/comment/showValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
-import { useAddNewAnswerPostMutation, useGetCommentPostQuery } from '@/lib/content/commentPostApi'
+import { useAddNewAnswerPostMutation, useGetCommentPostQuery } from '@/services/content/commentPostApi'
 
 
 const ShowComment = ({ params }) => {

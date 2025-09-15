@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
-import { useDeleteValueMutation, useGetAllValueQuery } from "@/lib/market/categoryValueApi";
+import { useDeleteValueMutation, useGetAllValueQuery } from "@/services/market/categoryValueApi";
  
 const Index = ({params}) => {   
     const  columns =[

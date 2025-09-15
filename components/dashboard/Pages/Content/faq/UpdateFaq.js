@@ -10,7 +10,7 @@ import { Editor, Input,   InputTags } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
  
-import { useGetFaqQuery, useUpdateFaqMutation } from '@/lib/content/faqApi'
+import { useGetFaqQuery, useUpdateFaqMutation } from '@/services/content/faqApi'
 import EditFaqSchema from '@/validation/doshboard/content/faq/editFaq'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

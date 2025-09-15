@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, StatusRecord } from "@/components/dashboard/Table";
-import { useChangeMenuStatusMutation, useDeleteMenuMutation, useGetAllMenusQuery } from "@/lib/content/menuApi";
+import { useChangeMenuStatusMutation, useDeleteMenuMutation, useGetAllMenusQuery } from "@/services/content/menuApi";
  
 
 const Index = () => { 

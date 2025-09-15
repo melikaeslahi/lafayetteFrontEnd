@@ -8,7 +8,7 @@ import {   Input  } from '@/components/dashboard/inputs'
  
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewCopanMutation, useGetUsersQuery } from '@/lib/market/copanApi'
+import { useAddNewCopanMutation, useGetUsersQuery } from '@/services/market/copanApi'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
 import CopanSchema from '@/validation/doshboard/market/discount/copan/copanValidation'
 

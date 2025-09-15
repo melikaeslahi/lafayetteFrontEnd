@@ -1,6 +1,6 @@
 'use client'
 import { SettingRecord , ShowImage , CustomTable ,StatusRecord } from "@/components/dashboard/Table";
-import { useChangeBannerStatusMutation, useDeleteBannerMutation, useGetAllBannerQuery } from "@/lib/content/bannerApi";
+import { useChangeBannerStatusMutation, useDeleteBannerMutation, useGetAllBannerQuery } from "@/services/content/bannerApi";
  
  
 const Index = () => {

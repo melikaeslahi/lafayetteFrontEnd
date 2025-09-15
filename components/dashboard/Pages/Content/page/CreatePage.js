@@ -8,7 +8,7 @@ import {  useEffect } from 'react'
 import { Editor, Input, InputTags } from '@/components/dashboard/inputs'
 
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewPageMutation } from '@/lib/content/pageApi'
+import { useAddNewPageMutation } from '@/services/content/pageApi'
 import CreatePageSchema from '@/validation/doshboard/content/page/createPageValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

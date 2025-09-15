@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import {   Input  } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useGetDeliveryQuery, useUpdateDeliveryMutation } from '@/lib/market/deliveryApi'
+import { useGetDeliveryQuery, useUpdateDeliveryMutation } from '@/services/market/deliveryApi'
 import DeliverySchema from '@/validation/doshboard/market/delivery/DeliveryValidation'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 

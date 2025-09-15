@@ -6,7 +6,7 @@ import {    useEffect } from 'react'
  
 import { Editor, Input, InputFrame, InputTags, SelectImage } from '@/components/dashboard/inputs'
 import EditPostSchema from '@/validation/doshboard/content/post/editPostValidate'
-import { useGetAllCategoryQuery, useGetPostQuery, useUpdatePostMutation } from '@/lib/content/postApi'
+import { useGetAllCategoryQuery, useGetPostQuery, useUpdatePostMutation } from '@/services/content/postApi'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'

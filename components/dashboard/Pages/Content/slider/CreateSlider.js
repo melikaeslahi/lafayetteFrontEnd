@@ -8,7 +8,7 @@ import {  useEffect } from 'react'
 import {   Input } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewSliderMutation, useGetAllParentIdQuery } from '@/lib/content/sliderApi'
+import { useAddNewSliderMutation, useGetAllParentIdQuery } from '@/services/content/sliderApi'
 import SliderSchema from '@/validation/doshboard/content/slider/sliderValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

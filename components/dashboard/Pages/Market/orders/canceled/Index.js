@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingOrdersRecord } from "@/components/dashboard/Table";
-import { useGetCanceledOrderQuery } from "@/lib/market/orderApi";
+import { useGetCanceledOrderQuery } from "@/services/market/orderApi";
  
 const Index = () => {
 

@@ -5,7 +5,7 @@ import TitlePage from '@/components/dashboard/TitlePage'
  
  
 import { Editor, Input, InputTags, ResponseError } from '@/components/dashboard/inputs'
-import { useAddNewProductMutation, useGetCategoriesAndBrandsQuery, } from '@/lib/market/productApi'
+import { useAddNewProductMutation, useGetCategoriesAndBrandsQuery, } from '@/services/market/productApi'
 import CreateProductSchema from '@/validation/doshboard/market/product/createProduct'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
 import {  FieldArray, Form, Formik } from 'formik'

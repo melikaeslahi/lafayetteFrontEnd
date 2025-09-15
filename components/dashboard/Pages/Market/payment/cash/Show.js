@@ -4,7 +4,7 @@ import TitlePage from '@/components/dashboard/TitlePage'
 import {   useEffect } from 'react' 
 import {  setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useGetPaymentQuery } from '@/lib/market/paymentApi'
+import { useGetPaymentQuery } from '@/services/market/paymentApi'
 import { useDispatch } from 'react-redux'
 
 const  ShowPayment = ({params}) => {

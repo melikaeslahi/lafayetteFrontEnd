@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingPaymentRecord } from "@/components/dashboard/Table";
-import {  useGetOfflinePaymentQuery  } from "@/lib/market/paymentApi";
+import {  useGetOfflinePaymentQuery  } from "@/services/market/paymentApi";
 
 const Index = () => {
 

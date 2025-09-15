@@ -18,15 +18,22 @@ export const baseApi = createApi({
          return headers
        },
     }),
-    tagTypes: ['PostCategory'],
+    tagTypes: [
+      //content
+      'PostCategory','Banner','CommentPost','FAQ','Menu','Page','Post',
+      //market
+      'AmazingSale', 'Brand' , 'Product' , 'Comment' ,'Value' , 'CommonDiscount', 'Copan' , 'Delivery'
+    ],
 
     endpoints: (builder) => ({
        
         getCsrf:builder.query({
             query:()=>`${process.env.NEXT_PUBLIC_BACKEND_URL}/sanctum/csrf-cookie`
            }),
-        })
-})
+        }),
+ 
+
+});
  
 
 export const {useGetCsrfQuery} = baseApi;
