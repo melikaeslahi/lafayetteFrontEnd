@@ -2,8 +2,8 @@
 import { Button, Input } from "@/components/dashboard/inputs";
 import PaymentContent from "@/components/shop/pages/payment/PaymentContent";
 import Sidebar from "@/components/shop/pages/salesProccess/profileCompletion/Sidebar";
-import { useAddCopanDiscountMutation, useGetPaymentDataQuery } from "@/lib/customer/salesProccess/paymentApi";
-import { useGetProfileCompletionQuery, useUpdateProfileCompletionMutation } from "@/lib/customer/salesProccess/profileCompletionApi";
+import { useAddCopanDiscountMutation, useGetPaymentDataQuery } from "@/services/customer/salesProccess/paymentApi";
+import { useGetProfileCompletionQuery, useUpdateProfileCompletionMutation } from "@/services/customer/salesProccess/profileCompletionApi";
 import { setOrder } from "@/store/reducers/customer/paymentSlice";
 import ProfileCompletionSchema from "@/validation/customer/salesProccess/profileCompletionValidation";
 import { Form, Formik } from "formik";

@@ -1,6 +1,6 @@
 import MobileContainer from "./MobileContainer"
 import { Button, Input } from "@/components/dashboard/inputs";
-import {   useSetFilteringMutation } from "@/lib/customer/homeApi";
+import {   useSetFilteringMutation } from "@/services/customer/homeApi";
 import { faAngleDown, faAngleLeft,  faFilter, faSortAmountAsc } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Field, Form, Formik } from "formik";

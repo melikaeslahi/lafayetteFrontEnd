@@ -3,7 +3,7 @@ import Image from "next/image";
  
 import { convertEnglishToPersian, priceFormatter } from "@/helper/helper";
 import { useSelector } from "react-redux";
-import { usePaymentSubmitMutation } from "@/lib/customer/salesProccess/paymentApi";
+import { usePaymentSubmitMutation } from "@/services/customer/salesProccess/paymentApi";
 import SidbarFrame from "../SidebarFrame";
 
 const Sidebar = ( ) => {

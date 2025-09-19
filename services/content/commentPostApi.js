@@ -1,5 +1,6 @@
 import { baseApi } from '../baseApi';
 
+const url = 'admin/content/comment';
 
 export const  commentPostApi = baseApi.injectEndpoints({
 
@@ -8,19 +9,19 @@ export const  commentPostApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/content/comment/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
             providesTags: ['CommentPost'],
         }),
         changeCommentPostStatus: builder.mutation({
-            query: (id) => `/content/comment/status/${id}`,
+            query: (id) => `${url}/status/${id}`,
 
             invalidatesTags: ['CommentPost']
         }),
         changeApprovedPost: builder.mutation({
-            query: (id) => `/content/comment/approved/${id}`,
+            query: (id) => `${url}/approved/${id}`,
 
             invalidatesTags: ['CommentPost']
         }),
@@ -28,7 +29,7 @@ export const  commentPostApi = baseApi.injectEndpoints({
         addNewAnswerPost: builder.mutation({
             query: ({formData  , id}) => {
                 return {
-                    url: `/content/comment/answer/${id}`,
+                    url: `${url}/answer/${id}`,
                     method: 'POST',
                     body: formData,
                     
@@ -37,10 +38,11 @@ export const  commentPostApi = baseApi.injectEndpoints({
             invalidatesTags: ['CommentPost'],
 
         }),
+
         getCommentPost: builder.query({
             query: ({id}) => {
                 return {
-                    url: `/content/comment/comment/${id}`,
+                    url: `${url}/comment/${id}`,
                 }
             },
             providesTags: ['CommentPost'],

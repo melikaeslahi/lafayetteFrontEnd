@@ -8,7 +8,7 @@ import { isBrowser, isMobile } from "react-device-detect";
 import { useDispatch, useSelector } from "react-redux";
 import Filtering from "./Filtering";
 import { setProducts } from "@/store/reducers/customer/ProductsSlice";
-import { useSetFilteringMutation } from "@/lib/customer/homeApi";
+import { useSetFilteringMutation } from "@/services/customer/homeApi";
 import { Field, Form, Formik } from "formik";
 import SelectedFiltering from "@/components/shop/pages/market/products/SelectedFiltering";
 import Sorting from "@/components/shop/pages/market/products/Sorting";

@@ -1,4 +1,4 @@
-import { useAddToCartMutation } from "@/lib/customer/salesProccess/cartApi";
+import { useAddToCartMutation } from "@/services/customer/salesProccess/cartApi";
 import { createSlice, current } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 

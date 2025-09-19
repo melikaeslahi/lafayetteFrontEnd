@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import { useSelector } from "react-redux";
 import { Button } from "@mantine/core";
-import { useDeleteFavoriteMutation } from "@/lib/customer/profile/profileApi";
+import { useDeleteFavoriteMutation } from "@/services/customer/profile/profileApi";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 

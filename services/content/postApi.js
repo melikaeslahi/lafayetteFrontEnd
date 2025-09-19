@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url = 'admin/content/posts'
+
 export const postApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
@@ -7,7 +9,7 @@ export const postApi = baseApi.injectEndpoints({
         query: (arg) => {
             const { page = 1, perPage = 0, search } = arg;
             return {
-                url: `/content/posts/${perPage}/${search}`,
+                url: `${url}/${perPage}/${search}`,
                 params: { page },
             }
         },
@@ -15,20 +17,20 @@ export const postApi = baseApi.injectEndpoints({
     
     }),
     changePostStatus: builder.mutation({
-        query: (id) => `/content/posts/status/${id}`,
+        query: (id) => `${url}/status/${id}`,
 
         invalidatesTags: ['Post']
     }),
 
     changePostCommentable: builder.mutation({
-        query: (id) => `/content/posts/commentable/${id}`,
+        query: (id) => `${url}/commentable/${id}`,
 
         invalidatesTags: ['Post']
     }),
     deletePost: builder.mutation({
         query(id) {
             return {
-                url: `/content/posts/delete/${id}`,
+                url: `${url}/delete/${id}`,
                 method: 'DELETE',            
             }
         },
@@ -38,7 +40,7 @@ export const postApi = baseApi.injectEndpoints({
     addNewPost: builder.mutation({
         query: (formData) => {
             return {
-                url: `/content/posts/store`,
+                url: `${url}/store`,
                 method: 'POST',
                 body: formData,
             }
@@ -50,7 +52,7 @@ export const postApi = baseApi.injectEndpoints({
         query: ({ id, formData }) => {
 
             return {
-                url: `/content/posts/update/${id}`,
+                url: `${url}/update/${id}`,
                 method: 'POST',
                 body: formData,
             }
@@ -61,7 +63,7 @@ export const postApi = baseApi.injectEndpoints({
     getAllCategory: builder.query({
         query: () => {
             return {
-                url: `/content/posts/category`,
+                url: `${url}/category`,
             }
         },
         providesTags: ['Post'],
@@ -69,7 +71,7 @@ export const postApi = baseApi.injectEndpoints({
     getPost: builder.query({
         query: (id) => {
             return {
-                url: `/content/posts/post/${id}`,
+                url: `${url}/post/${id}`,
             }
         },
         providesTags: ['Post'],

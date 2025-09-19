@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
  
 import Link from "next/link";
 import TicketContainer from "@/components/shop/pages/profile/tickets/TicketContainer";
-import { useChangeTicketMutation, useGetAllTicketsMutation  } from "@/lib/customer/profile/profileApi";
+import { useChangeTicketMutation, useGetAllTicketsMutation  } from "@/services/customer/profile/profileApi";
  
 
 

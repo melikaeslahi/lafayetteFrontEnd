@@ -1,22 +1,24 @@
 import { baseApi } from "../baseApi";
 
+const url = 'admin/content/category';
+
 export const postCategoryApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({  
         getAllPostCategory: builder.query({
             query: ({ page = 1, perPage = 10, search  }) => ({
-              url: `/content/category/${perPage}/${search}`,
+              url: `${url}/${perPage}/${search}`,
               params: { page },
             }),
             providesTags: ['PostCategory'],
           }),
         changePostCategoryStatus: builder.mutation({
-            query: (id) => `content/category/status/${id}`,
+            query: (id) => `${url}/status/${id}`,
             invalidatesTags: ['PostCategory']
         }),
         deletePostCategory: builder.mutation({
             query(id) {
                 return {
-                    url: `content/category/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',           
                 }
             },
@@ -26,7 +28,7 @@ export const postCategoryApi = baseApi.injectEndpoints({
         addNewPostCategory: builder.mutation({
             query: (body) => {
                 return {
-                    url: `content/category/store`,
+                    url: `${url}/store`,
                     method: 'POST',
                     body,          
                 }
@@ -37,7 +39,7 @@ export const postCategoryApi = baseApi.injectEndpoints({
         updatePostCategory: builder.mutation({
             query: ({ id, formData }) => {
                 return {
-                    url: `content/category/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -48,7 +50,7 @@ export const postCategoryApi = baseApi.injectEndpoints({
         getAllParentId: builder.query({
             query: () => {
                 return {
-                    url: `content/category/parentId`,
+                    url: `${url}/parentId`,
                 }
             },
             providesTags: ['PostCategory'],
@@ -56,7 +58,7 @@ export const postCategoryApi = baseApi.injectEndpoints({
         getCategory: builder.query({
             query: (id) => {
                 return {
-                    url: `content/category/category/${id}`,
+                    url: `${url}/category/${id}`,
                 }
             },
             providesTags: ['PostCategory'],
@@ -66,7 +68,6 @@ export const postCategoryApi = baseApi.injectEndpoints({
 });
 
  
-
 export const { 
     useGetAllPostCategoryQuery,
     useChangePostCategoryStatusMutation,

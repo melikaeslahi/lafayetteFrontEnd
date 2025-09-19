@@ -20,9 +20,12 @@ export const baseApi = createApi({
     }),
     tagTypes: [
       //content
-      'PostCategory','Banner','CommentPost','FAQ','Menu','Page','Post',
+      'PostCategory','Banner','CommentPost','FAQ','Menu','Page','Post', 'Slider',
       //market
-      'AmazingSale', 'Brand' , 'Product' , 'Comment' ,'Value' , 'CommonDiscount', 'Copan' , 'Delivery'
+      'AmazingSale', 'Brand' , 'Product' , 'Comment' ,'Value' , 'CommonDiscount', 'Copan' , 'Delivery' ,'Gallery',
+      'Product','ProductCategory','Color','Store','Size',
+      //customer
+      'MarketProduct', 'Profile' , 'Address', 'CartItem' , 'Payment','ProfileCompletion'
     ],
 
     endpoints: (builder) => ({

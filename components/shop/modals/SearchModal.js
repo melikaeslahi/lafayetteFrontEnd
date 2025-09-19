@@ -1,6 +1,6 @@
 import { Input } from "@/components/dashboard/inputs";
 import Modal from "@/components/shop/Modal";
-import { useSetFilteringMutation } from "@/lib/customer/homeApi";
+import { useSetFilteringMutation } from "@/services/customer/homeApi";
 import { setProducts } from "@/store/reducers/customer/ProductsSlice";
 import { setSearch } from "@/store/reducers/customer/UtilSlice";
 import { setIsSearch } from "@/store/reducers/dashboard/UtilSlice";

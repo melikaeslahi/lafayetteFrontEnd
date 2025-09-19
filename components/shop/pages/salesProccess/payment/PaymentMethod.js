@@ -4,7 +4,7 @@ import { Button, Input } from "@/components/dashboard/inputs";
 import Modal from "@/components/shop/Modal";
 import PaymentContent from "@/components/shop/pages/payment/PaymentContent";
 import Sidebar from "@/components/shop/pages/salesProccess/payment/Sidebar";
-import { useAddCopanDiscountMutation, useGetPaymentDataQuery, usePaymentSubmitMutation } from "@/lib/customer/salesProccess/paymentApi";
+import { useAddCopanDiscountMutation, useGetPaymentDataQuery, usePaymentSubmitMutation } from "@/services/customer/salesProccess/paymentApi";
 import { setCashReceiver, setOrder, setPaymentType } from "@/store/reducers/customer/paymentSlice";
 import { modalOpenClose, } from "@/store/reducers/dashboard/UtilSlice";
 import cashReceiverSchema from "@/validation/customer/salesProccess/cashReceiverValidation";

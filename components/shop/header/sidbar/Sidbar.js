@@ -5,7 +5,7 @@ import { setSidebarOpen } from "@/store/reducers/dashboard/UtilSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus, faClose } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import { useGetMenusQuery } from "@/lib/customer/homeApi";
+import { useGetMenusQuery } from "@/services/customer/homeApi";
 import CategorySidebar from "./CategorySidebar";
 import SidebarMenuItem from "./SidebarMenuItem";
 import { getMenuItemOpen, setMenuItemOpen } from "@/store/reducers/customer/sidebarSlice";

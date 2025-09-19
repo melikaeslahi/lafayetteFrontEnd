@@ -1,5 +1,5 @@
 'use client';
-import { useGetPageMutation } from "@/lib/customer/homeApi";
+import { useGetPageMutation } from "@/services/customer/homeApi";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";

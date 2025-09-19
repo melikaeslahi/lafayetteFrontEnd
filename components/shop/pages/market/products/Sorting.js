@@ -2,7 +2,7 @@
 import {   faSortAmountAsc } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Field, Form, Formik } from "formik";
-import { useGetProductsMutation, useSetFilteringMutation } from "@/lib/customer/homeApi";
+import { useGetProductsMutation, useSetFilteringMutation } from "@/services/customer/homeApi";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { isBrowser } from "react-device-detect";

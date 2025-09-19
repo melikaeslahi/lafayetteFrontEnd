@@ -8,7 +8,7 @@ import { modalOpenClose, setIsCartItemModal } from "@/store/reducers/dashboard/U
 import { getTotal } from "@/store/reducers/customer/cartSlice";
 import { useEffect } from "react";
 import { convertEnglishToPersian, priceFormatter } from "@/helper/helper";
-import { useGetCartQuery } from "@/lib/customer/salesProccess/cartApi";
+import { useGetCartQuery } from "@/services/customer/salesProccess/cartApi";
 const CartItemModal = () => {
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);

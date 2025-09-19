@@ -7,7 +7,7 @@ import CreateAddress from "@/components/shop/pages/profile/address/CreateAddress
 import UpdateAddress from "@/components/shop/pages/profile/address/UpdateAddress";
 import Sidebar from "@/components/shop/pages/salesProccess/choseAddressAndDelivery/Sidebar";
 import { priceFormatter } from "@/helper/helper";
-import { useChooseAddressAndDeliveryMutation, useGetAddressAndDeliveryQuery } from "@/lib/customer/salesProccess/addressApi";
+import { useChooseAddressAndDeliveryMutation, useGetAddressAndDeliveryQuery } from "@/services/customer/salesProccess/addressApi";
 import { modalOpenClose, setIsCreateAddressModal, setIsUpdateAddressModal, setUpdateAddress,   } from "@/store/reducers/dashboard/UtilSlice";
 import { faCalendar, faEdit, faMapMarkerAlt, faMobileAlt, faPlusSquare, faShippingFast, faUserTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

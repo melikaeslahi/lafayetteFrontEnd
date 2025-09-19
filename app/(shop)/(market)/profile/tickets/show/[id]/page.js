@@ -8,7 +8,7 @@ import { TableError404, TableLoading, TableNotFound } from '@/components/dashboa
 import { setErrorData, setSuccessMessage } from '@/store/reducers/dashboard/UtilSlice'
 import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
-import { useAnswerTicketMutation, useGetTicketMutation } from "@/lib/customer/profile/profileApi";
+import { useAnswerTicketMutation, useGetTicketMutation } from "@/services/customer/profile/profileApi";
 import TicketAnswerSchema from "@/validation/customer/profile/ticketAnswerValidation";
 import Link from "next/link";
 

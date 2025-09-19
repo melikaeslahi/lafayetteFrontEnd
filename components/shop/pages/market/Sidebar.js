@@ -4,7 +4,7 @@ import profile from '../../../../public/image/profile.jpg'
 import { useDispatch, useSelector } from "react-redux";
 import { priceFormatter } from "@/helper/helper";
 import { addToCart } from "@/store/reducers/customer/cartSlice";
-import { useAddToCartMutation } from "@/lib/customer/salesProccess/cartApi";
+import { useAddToCartMutation } from "@/services/customer/salesProccess/cartApi";
 
 const Sidebar = ( ) => {
     const dispatch =useDispatch();

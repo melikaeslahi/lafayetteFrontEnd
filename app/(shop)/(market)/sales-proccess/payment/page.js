@@ -3,7 +3,7 @@ import { Button, Input } from "@/components/dashboard/inputs";
 import PaymentContent from "@/components/shop/pages/payment/PaymentContent";
 import PaymentMethod from "@/components/shop/pages/salesProccess/payment/PaymentMethod";
 import Sidebar from "@/components/shop/pages/salesProccess/payment/Sidebar";
-import { useAddCopanDiscountMutation, useGetPaymentDataQuery } from "@/lib/customer/salesProccess/paymentApi";
+import { useAddCopanDiscountMutation, useGetPaymentDataQuery } from "@/services/customer/salesProccess/paymentApi";
 import { setOrder } from "@/store/reducers/customer/paymentSlice";
 import copanSchema from "@/validation/customer/salesProccess/copanValidation";
 import { Form, Formik } from "formik";

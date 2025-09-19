@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 
-import { useGetOrdersQuery } from "@/lib/customer/profile/profileApi";
+import { useGetOrdersQuery } from "@/services/customer/profile/profileApi";
 import { useEffect, useState } from "react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";

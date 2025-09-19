@@ -1,7 +1,7 @@
 'use client'
 import { Button, Editor, Input, ResponseError } from "@/components/dashboard/inputs";
 import TicketContainer from "@/components/shop/pages/profile/tickets/TicketContainer";
-import { useAddNewTicketMutation, useGetPriorityAndCategoryMutation } from "@/lib/customer/profile/profileApi";
+import { useAddNewTicketMutation, useGetPriorityAndCategoryMutation } from "@/services/customer/profile/profileApi";
 import { setErrorData, setSuccessMessage } from "@/store/reducers/dashboard/UtilSlice";
 import TicketStoreSchema from "@/validation/customer/profile/ticketValidation";
 import { Form, Formik } from "formik";

@@ -1,6 +1,6 @@
 import { Editor, Input } from "@/components/dashboard/inputs";
 import Modal from "@/components/shop/Modal";
-import { useAddCommentMutation } from "@/lib/customer/market/productApi";
+import { useAddCommentMutation } from "@/services/customer/market/productApi";
 import { modalOpenClose, setErrorData,  setIsCommentModal,  setSuccessMessage } from "@/store/reducers/dashboard/UtilSlice";
 import CommentSchema from "@/validation/customer/market/commentValidation";
 import {  Form, Formik } from "formik";

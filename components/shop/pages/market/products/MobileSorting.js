@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { isBrowser } from "react-device-detect";
 import { setProducts, setSortValue } from "@/store/reducers/customer/ProductsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useSetFilteringMutation } from "@/lib/customer/homeApi";
+import { useSetFilteringMutation } from "@/services/customer/homeApi";
 import {   faSortAmountAsc } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const MobileSorting =()=>{

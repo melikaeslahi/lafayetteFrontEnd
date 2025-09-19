@@ -11,7 +11,7 @@ import TabContainer from "@/components/shop/tab/TabContainer";
 import TabContent from "@/components/shop/tab/TabContent";
 import TabItems from "@/components/shop/tab/TabItems";
 import { priceFormatter } from "@/helper/helper";
-import { useAddToFavoriteMutation, useGetProductMutation } from "@/lib/customer/market/productApi";
+import { useAddToFavoriteMutation, useGetProductMutation } from "@/services/customer/market/productApi";
 import { setCalculatePrice, setComments, setGallery, setIsFavorite, setNumber, setOriginalProductPrice, setProductDiscountPrice, setSelectedColorPrice, setSlug } from "@/store/reducers/customer/ProductSlice";
 import { setIsError, setIsLoading, setIsSuccess, setItemLength } from "@/store/reducers/dashboard/UtilSlice";
 import { faHeart, faStoreAlt } from "@fortawesome/free-solid-svg-icons";

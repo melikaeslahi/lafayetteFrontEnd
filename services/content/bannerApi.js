@@ -1,5 +1,6 @@
 import { baseApi } from "../baseApi";
 
+const url='admin/content/banner';
 
 export const bannerApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -7,7 +8,7 @@ export const bannerApi = baseApi.injectEndpoints({
         query: (arg) => {
             const { page = 1, perPage = 0, search } = arg;
             return {
-                url: `/content/banner/${perPage}/${search}`,
+                url: `${url}/${perPage}/${search}`,
                 params: { page },
             }
         },
@@ -15,14 +16,14 @@ export const bannerApi = baseApi.injectEndpoints({
     }),
 
     changeBannerStatus: builder.mutation({
-        query: (id) => `/content/banner/status/${id}`,
+        query: (id) => `${url}/status/${id}`,
         invalidatesTags: ['Banner']
     }),
 
     deleteBanner: builder.mutation({
         query(id) {
             return {
-                url: `/content/banner/delete/${id}`,
+                url: `${url}/content/banner/delete/${id}`,
                 method: 'DELETE',    
             }
         },
@@ -32,7 +33,7 @@ export const bannerApi = baseApi.injectEndpoints({
     addNewBanner: builder.mutation({
         query: (formData) => {
             return {
-                url: `/content/banner/store`,
+                url: `${url}/store`,
                 method: 'POST',
                 body:formData,
             }
@@ -43,7 +44,7 @@ export const bannerApi = baseApi.injectEndpoints({
     updateBanner: builder.mutation({
         query: ({ id, formData }) => {
             return {
-                url: `/content/banner/update/${id}`,
+                url: `${url}/update/${id}`,
                 method: 'POST',
                 body: formData,
             }
@@ -54,14 +55,14 @@ export const bannerApi = baseApi.injectEndpoints({
     getBanner: builder.query({
         query: (id) => {
             return {
-                url: `/content/banner/banner/${id}`,
+                url: `${url}/banner/${id}`,
             }
         },
         providesTags: ['Banner'],
     }),
 
     getPositions: builder.query({
-        query :() => 'content/banner/position' 
+        query :() => `${url}/position` 
     }),
 }),
     overrideExisting: false,

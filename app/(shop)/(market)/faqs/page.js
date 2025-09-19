@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetFaqsQuery } from "@/lib/customer/homeApi";
+import { useGetFaqsQuery } from "@/services/customer/homeApi";
 import { faAngleDown, faAngleLeft, faArrowLeft, faArrowRight, faDroplet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";

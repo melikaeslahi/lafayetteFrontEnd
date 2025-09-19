@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { convertEnglishToPersian, priceFormatter } from "@/helper/helper";
-import { useGetCartQuery } from "@/lib/customer/salesProccess/cartApi";
+import { useGetCartQuery } from "@/services/customer/salesProccess/cartApi";
 import { useEffect, useState } from "react";
 import { setSidbarDatabaseInfo } from "@/store/reducers/customer/cartSlice";
 import CartItemFromDatabase from "@/components/shop/pages/salesProccess/cartItem/CartItemFromDatabase";

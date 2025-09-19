@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url = 'admin/content/menus'
+
 export const  menuApi = baseApi.injectEndpoints({
     
     endpoints: (builder) => ({
@@ -7,21 +9,21 @@ export const  menuApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/content/menus/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
             providesTags: ['Menu'],
         }),
         changeMenuStatus: builder.mutation({
-            query: (id) => `status/${id}`,
+            query: (id) => `${url}/status/${id}`,
 
             invalidatesTags: ['Menu']
         }),
         deleteMenu: builder.mutation({
             query(id) {
                 return {
-                    url: `/content/menus/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',           
                 }
             },
@@ -31,7 +33,7 @@ export const  menuApi = baseApi.injectEndpoints({
         addNewMenu: builder.mutation({
             query: (formData) => {
                 return {
-                    url: `/content/menus/store`,
+                    url: `${url}/store`,
                     method: 'POST',
                     body: formData,
                 }
@@ -42,7 +44,7 @@ export const  menuApi = baseApi.injectEndpoints({
         updateMenu: builder.mutation({
             query: ({ id, formData }) => {
                 return {
-                    url: `/content/menus/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -52,7 +54,7 @@ export const  menuApi = baseApi.injectEndpoints({
         getAllParentId: builder.query({
             query: () => {
                 return {
-                    url: `/content/menus/parentId`,
+                    url: `${url}/parentId`,
                 }
             },
             providesTags: ['Menu'],
@@ -60,7 +62,7 @@ export const  menuApi = baseApi.injectEndpoints({
         getMenu: builder.query({
             query: (id) => {
                 return {
-                    url: `/content/menus/menu/${id}`,
+                    url: `${url}/menu/${id}`,
                 }
             },
             providesTags: ['Menu'],

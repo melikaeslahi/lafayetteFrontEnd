@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url = 'admin/content/page'
+
 export const  pageApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
     
@@ -7,21 +9,21 @@ export const  pageApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/content/page/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
             providesTags: ['Page'],
         }),
         changePageStatus: builder.mutation({
-            query: (id) => `/content/page/status/${id}`,
+            query: (id) => `${url}/status/${id}`,
 
             invalidatesTags: ['Page']
         }),
         deletePage: builder.mutation({
             query(id) {
                 return {
-                    url: `/content/page/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',          
                 }
             },
@@ -30,7 +32,7 @@ export const  pageApi = baseApi.injectEndpoints({
         addNewPage: builder.mutation({
             query: (formData) => {
                 return {
-                    url: `/content/page/store`,
+                    url: `${url}/store`,
                     method: 'POST',
                     body: formData,
                 }
@@ -43,7 +45,7 @@ export const  pageApi = baseApi.injectEndpoints({
             query: ({ id, formData }) => {
 
                 return {
-                    url: `/content/page/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -55,7 +57,7 @@ export const  pageApi = baseApi.injectEndpoints({
         getPage: builder.query({
             query: (id) => {
                 return {
-                    url: `/content/page/page/${id}`,
+                    url: `${url}/page/${id}`,
                 }
             },
             providesTags: ['Page'],

@@ -1,38 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Result } from 'postcss';
-import { HYDRATE } from 'next-redux-wrapper'
+import { baseApi } from '../baseApi';
 
 
 
-export const  productApi = createApi({
-    reducerPath: 'productApi',
-    baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/admin/market/product` ,
-    prepareHeaders: (headers, { extra }) => {
-        headers.set('X-XSRF-TOKEN' , extra.cookie) // cookies is the name of the field added to the extraArgument
-     
-         return headers
-       },
-}),
-    extractRehydrationInfo(action, { reducerPath }) {
-        if (action.type === HYDRATE) {
-            return action.payload[reducerPath]
-        }
-    },
-    tagTypes: ['Product'],
-
-    // headers:{
-    //     'Access-Control-Allow-Origin': '*',
-    //        'Content-Type' :'multipart/form-data'
-    // },
-    credentials: true,
-
+export const  productApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
   
         getAllProduct: builder.query({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `${perPage}/${search}`,
+                    url: `/market/product/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -41,19 +18,19 @@ export const  productApi = createApi({
 
         }),
         changeProductStatus: builder.mutation({
-            query: (id) => `status/${id}`,
+            query: (id) => `/market/product/status/${id}`,
 
             invalidatesTags: ['Product']
         }),
         changeMarketable: builder.mutation({
-            query: (id) => `marketable/${id}`,
+            query: (id) => `/market/product/marketable/${id}`,
 
             invalidatesTags: ['Product']
         }),
         deleteProduct: builder.mutation({
             query(id) {
                 return {
-                    url: `delete/${id}`,
+                    url: `/market/product/delete/${id}`,
                     method: 'DELETE',
 
                     // credentials:'include',            
@@ -67,7 +44,7 @@ export const  productApi = createApi({
         addNewProduct: builder.mutation({
             query: (payload) => {
                 return {
-                    url: `store`,
+                    url: `/market/product/store`,
                     method: 'POST',
 
                     body: payload,
@@ -83,50 +60,33 @@ export const  productApi = createApi({
             query: ({ id, formData }) => {
 
                 return {
-                    url: `update/${id}`,
+                    url: `/market/product/update/${id}`,
                     method: 'POST',
-
                     body: formData,
-
-
                 }
             },
             invalidatesTags: ['Product'],
-
         }),
       
         getProduct: builder.query({
             query: (id) => {
-
                 return {
-                    url: `product/${id}`,
-
+                    url: `/market/product/product/${id}`,
                 }
             },
             providesTags: ['Product'],
-          
-
         }),
-      
-     
+
          getCategoriesAndBrands: builder.query({
             query: () => {
-
                 return {
-                    url: `categoryAndBrand/`,
-
+                    url: `/market/product/categoryAndBrand/`,
                 }
             },
             providesTags: ['Product'],
-          
-
         }),
-
-    
-
-
-
-    })
+    }),
+    overrideExisting: false,
 });
 export const { 
         useGetAllProductQuery,
@@ -141,16 +101,4 @@ export const {
 
 
         
-// export const {
-//     useGetAllPostCategoryQuery,
-//     useChangePostCategoryStatusMutation,
-//     useDeletePostCategoryMutation,
-   
-//     useAddNewPostCategoryMutation,
-//     useUpdatePostCategoryMutation,
-//     useGetAllParentIdQuery,
-//     useGetCategoryQuery,
-//     util: { getRunningQueriesThunk },
-// } = apiSlice;
-
-// export const { getAllPostCategory,changePostCategoryStatus,getCategory ,getAllParentId,updatePostCategory,addNewPostCategory, deletePostCategory } = apiSlice.endpoints;
+ 

@@ -3,7 +3,7 @@
  
 import {  Input  } from "@/components/dashboard/inputs";
 import Modal from "@/components/shop/Modal";
-import { useUpdateProfileMutation } from "@/lib/customer/profile/profileApi";
+import { useUpdateProfileMutation } from "@/services/customer/profile/profileApi";
  
 import { modalOpenClose, setErrorData, setHandlerModal, setSuccessMessage } from "@/store/reducers/dashboard/UtilSlice";
 import ProfileSchema from "@/validation/customer/profile/profileValidation";

@@ -8,7 +8,7 @@ import TabItems from "@/components/shop/tab/TabItems";
 import TabContent from "@/components/shop/tab/TabContent";
 import ProductSlider from "@/components/shop/ProductSlider";
 import { SwiperSlide } from "swiper/react";
-import { useGetHomeDataQuery } from "@/lib/customer/homeApi";
+import { useGetHomeDataQuery } from "@/services/customer/homeApi";
 import Link from "next/link";
 import CartProduct from "@/components/shop/CartProduct";
 import { useEffect, useState } from "react";

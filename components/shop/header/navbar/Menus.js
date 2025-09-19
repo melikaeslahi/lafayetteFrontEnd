@@ -1,4 +1,4 @@
-import { useGetMenusQuery } from "@/lib/customer/homeApi";
+import { useGetMenusQuery } from "@/services/customer/homeApi";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import Categories from "../../pages/market/products/Categories";

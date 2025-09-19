@@ -3,7 +3,7 @@ import { Button } from "@/components/dashboard/inputs";
 import { faArrowAltCircleRight, faArrowRight, faBagShopping, faBars, faHeart, faLessThan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
-import { useAddToFavoriteMutation, useGetProductMutation } from "@/lib/customer/market/productApi";
+import { useAddToFavoriteMutation, useGetProductMutation } from "@/services/customer/market/productApi";
 import { useState , useEffect } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";

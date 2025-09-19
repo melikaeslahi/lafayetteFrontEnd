@@ -1,7 +1,7 @@
 'use client'
 import { TableError404, TableLoading } from "@/components/dashboard/Table";
 import ProfileContainer from "@/components/shop/pages/profile/ProfileContainer";
-import { useGetShowOrderQuery } from "@/lib/customer/profile/profileApi";
+import { useGetShowOrderQuery } from "@/services/customer/profile/profileApi";
 import { faArrowRight ,faEdit, faMapMarkerAlt, faMobileAlt, faTrashAlt, faUserTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";

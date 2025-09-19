@@ -1,7 +1,7 @@
 import { Input } from "@/components/dashboard/inputs";
 import Modal from "@/components/shop/Modal";
-import { useGetProvinceQuery, useUpdateProfileMutation } from "@/lib/customer/profile/profileApi";
-import { useGetCitiesMutation, useUpdateAddressMutation } from "@/lib/customer/salesProccess/addressApi";
+import { useGetProvinceQuery, useUpdateProfileMutation } from "@/services/customer/profile/profileApi";
+import { useGetCitiesMutation, useUpdateAddressMutation } from "@/services/customer/salesProccess/addressApi";
 
 import { modalOpenClose, setErrorData, setHandlerModal, setIsUpdateAddressModal, setSuccessMessage } from "@/store/reducers/dashboard/UtilSlice";
 import ProfileSchema from "@/validation/customer/profile/profileValidation";

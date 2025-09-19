@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url = 'admin/content/faq';
+
 export const  faqApi = baseApi.injectEndpoints({
     
     endpoints: (builder) => ({
@@ -8,21 +10,21 @@ export const  faqApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `content/faq/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
             providesTags: ['FAQ'],
         }),
         changeFaqStatus: builder.mutation({
-            query: (id) => `content/faq/status/${id}`,
+            query: (id) => `${url}/status/${id}`,
 
             invalidatesTags: ['FAQ']
         }),
         deleteFaq: builder.mutation({
             query(id) {
                 return {
-                    url: `content/faq/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',          
                 }
             },
@@ -32,7 +34,7 @@ export const  faqApi = baseApi.injectEndpoints({
         addNewFaq: builder.mutation({
             query: (formData) => {
                 return {
-                    url: `content/faq/store`,
+                    url: `${url}/store`,
                     method: 'POST',
                     body: formData,
                 }
@@ -44,7 +46,7 @@ export const  faqApi = baseApi.injectEndpoints({
             query: ({ id, formData }) => {
 
                 return {
-                    url: `content/faq/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -55,7 +57,7 @@ export const  faqApi = baseApi.injectEndpoints({
         getFaq: builder.query({
             query: (id) => {
                 return {
-                    url: `content/faq/faq/${id}`,
+                    url: `${url}/faq/${id}`,
                 }
             },
             providesTags: ['FAQ'],
@@ -64,7 +66,6 @@ export const  faqApi = baseApi.injectEndpoints({
     overrideExisting: false,
 });
 export const { 
- 
         useGetAllFaqsQuery,
         useChangeFaqStatusMutation,
         useDeleteFaqMutation,

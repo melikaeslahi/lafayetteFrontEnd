@@ -12,9 +12,9 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { addToCart, getTotal, setSidbarDatabaseInfo  } from "@/store/reducers/customer/cartSlice";
 import { convertEnglishToPersian } from "@/helper/helper";
-import { useGetCartQuery } from "@/lib/customer/salesProccess/cartApi";
+import { useGetCartQuery } from "@/services/customer/salesProccess/cartApi";
 import SearchModal from "./modals/SearchModal";
-import { useGetMenusQuery } from "@/lib/customer/homeApi";
+import { useGetMenusQuery } from "@/services/customer/homeApi";
 import Menus from "./header/navbar/Menus";
 import Sidebar from "./header/sidbar/Sidbar";
  

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useGetDetailOrderQuery } from "@/lib/customer/profile/profileApi";
+import { useGetDetailOrderQuery } from "@/services/customer/profile/profileApi";
 import { TableError404, TableLoading, TableNotFound } from "@/components/dashboard/Table";
 const Detail = ({ params }) => {
     const router = useRouter();
