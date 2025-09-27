@@ -9,7 +9,7 @@ import { Editor, Input } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
-import { useAddNewSMSMutation } from '@/lib/notify/SMSApi'
+import { useAddNewSMSMutation } from '@/services/notify/SMSApi'
 import SMSSchema from '@/validation/doshboard/notify/sms/SMSValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

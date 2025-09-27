@@ -25,7 +25,13 @@ export const baseApi = createApi({
       'AmazingSale', 'Brand' , 'Product' , 'Comment' ,'Value' , 'CommonDiscount', 'Copan' , 'Delivery' ,'Gallery',
       'Product','ProductCategory','Color','Store','Size',
       //customer
-      'MarketProduct', 'Profile' , 'Address', 'CartItem' , 'Payment','ProfileCompletion'
+      'MarketProduct', 'Profile' , 'Address', 'CartItem' , 'Payment','ProfileCompletion',
+      //notify
+      'Email', 'SMS',
+      //setting
+      'Setting',
+      //ticket
+      'TicketAdmin','Ticket','TicketCategory' , 'TicketPriority'
     ],
 
     endpoints: (builder) => ({

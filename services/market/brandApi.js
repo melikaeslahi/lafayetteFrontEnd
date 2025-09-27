@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url ="/admin/market/brand"
+
 export const  brandApi = baseApi.injectEndpoints({
 
     endpoints: (builder) => ({
@@ -7,21 +9,21 @@ export const  brandApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg; 
                 return {
-                    url: `/market/brand/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },    
                 }
             },
             providesTags: ['Brand'],
         }),
         changeBrandStatus: builder.mutation({
-            query: (id) => `/market/brand/status/${id}`,
+            query: (id) => `${url}/status/${id}`,
             invalidatesTags: ['Brand']
         }),
    
         deleteBrand: builder.mutation({
             query(id) {
                 return {
-                    url: `/market/brand/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',     
                 }
             },
@@ -31,7 +33,7 @@ export const  brandApi = baseApi.injectEndpoints({
         addNewBrand: builder.mutation({
             query: (formData) => {
                 return {
-                    url: `/market/brand/store`,
+                    url: `${url}/store`,
                     method: 'POST',
                     body: formData,
                 }
@@ -43,7 +45,7 @@ export const  brandApi = baseApi.injectEndpoints({
             query: ({ id, formData }) => {
 
                 return {
-                    url: `/market/brand/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -55,7 +57,7 @@ export const  brandApi = baseApi.injectEndpoints({
             query: (id) => {
 
                 return {
-                    url: `/market/brand/brand/${id}`,
+                    url: `${url}/brand/${id}`,
                 }
             },
             providesTags: ['Brand'],

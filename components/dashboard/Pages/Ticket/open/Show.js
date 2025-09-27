@@ -9,7 +9,7 @@ import { Editor } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 
  
-import { useAddNewAnswerMutation, useGetTicketQuery } from '@/lib/ticket/ticketApi'
+import { useAddNewAnswerMutation, useGetTicketQuery } from '@/services/ticket/ticketApi'
  
 import ShowTicketSchema from '@/validation/doshboard/ticket/ticket/showValidation'
 import { TableError404, TableLoading, TableNotFound } from '@/components/dashboard/Table'

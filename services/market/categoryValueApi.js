@@ -1,4 +1,6 @@
 import { baseApi } from '../baseApi';
+ 
+const url = '/admin/market/property/value'
 
 export const  categoryValueApi = baseApi.injectEndpoints({
 
@@ -8,7 +10,7 @@ export const  categoryValueApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0 , params } = arg;
                 return {
-                    url: `/market/property/value/${perPage}/${params}`,
+                    url: `${url}/${perPage}/${params}`,
                     params: { page },
                 }
             },
@@ -18,7 +20,7 @@ export const  categoryValueApi = baseApi.injectEndpoints({
         deleteValue: builder.mutation({
             query( id) {
                 return {
-                    url: `/market/property/value/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',      
                 }
             },
@@ -29,7 +31,7 @@ export const  categoryValueApi = baseApi.injectEndpoints({
         addNewValue: builder.mutation({
             query: ({ params , formData}) => {
                 return {
-                    url: `/market/property/value/store/${params}`,
+                    url: `${url}/store/${params}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -41,7 +43,7 @@ export const  categoryValueApi = baseApi.injectEndpoints({
         updateValue: builder.mutation({
             query: ({ attribute , id, formData }) => {
                 return {
-                    url: `/market/property/value/update/${attribute}/${id}`,
+                    url: `${url}/update/${attribute}/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -52,7 +54,7 @@ export const  categoryValueApi = baseApi.injectEndpoints({
         getValue: builder.query({
             query: ({id}) => {
                 return {
-                    url: `/market/property/value/value/${id}`,
+                    url: `${url}/value/${id}`,
                 }
             },
             providesTags: ['Value'],
@@ -61,7 +63,7 @@ export const  categoryValueApi = baseApi.injectEndpoints({
         productsAndAttributes: builder.query({
             query: () => {
                 return {
-                    url: `/market/property/value/productsAndAttributes/`,
+                    url: `${url}/productsAndAttributes/`,
                 }
             },
             providesTags: ['Value'],

@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, ShowImage} from "@/components/dashboard/Table";
-import { useGetAllSettingQuery } from "@/lib/setting/settingApi";
+import { useGetAllSettingQuery } from "@/services/setting/settingApi";
 const Index = () => {    
     const  columns =[
         {key:'title', label:'عنوان'},

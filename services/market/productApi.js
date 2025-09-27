@@ -1,6 +1,6 @@
 import { baseApi } from '../baseApi';
 
-
+const url = "/admin/market/product"
 
 export const  productApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -9,7 +9,7 @@ export const  productApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/product/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -18,22 +18,20 @@ export const  productApi = baseApi.injectEndpoints({
 
         }),
         changeProductStatus: builder.mutation({
-            query: (id) => `/market/product/status/${id}`,
+            query: (id) => `${url}/status/${id}`,
 
             invalidatesTags: ['Product']
         }),
         changeMarketable: builder.mutation({
-            query: (id) => `/market/product/marketable/${id}`,
+            query: (id) => `${url}/marketable/${id}`,
 
             invalidatesTags: ['Product']
         }),
         deleteProduct: builder.mutation({
             query(id) {
                 return {
-                    url: `/market/product/delete/${id}`,
-                    method: 'DELETE',
-
-                    // credentials:'include',            
+                    url: `${url}/delete/${id}`,
+                    method: 'DELETE',           
                 }
             },
             invalidatesTags: ['Product'],
@@ -44,12 +42,9 @@ export const  productApi = baseApi.injectEndpoints({
         addNewProduct: builder.mutation({
             query: (payload) => {
                 return {
-                    url: `/market/product/store`,
+                    url: `${url}/store`,
                     method: 'POST',
-
                     body: payload,
-                    FormData: true,
-                    credentials: 'include',
                 }
             },
             invalidatesTags: ['Product'],
@@ -60,7 +55,7 @@ export const  productApi = baseApi.injectEndpoints({
             query: ({ id, formData }) => {
 
                 return {
-                    url: `/market/product/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -71,7 +66,7 @@ export const  productApi = baseApi.injectEndpoints({
         getProduct: builder.query({
             query: (id) => {
                 return {
-                    url: `/market/product/product/${id}`,
+                    url: `${url}/product/${id}`,
                 }
             },
             providesTags: ['Product'],
@@ -80,7 +75,7 @@ export const  productApi = baseApi.injectEndpoints({
          getCategoriesAndBrands: builder.query({
             query: () => {
                 return {
-                    url: `/market/product/categoryAndBrand/`,
+                    url: `${url}/categoryAndBrand/`,
                 }
             },
             providesTags: ['Product'],

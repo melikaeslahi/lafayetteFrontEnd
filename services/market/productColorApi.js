@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url = '/admin/market/product/colors'
+
 export const  productColorApi =  baseApi.injectEndpoints({
  
     endpoints: (builder) => ({
@@ -8,7 +10,7 @@ export const  productColorApi =  baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0 ,params, search  } = arg;
                 return {
-                    url: `/market/product/colors/${perPage}/${params}/${search}`   ,
+                    url: `${url}/${perPage}/${params}/${search}`   ,
                     params: { page },
                 }
             },
@@ -18,7 +20,7 @@ export const  productColorApi =  baseApi.injectEndpoints({
         deleteProductColor: builder.mutation({
             query(id) {
                 return {
-                    url: `/market/product/colors/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',         
                 }
             },
@@ -28,7 +30,7 @@ export const  productColorApi =  baseApi.injectEndpoints({
         addNewProductColor: builder.mutation({
             query: ({ params  , formData  }) => {
                 return {
-                    url: `/market/product/colors/store/${params}`,
+                    url: `${url}/store/${params}`,
                     method: 'POST',
                     body: formData,    
                 }

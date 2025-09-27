@@ -8,7 +8,7 @@ import {  useEffect } from 'react'
 import { Editor, Input } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewEmailMutation } from '@/lib/notify/EmailApi'
+import { useAddNewEmailMutation } from '@/services/notify/EmailApi'
 import EmailSchema from '@/validation/doshboard/notify/email/EmailValidation'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
 import { useDispatch  } from 'react-redux'

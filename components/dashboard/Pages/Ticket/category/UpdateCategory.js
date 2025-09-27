@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
  
 import {   Input  } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
-import { useGetTicketCategoryQuery, useUpdateTicketCategoryMutation } from '@/lib/ticket/ticketCategoryApi'
+import { useGetTicketCategoryQuery, useUpdateTicketCategoryMutation } from '@/services/ticket/ticketCategoryApi'
 import TicketCategorySchema from '@/validation/doshboard/ticket/priority/TicketPriorityValidation'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

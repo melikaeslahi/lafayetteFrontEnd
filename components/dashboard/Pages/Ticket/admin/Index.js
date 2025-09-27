@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/dashboard/inputs";
 import {  faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useChangeTicketAdminStatusMutation, useGetAllTicketAdminQuery } from "@/lib/ticket/ticketAdminApi";
+import { useChangeTicketAdminStatusMutation, useGetAllTicketAdminQuery } from "@/services/ticket/ticketAdminApi";
 import useToast from "@/hooks/useToast";
  
 const Index = () => {

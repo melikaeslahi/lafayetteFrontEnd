@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url = "admin/market/store";
+
 export const storeApi = baseApi.injectEndpoints({
 
     endpoints: (builder) => ({
@@ -8,7 +10,7 @@ export const storeApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/store/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -18,12 +20,10 @@ export const storeApi = baseApi.injectEndpoints({
         addToStore: builder.mutation({
             query: ({params ,  formData}) => {
                 return {
-                    url: `/market/store/store/${params}`,
+                    url: `${url}/store/${params}`,
                     method: 'POST',
-
                     body: formData,
-                    FormData: true,
-                    credentials: 'include',
+             
                 }
             },
             invalidatesTags: ['Store'],
@@ -34,7 +34,7 @@ export const storeApi = baseApi.injectEndpoints({
             query: ({ id, formData }) => {
 
                 return {
-                    url: `/market/store/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -46,7 +46,7 @@ export const storeApi = baseApi.injectEndpoints({
         getProduct: builder.query({
             query: (id) => {
                 return {
-                    url: `/market/store/product/${id}`,
+                    url: `${url}/product/${id}`,
                 }
             },
             providesTags: ['Store'],

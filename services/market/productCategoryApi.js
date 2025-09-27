@@ -1,6 +1,6 @@
 import { baseApi } from '../baseApi';
 
-
+const url= '/admin/market/category'
 
 export const  productCategoryApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -9,24 +9,24 @@ export const  productCategoryApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/category/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
             providesTags: ['ProductCategory'],
         }),
         changeProductCategoryStatus: builder.mutation({
-            query: (id) => `/market/category/status/${id}`,
+            query: (id) => `${url}/status/${id}`,
             invalidatesTags: ['ProductCategory']
         }),
         changeShowInMenu: builder.mutation({
-            query: (id) => `/market/category/showInMenu/${id}`,
+            query: (id) => `${url}/showInMenu/${id}`,
             invalidatesTags: ['ProductCategory']
         }),
         deleteProductCategory: builder.mutation({
             query(id) {
                 return {
-                    url: `/market/category/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',      
                 }
             },
@@ -37,12 +37,9 @@ export const  productCategoryApi = baseApi.injectEndpoints({
         addNewProductCategory: builder.mutation({
             query: (payload) => {
                 return {
-                    url: `/market/category/store`,
+                    url: `${url}/store`,
                     method: 'POST',
-
                     body: payload,
-                    FormData: true,
-                    credentials: 'include',
                 }
             },
             invalidatesTags: ['ProductCategory'],
@@ -52,7 +49,7 @@ export const  productCategoryApi = baseApi.injectEndpoints({
             query: ({ id, formData }) => {
 
                 return {
-                    url: `/market/category/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData
                 }
@@ -62,7 +59,7 @@ export const  productCategoryApi = baseApi.injectEndpoints({
         getAllParentId: builder.query({
             query: () => {
                 return {
-                    url: `/market/category/parentId`,
+                    url: `${url}/parentId`,
                 }
             },
             providesTags: ['ProductCategory'],
@@ -70,7 +67,7 @@ export const  productCategoryApi = baseApi.injectEndpoints({
         getProductCategory: builder.query({
             query: (id) => {
                 return {
-                    url: `/market/category/category/${id}`,
+                    url: ` ${url}/category/${id}`,
                 }
             },
             providesTags: ['ProductCategory'],

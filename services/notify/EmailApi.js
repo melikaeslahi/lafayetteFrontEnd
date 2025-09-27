@@ -1,11 +1,11 @@
 import { baseApi } from '../baseApi';
 
-const url = "/admin/market/delivery"
+const url= '/admin/notify/email';
 
-export const  deliveryApi = baseApi.injectEndpoints({
-
+export const  EmailApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAllDelivery: builder.query({
+  
+        getAllEmail: builder.query({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
@@ -13,21 +13,25 @@ export const  deliveryApi = baseApi.injectEndpoints({
                     params: { page },
                 }
             },
-            providesTags: ['Delivery'],
+            providesTags: ['Email'],
         }),
-       
-        deleteDelivery: builder.mutation({
+        changeEmailStatus: builder.mutation({
+            query: (id) => `${url}/status/${id}`,
+
+            invalidatesTags: ['Email']
+        }),
+      
+        deleteEmail: builder.mutation({
             query(id) {
                 return {
                     url: `${url}/delete/${id}`,
-                    method: 'DELETE',   
+                    method: 'DELETE',
                 }
             },
-            invalidatesTags: ['Delivery'],
+            invalidatesTags: ['Email'],
         }),
        
-        
-        addNewDelivery: builder.mutation({
+        addNewEmail: builder.mutation({
             query: (payload) => {
                 return {
                     url: `${url}/store`,
@@ -35,10 +39,11 @@ export const  deliveryApi = baseApi.injectEndpoints({
                     body: payload,
                 }
             },
-            invalidatesTags: ['Delivery'],
+            invalidatesTags: ['Email'],
+
         }),
 
-        updateDelivery: builder.mutation({
+        updateEmail: builder.mutation({
             query: ({ id, formData }) => {
 
                 return {
@@ -47,26 +52,27 @@ export const  deliveryApi = baseApi.injectEndpoints({
                     body: formData,
                 }
             },
-            invalidatesTags: ['Delivery'],
+            invalidatesTags: ['Email'],
+
         }),
-        
-        getDelivery: builder.query({
+       
+        getEmail: builder.query({
             query: (id) => {
                 return {
-                    url: `${url}/delivery/${id}`,
+                    url: `${url}/email/${id}`,
                 }
             },
-            providesTags: ['Delivery'],
+            providesTags: ['Email'],
         }),
     }),
     overrideExisting: false,
-
 });
 export const { 
-        useGetAllDeliveryQuery,
-        useDeleteDeliveryMutation,
-        useAddNewDeliveryMutation,
-        useUpdateDeliveryMutation,
-        useGetDeliveryQuery,
-        
-    } =  deliveryApi;
+        useGetAllEmailQuery,
+        useChangeEmailStatusMutation,
+        useDeleteEmailMutation,
+        useAddNewEmailMutation,
+        useUpdateEmailMutation,   
+        useGetEmailQuery,
+       
+    } =  EmailApi;

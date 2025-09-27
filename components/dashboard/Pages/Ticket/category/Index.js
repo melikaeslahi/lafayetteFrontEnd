@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, StatusRecord } from "@/components/dashboard/Table";
-import { useChangeTicketCategoryStatusMutation, useDeleteTicketCategoryMutation, useGetAllTicketCategoryQuery } from "@/lib/ticket/ticketCategoryApi";
+import { useChangeTicketCategoryStatusMutation, useDeleteTicketCategoryMutation, useGetAllTicketCategoryQuery } from "@/services/ticket/ticketCategoryApi";
  
 const Index = () => {   
     const  columns =[

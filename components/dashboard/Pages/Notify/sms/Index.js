@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, StatusRecord} from "@/components/dashboard/Table";
-import { useChangeSMSStatusMutation, useDeleteSMSMutation, useGetAllSMSQuery } from "@/lib/notify/SMSApi";
+import { useChangeSMSStatusMutation, useDeleteSMSMutation, useGetAllSMSQuery } from "@/services/notify/SMSApi";
  
 const Index = () => {
     const  columns =[

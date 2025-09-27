@@ -1,7 +1,6 @@
- 
 import { baseApi } from '../baseApi';
 
-
+const url = '/admin/market/order'
 
 export const  orderApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -10,7 +9,7 @@ export const  orderApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/order/all/${perPage}/${search}`,
+                    url: `${url}/all/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -21,7 +20,7 @@ export const  orderApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/order/newOrders/${perPage}/${search}`,
+                    url: `${url}/all/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -32,7 +31,7 @@ export const  orderApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/order/sending/${perPage}/${search}`,
+                    url: `${url}/sending/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -42,7 +41,7 @@ export const  orderApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/order/unpaind/${perPage}/${search}`,
+                    url: `${url}/unpaind/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -52,7 +51,7 @@ export const  orderApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/order/canceled/${perPage}/${search}`,
+                    url: `${url}/canceled/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -64,25 +63,25 @@ export const  orderApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/order/returned/${perPage}/${search}`,
+                    url: `${url}/returned/${perPage}/${search}`,
                     params: { page },
                 }
             },
             providesTags: ['Order'],
         }),
         changeSendStatus: builder.mutation({
-            query: (id) => `/market/order/changeSendStatus/${id}`,
+            query: (id) => `${url}/changeSendStatus/${id}`,
 
             invalidatesTags: ['Order']
         }),
         changeOrderStatus: builder.mutation({
-            query: (id) => `/market/order/changeOrderStatus/${id}`,
+            query: (id) => `${url}/changeOrderStatus/${id}`,
 
             invalidatesTags: ['Order']
         }),
        
         cancelOrder: builder.mutation({
-            query: (id) => `/market/order/cancelOrder/${id}`,
+            query: (id) => `${url}/cancelOrder/${id}`,
 
             invalidatesTags: ['Order']
         }),
@@ -90,7 +89,7 @@ export const  orderApi = baseApi.injectEndpoints({
         getDetailOrder: builder.query({
             query: (id) => {
                 return {
-                    url: `/market/order/detailOrder/${id}`,
+                    url: `${url}/detailOrder/${id}`,
                 }
             },
             providesTags: ['Order'],
@@ -100,7 +99,7 @@ export const  orderApi = baseApi.injectEndpoints({
             query: (id) => {
 
                 return {
-                    url: `/market/order/show/${id}`,
+                    url: `${url}/show/${id}`,
                 }
             },
             providesTags: ['Order'],

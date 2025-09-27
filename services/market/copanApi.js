@@ -1,5 +1,6 @@
 import { baseApi } from '../baseApi';
 
+const url = "admin/market/discount/copan";
 
 export const   copanApi =  baseApi.injectEndpoints({
     
@@ -9,7 +10,7 @@ export const   copanApi =  baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/discount/copan/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -19,7 +20,7 @@ export const   copanApi =  baseApi.injectEndpoints({
         deleteCopan: builder.mutation({
             query(id) {
                 return {
-                    url: `/market/discount/copan/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',        
                 }
             },
@@ -29,7 +30,7 @@ export const   copanApi =  baseApi.injectEndpoints({
         addNewCopan: builder.mutation({
             query: (formData) => {
                 return {
-                    url: `/market/discount/copan/store`,
+                    url: `${url}/store`,
                     method: 'POST',
                     body: formData,
                 }
@@ -40,7 +41,7 @@ export const   copanApi =  baseApi.injectEndpoints({
         updateCopan: builder.mutation({
             query: ({ id, formData }) => {
                 return {
-                    url: `/market/discount/copan/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -50,7 +51,7 @@ export const   copanApi =  baseApi.injectEndpoints({
         getUsers: builder.query({
             query: () => {
                 return {
-                    url: `//market/discount/copan/users`,
+                    url: `${url}/users`,
                 }
             },
             providesTags: ['Copan'],
@@ -58,7 +59,7 @@ export const   copanApi =  baseApi.injectEndpoints({
         getCopan: builder.query({
             query: (id) => {
                 return {
-                    url: `/market/discount/copan/copan/${id}`,
+                    url: `${url}/copan/${id}`,
                 }
             },
             providesTags: ['Copan'],

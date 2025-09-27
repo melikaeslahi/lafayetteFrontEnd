@@ -7,7 +7,7 @@ import {   useEffect } from 'react'
 import {   Input  } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewTicketPriorityMutation } from '@/lib/ticket/ticketPriorityApi'
+import { useAddNewTicketPriorityMutation } from '@/services/ticket/ticketPriorityApi'
 import TicketPrioritySchema from '@/validation/doshboard/ticket/category/TicketCategoryValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

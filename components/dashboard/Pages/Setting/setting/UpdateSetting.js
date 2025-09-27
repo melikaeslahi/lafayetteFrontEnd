@@ -10,7 +10,7 @@ import { Editor, Input, InputFrame, InputTags, SelectImage } from '@/components/
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import EditSettingSchema from '@/validation/doshboard/setting/editSettingValidation'
-import { useGetSettingQuery, useUpdateSettingMutation } from '@/lib/setting/settingApi'
+import { useGetSettingQuery, useUpdateSettingMutation } from '@/services/setting/settingApi'
  
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 

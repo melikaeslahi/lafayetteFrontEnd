@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import Link from "next/link";
-import { useChangeMutation,  useGetOpenTicketsQuery } from "@/lib/ticket/ticketApi";
+import { useChangeMutation,  useGetOpenTicketsQuery } from "@/services/ticket/ticketApi";
 import useToast from "@/hooks/useToast";
  
 const Index = () => {

@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url = "admin/market/comment"
+
 export const  commentApi =  baseApi.injectEndpoints({
  
     endpoints: (builder) => ({
@@ -8,20 +10,19 @@ export const  commentApi =  baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/comment/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
             providesTags: ['Comment'],
-
         }),
         changeCommentStatus: builder.mutation({
-            query: (id) => `/market/comment/status/${id}`,
+            query: (id) => `${url}/status/${id}`,
 
             invalidatesTags: ['Comment']
         }),
         changeApproved: builder.mutation({
-            query: (id) => `/market/comment/approved/${id}`,
+            query: (id) => `${url}/approved/${id}`,
 
             invalidatesTags: ['Comment']
         }),
@@ -29,7 +30,7 @@ export const  commentApi =  baseApi.injectEndpoints({
         addNewAnswer: builder.mutation({
             query: ({formData  , id}) => {
                 return {
-                    url: `/market/comment/answer/${id}`,
+                    url: `${url}/answer/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -40,7 +41,7 @@ export const  commentApi =  baseApi.injectEndpoints({
         getComment: builder.query({
             query: ({id}) => {
                 return {
-                    url: `/market/comment/comment/${id}`,
+                    url: `${url}/comment/${id}`,
                 }
             },
             providesTags: ['Comment'],

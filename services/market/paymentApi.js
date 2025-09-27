@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url = '/admin/market/payment';
+
 export const  paymentApi = baseApi.injectEndpoints({
   
     endpoints: (builder) => ({
@@ -8,7 +10,7 @@ export const  paymentApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/payment/all/${perPage}/${search}`,
+                    url: `${url}/all/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -19,7 +21,7 @@ export const  paymentApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/payment/offline/${perPage}/${search}`,
+                    url: `${url}/offline/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -30,7 +32,7 @@ export const  paymentApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/payment/online/${perPage}/${search}`,
+                    url: `${url}/online/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -40,19 +42,19 @@ export const  paymentApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/payment/cash/${perPage}/${search}`,
+                    url: `${url}/cash/${perPage}/${search}`,
                     params: { page },
                 }
             },
             providesTags: ['Payment'],
         }),
         canceledPayment: builder.mutation({
-            query: (id) => `/market/payment/canceled/${id}`,
+            query: (id) => `${url}/canceled/${id}`,
 
             invalidatesTags: ['Payment']
         }),
         returnedPayment: builder.mutation({
-            query: (id) => `/market/payment/returned/${id}`,
+            query: (id) => `${url}/returned/${id}`,
 
             invalidatesTags: ['Payment']
         }),
@@ -60,7 +62,7 @@ export const  paymentApi = baseApi.injectEndpoints({
         getPayment: builder.query({
             query: (id) => {
                 return {
-                    url: `show/${id}`,
+                    url: `${url}/show/${id}`,
                 }
             },
             providesTags: ['Payment'],

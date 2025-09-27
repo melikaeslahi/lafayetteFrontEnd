@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url ="/admin/market/discount/amazingSale"
+
 export const  amazingSaleApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
   
@@ -7,7 +9,7 @@ export const  amazingSaleApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/discount/amazingSale/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -16,7 +18,7 @@ export const  amazingSaleApi = baseApi.injectEndpoints({
         deleteAmazingSale: builder.mutation({
             query(id) {
                 return {
-                    url: `/market/discount/amazingSale/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',
                 }
             },
@@ -26,7 +28,7 @@ export const  amazingSaleApi = baseApi.injectEndpoints({
         addNewAmazingSale: builder.mutation({
             query: (formData) => {
                 return {
-                    url: `/market/discount/amazingSale/store`,
+                    url: `${url}/store`,
                     method: 'POST',
                     body: formData,
                 }
@@ -37,7 +39,7 @@ export const  amazingSaleApi = baseApi.injectEndpoints({
         updateAmazingSale: builder.mutation({
             query: ({ id, formData }) => {
                 return {
-                    url: `/market/discount/amazingSale/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -48,7 +50,7 @@ export const  amazingSaleApi = baseApi.injectEndpoints({
         getProducts: builder.query({
             query: () => {
                 return {
-                    url: `/market/discount/amazingSale/product`,
+                    url: `${url}/product`,
                 }
             },
             providesTags: ['AmazingSale'],
@@ -57,7 +59,7 @@ export const  amazingSaleApi = baseApi.injectEndpoints({
         getAmazingSale: builder.query({
             query: (id) => {
                 return {
-                    url: `/market/discount/amazingSale/amazingSale/${id}`,
+                    url: `${url}/amazingSale/${id}`,
                 }
             },
             providesTags: ['AmazingSale'],
@@ -72,8 +74,7 @@ export const {
         useAddNewAmazingSaleMutation,
         useUpdateAmazingSaleMutation,
         useGetProductsQuery,
-        useGetAmazingSaleQuery,
-      
+        useGetAmazingSaleQuery,  
     } =  amazingSaleApi;
 
 

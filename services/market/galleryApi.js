@@ -1,5 +1,6 @@
 import { baseApi } from '../baseApi';
 
+const url = '/admin/market/product/gallery'
 
 export const  galleryApi = baseApi.injectEndpoints({
 
@@ -9,7 +10,7 @@ export const  galleryApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0  , params} = arg;
                 return {
-                    url: `/market/product/gallery/${perPage}/${params}`,
+                    url: `${url}/${perPage}/${params}`,
                     params: { page },
                 }
             },
@@ -19,7 +20,7 @@ export const  galleryApi = baseApi.injectEndpoints({
         deleteGallery: builder.mutation({
             query(id) {
                 return {
-                    url: `/market/product/gallery/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',         
                 }
             },
@@ -29,7 +30,7 @@ export const  galleryApi = baseApi.injectEndpoints({
         addNewGallery: builder.mutation({
             query: ({  params,  formData  }) => {
                 return {
-                    url: `/market/product/gallery/store/${params}`,
+                    url: `${url}/store/${params}`,
                     method: 'POST',
                     body: formData,
                 }

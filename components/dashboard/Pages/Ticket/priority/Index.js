@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, StatusRecord } from "@/components/dashboard/Table";
-import { useChangeTicketPriorityStatusMutation, useDeleteTicketPriorityMutation, useGetAllTicketPriorityQuery } from "@/lib/ticket/ticketPriorityApi";
+import { useChangeTicketPriorityStatusMutation, useDeleteTicketPriorityMutation, useGetAllTicketPriorityQuery } from "@/services/ticket/ticketPriorityApi";
  
 const Index = () => {
     const  columns =[

@@ -1,5 +1,6 @@
 import { baseApi } from '../baseApi';
 
+const url = "/admin/market/property"
 
 export const  categoryAttributeApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -8,7 +9,7 @@ export const  categoryAttributeApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0, search } = arg;
                 return {
-                    url: `/market/property/${perPage}/${search}`,
+                    url: `${url}/${perPage}/${search}`,
                     params: { page },
                 }
             },
@@ -19,7 +20,7 @@ export const  categoryAttributeApi = baseApi.injectEndpoints({
         deleteAttribute: builder.mutation({
             query(id) {
                 return {
-                    url: `/market/property/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',           
                 }
             },
@@ -30,7 +31,7 @@ export const  categoryAttributeApi = baseApi.injectEndpoints({
         addNewAttribute: builder.mutation({
             query: (formData) => {
                 return {
-                    url: `/market/property/store`,
+                    url: `${url}/store`,
                     method: 'POST',
                     body: formData,
                 }
@@ -41,7 +42,7 @@ export const  categoryAttributeApi = baseApi.injectEndpoints({
         updateAttribute: builder.mutation({
             query: ({ id, formData }) => {
                 return {
-                    url: `/market/property/update/${id}`,
+                    url: `${url}/update/${id}`,
                     method: 'POST',
                     body: formData,
                 }
@@ -52,7 +53,7 @@ export const  categoryAttributeApi = baseApi.injectEndpoints({
         getAttribute: builder.query({
             query: (id) => {
                 return {
-                    url: `/market/property/attribute/${id}`,
+                    url: `${url}/attribute/${id}`,
                 }
             },
             providesTags: ['Product'],
@@ -62,7 +63,7 @@ export const  categoryAttributeApi = baseApi.injectEndpoints({
          getCategories: builder.query({
             query: () => {
                 return {
-                    url: `/market/property/category/`,
+                    url: `${url}/category/`,
                 }
             },
             providesTags: ['Product'],   

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/dashboard/inputs";
 import Link from "next/link";
-import { useChangeMutation,  useGetCloseTicketsQuery } from "@/lib/ticket/ticketApi";
+import { useChangeMutation,  useGetCloseTicketsQuery } from "@/services/ticket/ticketApi";
 import useToast from "@/hooks/useToast";
  
  

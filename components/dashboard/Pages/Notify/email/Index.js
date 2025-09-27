@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, StatusRecord  } from "@/components/dashboard/Table";
-import { useChangeEmailStatusMutation, useDeleteEmailMutation, useGetAllEmailQuery } from "@/lib/notify/EmailApi";
+import { useChangeEmailStatusMutation, useDeleteEmailMutation, useGetAllEmailQuery } from "@/services/notify/EmailApi";
  
 const Index = () => {   
     const  columns =[

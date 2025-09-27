@@ -9,7 +9,7 @@ import {   Input   } from '@/components/dashboard/inputs'
  
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useGetTicketPriorityQuery, useUpdateTicketPriorityMutation } from '@/lib/ticket/ticketPriorityApi'
+import { useGetTicketPriorityQuery, useUpdateTicketPriorityMutation } from '@/services/ticket/ticketPriorityApi'
 import TicketPrioritySchema from '@/validation/doshboard/ticket/category/TicketCategoryValidation'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 const UpdatePriority = ({ params }) => {

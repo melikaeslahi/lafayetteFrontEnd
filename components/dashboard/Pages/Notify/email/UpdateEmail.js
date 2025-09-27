@@ -10,7 +10,7 @@ import { Editor, Input  } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import { useDispatch } from 'react-redux'
-import { useGetEmailQuery, useUpdateEmailMutation } from '@/lib/notify/EmailApi'
+import { useGetEmailQuery, useUpdateEmailMutation } from '@/services/notify/EmailApi'
 import EmailSchema from '@/validation/doshboard/notify/email/EmailValidation'
 import JalaliDate from '@/components/dashboard/inputs/JalaliDate'
  

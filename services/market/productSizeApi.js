@@ -1,5 +1,7 @@
 import { baseApi } from '../baseApi';
 
+const url = '/admin/market/product/sizes'
+
 export const  productSizeApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
   
@@ -7,7 +9,7 @@ export const  productSizeApi = baseApi.injectEndpoints({
             query: (arg) => {
                 const { page = 1, perPage = 0 ,params, search  } = arg;
                 return {
-                    url: `/market/product/sizes/${perPage}/${params}/${search}`   ,
+                    url: `${url}/${perPage}/${params}/${search}`   ,
                     params: { page },
                 }
             },
@@ -17,7 +19,7 @@ export const  productSizeApi = baseApi.injectEndpoints({
         deleteProductSize: builder.mutation({
             query(id) {
                 return {
-                    url: `/market/product/sizes/delete/${id}`,
+                    url: `${url}/delete/${id}`,
                     method: 'DELETE',      
                 }
             },
@@ -28,7 +30,7 @@ export const  productSizeApi = baseApi.injectEndpoints({
         addNewProductSize: builder.mutation({
             query: ({ params  , formData  }) => {
                 return {
-                    url: `/market/product/sizes/store/${params}`,
+                    url: `${url}/store/${params}`,
                     method: 'POST',
                     body: formData,
                 }
