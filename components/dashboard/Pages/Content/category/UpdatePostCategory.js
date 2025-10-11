@@ -1,14 +1,14 @@
 'use client'
 import EditCategorySchema from '@/validation/doshboard/content/category/editCategory'
 import { Editor, Input, InputFrame, InputTags, SelectImage } from '@/components/dashboard/inputs'
-import { useGetAllParentIdQuery, useGetCategoryQuery, useUpdatePostCategoryMutation } from '@/lib/content/postCategoryApi'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
+import { useGetAllParentIdQuery, useGetCategoryQuery, useUpdatePostCategoryMutation } from '@/services/content/postCategoryApi'
  
 
 const UpdataPostCategory = ({ params }) => {
-    const  query = useGetCategoryQuery(params.id);
+    const  query =  useGetCategoryQuery(params.id);
     const category = query.data;
-    const { data: parentId = [] } = useGetAllParentIdQuery();
+    const { data: parentId = [] } =  useGetAllParentIdQuery();
   
     
 
@@ -22,37 +22,7 @@ const UpdataPostCategory = ({ params }) => {
         tags: `${category?.tags}`
     }
 
-    const columns=[
-    {key:'image'},
-    {key:'name'},
-    {key:'parent_id'},
-    {key:'description'},
-    {key:'status'},
-    {key:'tags'},
-    {key:'currentImage'},
-
-]
-    // const [UpdateCategory, { data , isLoading: isSend ,isSuccess:Success }] = useUpdatePostCategoryMutation()
-    // const handlerSubmit = async (values) => {
-    //     // Create an object of formData
-    //     let formData = new FormData();
-    //     // Update the formData object
-    //     formData.append('_method', 'PUT');
-    //     if (values.image) {
-    //         formData.append("image", values.image);
-    //     }
-    //     formData.append("name", values.name);
-    //     if (values.parent_id) {
-    //         formData.append("parent_id", values.parent_id);
-    //     }
-    //     formData.append("description", values.description);
-    //     formData.append("status", values.status);
-    //     formData.append("tags", values.tags);
-    //     if (values.currentImage) {
-    //         formData.append("currentImage", values.currentImage);
-    //     }
-    //     await UpdateCategory({ id: params.id, formData });
-    // }
+    
  
     // useEffect(() => {
     //     dispatch(setErrorData(data)); 
@@ -73,6 +43,7 @@ const UpdataPostCategory = ({ params }) => {
                 itemQuery={query}
                 message={'دسته بندی با موفقیت ویرایش شد.'}
                 validationSchema={EditCategorySchema}
+                edit={true}
                 // handlerSubmit={handlerSubmit} 
                 >
            

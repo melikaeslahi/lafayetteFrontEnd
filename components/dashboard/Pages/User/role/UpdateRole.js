@@ -10,7 +10,7 @@ import { Editor, Input  } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
  
-import { useGetRoleQuery, useUpdateRoleMutation } from '@/lib/user/roleApi'
+import { useGetRoleQuery, useUpdateRoleMutation } from '@/services/user/roleApi'
 import RoleSchema from '@/validation/doshboard/user/roles/roleValidation'
  
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

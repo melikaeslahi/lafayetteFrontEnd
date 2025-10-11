@@ -7,7 +7,7 @@ import {   useEffect } from 'react'
 import {  Input  } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewAdminMutation } from '@/lib/user/adminUserApi'
+import { useAddNewAdminMutation } from '@/services/user/adminUserApi'
 import AdminSchema from '@/validation/doshboard/user/adminUser/adminValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

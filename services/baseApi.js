@@ -9,7 +9,7 @@ function getCookie(name) {
 export const baseApi = createApi({
     reducerPath:'baseApi',
     baseQuery:fetchBaseQuery({
-        baseUrl:`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/admin`,
+        baseUrl:`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1`,
         credentials: 'include',
         prepareHeaders: (headers) => {
         headers.set('Accept' , 'application/json');
@@ -31,7 +31,9 @@ export const baseApi = createApi({
       //setting
       'Setting',
       //ticket
-      'TicketAdmin','Ticket','TicketCategory' , 'TicketPriority'
+      'TicketAdmin','Ticket','TicketCategory' , 'TicketPriority',
+      //user
+      'Admin','Customer','Permission','Role'
     ],
 
     endpoints: (builder) => ({

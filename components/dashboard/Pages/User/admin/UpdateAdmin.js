@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import {   Input, InputFrame , SelectImage } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer' 
-import { useGetAdminQuery, useUpdateAdminMutation } from '@/lib/user/adminUserApi'
+import { useGetAdminQuery, useUpdateAdminMutation } from '@/services/user/adminUserApi'
 import AdminSchema from '@/validation/doshboard/user/adminUser/adminValidation'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 const UpdateAdmin = ({ params }) => {

@@ -1,11 +1,8 @@
-import { useSelector } from 'react-redux'
 import { Form, Formik } from 'formik'
-import { redirect, useRouter } from "next/navigation";
-import TitlePage from "../TitlePage";
+import { redirect, useRouter } from "next/navigation"; 
 import useToast from "@/hooks/useToast";
 import Button from './Button';
 import { useEffect } from 'react';
- 
 import InputLayout from './InputLayout';
 import QueryStatusHandler from './QueryStatusHandler';
  
@@ -22,25 +19,25 @@ const InputContainer = ({ itemQuery, edit, columns, query, message,children  ,in
     }, [isSuccess]);
 
     const handlerSubmit = async (values) => {
-        console.log(values)
+      
         const formData = new FormData();
-        if (edit) {
+        if(edit) {
         formData.append('_method', 'PUT');
         }
-        columns.forEach(col => {      
-           Object.keys(values).map((value)=>  
-             value === col.key ?? formData.append(`${col.key}`, values[col.key])
-           );    
-        }) 
-        
+        Object.entries(values).forEach(([key , value])=>{
+          if (Array.isArray(value)) {
+            value.forEach((item)=> formData.append(`${key}[]` , item ))
+          } else {
+            if (value !== undefined && value !== null && value !== '') {
+              formData.append(key , value)
+            }
+          }
+        }
+     ) 
         await addRecord(formData);
-
     }
 
-    
     return (<>
-     
-        
         <InputLayout name={name} query={itemQuery} sitemap={sitemap} >
                 <Formik
                     initialValues={initialValues}

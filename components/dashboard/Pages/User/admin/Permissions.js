@@ -9,7 +9,7 @@ import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboa
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
  
 import PermissionSchema from '@/validation/doshboard/user/adminUser/permissionValidation'
-import { useAddNewPermissionsMutation, useGetPermissionsQuery } from '@/lib/user/adminUserApi'
+import { useAddNewPermissionsMutation, useGetPermissionsQuery } from '@/services/user/adminUserApi'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 

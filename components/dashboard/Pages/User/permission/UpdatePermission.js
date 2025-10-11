@@ -11,7 +11,7 @@ import EditCategorySchema from '@/validation/doshboard/market/category/editCateg
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
  
-import { useGetPermissionQuery, useUpdatePermissionMutation } from '@/lib/user/permissionApi'
+import { useGetPermissionQuery, useUpdatePermissionMutation } from '@/services/user/permissionApi'
  
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 const UpdatePermission = ({ params }) => {

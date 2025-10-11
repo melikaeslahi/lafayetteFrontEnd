@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord, StatusRecord } from "@/components/dashboard/Table";
-import { useChangeCustomerActivationMutation, useDeleteCustomerMutation, useGetAllCustomerQuery } from "@/lib/user/customerApi";
+import { useChangeCustomerActivationMutation, useDeleteCustomerMutation, useGetAllCustomerQuery } from "@/services/user/customerApi";
  
 const Index = () => {
    

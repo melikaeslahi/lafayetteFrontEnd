@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { usePathname  } from "next/navigation";
 import Link from "next/link";
-import { useChangeActivationMutation, useChangeAdminStatusMutation, useDeleteAdminMutation, useGetAllAdminQuery } from "@/lib/user/adminUserApi";
+import { useChangeActivationMutation, useChangeAdminStatusMutation, useDeleteAdminMutation, useGetAllAdminQuery } from "@/services/user/adminUserApi";
 import useToast from "@/hooks/useToast";
  
 const Index = () => {

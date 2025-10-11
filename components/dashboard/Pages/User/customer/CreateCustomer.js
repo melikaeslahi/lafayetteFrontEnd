@@ -6,7 +6,7 @@ import {   useEffect } from 'react'
  
 import {   Input } from '@/components/dashboard/inputs'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewCustomerMutation } from '@/lib/user/customerApi'
+import { useAddNewCustomerMutation } from '@/services/user/customerApi'
 import CustomerSchema from '@/validation/doshboard/user/customer/CustomerValidation'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'

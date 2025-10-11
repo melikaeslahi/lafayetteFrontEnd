@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import {  Input, InputFrame , SelectImage } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useGetCustomerQuery, useUpdateCustomerMutation } from '@/lib/user/customerApi'
+import { useGetCustomerQuery, useUpdateCustomerMutation } from '@/services/user/customerApi'
 import CustomerSchema from '@/validation/doshboard/user/customer/CustomerValidation'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 const UpdateCustomer = ({ params }) => {

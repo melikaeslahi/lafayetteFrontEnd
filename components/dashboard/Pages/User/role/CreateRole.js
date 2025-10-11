@@ -8,7 +8,7 @@ import { Editor, Input  } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import RoleSchema from '@/validation/doshboard/user/roles/roleValidation'
-import { useAddNewRoleMutation } from '@/lib/user/roleApi'
+import { useAddNewRoleMutation } from '@/services/user/roleApi'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 

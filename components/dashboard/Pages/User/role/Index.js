@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
-import { useDeleteRoleMutation, useGetAllRoleQuery } from "@/lib/user/roleApi";
+import { useDeleteRoleMutation, useGetAllRoleQuery } from "@/services/user/roleApi";
  
 const Index = () => {    
     const  columns =[

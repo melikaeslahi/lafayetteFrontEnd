@@ -1,6 +1,6 @@
 'use client'
 import { CustomTable, SettingRecord } from "@/components/dashboard/Table";
-import { useDeletePermissionMutation, useGetAllPermissionQuery } from "@/lib/user/permissionApi";
+import { useDeletePermissionMutation, useGetAllPermissionQuery } from "@/services/user/permissionApi";
  
 const Index = () => {
     

@@ -1,6 +1,6 @@
 'use client';
-import { useCsrfQuery } from "@/lib/auth/authApi";
-import { useGetOtpDataMutation, useLoginConfirmMutation, useLoginRegisterMutation, useLogoutMutation, useResendOtpMutation, useUserMutation } from "@/lib/auth/loginRegisterApi";
+ 
+import { useGetOtpDataMutation, useLoginConfirmMutation, useLoginRegisterMutation, useLogoutMutation, useResendOtpMutation, useUserMutation } from "@/services/auth/loginRegisterApi";
 import { setData, setError, setLoading, setUser } from "@/store/reducers/auth/authSlice";
 import axios from '@/lib/axios'
 import { useEffect, useState } from "react"

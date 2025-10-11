@@ -4,13 +4,10 @@ export const metadata = {
 }
 
 const  Banner = () => {  
-
     return (
         <>
         <Index />
         </>
-
-  
     )
 
 }

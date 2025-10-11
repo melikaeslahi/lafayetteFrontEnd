@@ -7,7 +7,7 @@ import {   useEffect } from 'react'
 import { Editor, Input } from '@/components/dashboard/inputs'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import { useAddNewPermissionMutation } from '@/lib/user/permissionApi'
+import { useAddNewPermissionMutation } from '@/services/user/permissionApi'
 import PermissionSchema from '@/validation/doshboard/user/permission/permissionValidation'
 
 import { useDispatch  } from 'react-redux'

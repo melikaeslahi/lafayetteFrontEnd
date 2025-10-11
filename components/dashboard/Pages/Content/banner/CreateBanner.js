@@ -10,7 +10,6 @@ import InputContainer from '@/components/dashboard/inputs/InputContainer'
 import { useDispatch  } from 'react-redux'
 import { setErrorData ,setSuccessMessage} from '@/store/reducers/dashboard/UtilSlice'
 
-
 const CreateBanner = () => {
     const router = useRouter();
     const dispatch =useDispatch();
@@ -20,7 +19,6 @@ const CreateBanner = () => {
         image: '',
         url: '',
         status: '',
-
     }
     const { data: positions = [], isSuccess } = useGetPositionsQuery();
     
@@ -45,7 +43,6 @@ const CreateBanner = () => {
         formData.append("status", values.status);
 
         await addNewBanner(formData);
-
     }
 
     return (

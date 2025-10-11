@@ -7,7 +7,7 @@ import {    MultipleSelect  } from '@/components/dashboard/inputs'
 import { setIsError, setIsLoading, setIsSuccess } from '@/store/reducers/dashboard/UtilSlice'
  
 import InputContainer from '@/components/dashboard/inputs/InputContainer'
-import {  useAddNewRolesMutation, useGetRolesQuery } from '@/lib/user/adminUserApi'
+import {  useAddNewRolesMutation, useGetRolesQuery } from '@/services/user/adminUserApi'
 import AdminSchema from '@/validation/doshboard/user/adminUser/adminValidation'
 import { useDispatch } from 'react-redux'
  
